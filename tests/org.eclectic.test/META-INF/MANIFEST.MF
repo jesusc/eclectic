@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Eclectic JVM Tests
+Bundle-SymbolicName: org.eclectic.test
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: modelum.eclectic.jvm.test.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclectic.frontend;bundle-version="0.8.0",
+ org.junit,
+ org.eclectic.frontend.asm;bundle-version="0.8.0",
+ org.eclectic.frontend.syntax;bundle-version="0.8.0",
+ org.eclectic.idc;bundle-version="0.8.0",
+ org.eclectic.modeling;bundle-version="0.8.0",
+ org.eclectic.apidesc.language;bundle-version="0.8.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6

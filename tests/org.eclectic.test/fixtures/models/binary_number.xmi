@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="ASCII"?>
+<binary_calculator:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:binary_calculator="http://www.modelum.es/eclectic/test/binary_calculator" xsi:schemaLocation="http://www.modelum.es/eclectic/test/binary_calculator ../metamodels/Binary.ecore">
+  <calculators description="number: 3">
+    <number xsi:type="binary_calculator:L">
+      <left xsi:type="binary_calculator:L">
+        <left xsi:type="binary_calculator:Bit" value="1"/>
+        <rigth value="0"/>
+      </left>
+      <rigth value="1"/>
+    </number>
+  </calculators>
+</binary_calculator:Model>

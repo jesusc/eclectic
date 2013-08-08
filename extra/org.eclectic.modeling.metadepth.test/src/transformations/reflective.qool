@@ -1,0 +1,20 @@
+qool reflective_metadepth(in) -> (out)
+
+model rt 
+  class generic 
+	ref s : _!Any 
+	ref t : _!Any 
+  end
+end 
+
+local queue traceQ : _!Any
+
+model queue mNode : in!Node
+
+segment allNodes
+  forall n from mNode
+  	" ".println(n)
+  end
+end
+
+

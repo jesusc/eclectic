@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry exported="true" kind="lib" path="lib/asm-3.3.jar" sourcepath="/tmp/asm/asm-3.3/src"/>
+	<classpathentry exported="true" kind="lib" path="lib/asm-analysis-3.3.jar" sourcepath="/tmp/asm/asm-3.3/src"/>
+	<classpathentry exported="true" kind="lib" path="lib/asm-commons-3.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/asm-tree-3.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/asm-util-3.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/asm-xml-3.3.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/bcel-5.2.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-jci-core-1.0.jar"/>
+	<classpathentry exported="true" kind="lib" path="lib/commons-jci-eclipse-1.0.jar"/>
+	<classpathentry kind="lib" path="lib/commons-io-2.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-adapters-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/commons-logging-api-1.1.1.jar"/>
+	<classpathentry kind="con" path="org.scala-ide.sdt.launching.SCALA_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="src-original"/>
+	<classpathentry kind="src" path="test-javaflow"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

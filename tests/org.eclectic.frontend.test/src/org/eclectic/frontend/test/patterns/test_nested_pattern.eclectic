@@ -1,0 +1,27 @@
+eclectic test_nested_pattern(in) -> (out)
+
+patterns nested_pattern(in)
+	def closingClassifier -> (c)
+		o : in!CompilationUnit { // name = "CloseWait.java" ,
+			/*
+			classifiers = c : in!Class {
+				name = "CloseWait"
+			},
+			*/
+			classifiers = c : in!Class {
+				name = "TimeWait",
+				members = m : in!Field {
+        			annotationsAndModifiers = mod : in!Static { }					
+				}
+			}			
+		}
+	end
+end
+
+mappings mapping_linked_to_pattern(in) -> (out)
+	uses nested_pattern as nested_pattern
+	from c : nested_pattern!closingClassifier to
+	     r : out!Report
+		r.value = c.name
+	end
+end

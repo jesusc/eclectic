@@ -1,0 +1,50 @@
+@namespace(
+	uri="http://eclectic.org/streaming/emf_java_compiler_tree",
+	prefix="emf_java_compiler_tree")
+package ejctree;
+
+abstract class EJCTree {
+	// TODO: Make this transparent
+	attr String[1] objectId;
+}
+
+class EJCCompilationUnit extends EJCTree {
+	attr String[1] sourceFile;
+
+	val EJCTree[*] typeDecls; 
+}
+
+class EJCClassDecl extends EJCTree {
+   attr String[1] qName; // qualifiedName
+   attr String[1] sName; // simpleName
+
+   val EJCIdent[0..1] extendingId;
+   val EJCClassDecl[0..1] extending;
+
+   val EJCMethodDecl[*] methodDcls;
+}
+
+class EJCMethodDecl extends EJCTree {
+   attr String[1] name;   
+   attr String[1] qName; // This is needed until we have multi-key/closure-based keys
+ 
+   val JCTree[0..1] returnType;
+}
+
+
+class EJCIdent extends EJCTree {
+   attr String[1] value;
+}
+
+class EJCPrimitiveTypeTree extends EJCTree {
+   attr String[1] name;
+}
+
+class JCTypeApply extends EJCTree {
+   val JCIdent[1] clazz;
+}
+
+
+// JCPrimitiveTypeTree
+// JCTypeApply => clazz: JCIdent
+// JCIdent

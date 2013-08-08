@@ -1,0 +1,9 @@
+constraints for Company {
+
+	context Bank 
+		pre createAccount: 
+			let size : Integer = self.accounts->size() 
+			in size < 1000
+		description: "This is a small bank with a limited number of accounts"
+	
+}  

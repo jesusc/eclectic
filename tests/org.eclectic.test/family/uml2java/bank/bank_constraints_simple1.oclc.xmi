@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<ocl_constraints:OclConstraintsModel xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ocl="http://www.eclipse.org/gmt/2005/OCL" xmlns:ocl_constraints="ocl_constraints" location="1:1-10:2" metamodel="Company">
+  <contexts location="3:2-8:45">
+    <metaclass_ location="3:10-3:14" name="Account"/>
+    <precondition location="4:3-8:45" name="getCash" description="Simple constraint: integers">
+      <expr xsi:type="ocl:LetExp" location="5:4-6:11">
+        <commentsAfter>-- in size &lt; 1000</commentsAfter>
+        <variable location="5:8-5:26" varName="size" variableExp="//@contexts.0/@precondition/@expr/@in_">
+          <type xsi:type="ocl:IntegerType" location="5:15-5:22"/>
+          <initExpression xsi:type="ocl:IntegerExp" location="5:25-5:26" integerSymbol="1"/>
+        </variable>
+        <in_ xsi:type="ocl:VariableExp" location="6:7-6:11" referredVariable="//@contexts.0/@precondition/@expr/@variable">
+          <commentsAfter>-- in size &lt; 1000</commentsAfter>
+        </in_>
+      </expr>
+    </precondition>
+  </contexts>
+</ocl_constraints:OclConstraintsModel>

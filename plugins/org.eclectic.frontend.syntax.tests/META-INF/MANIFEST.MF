@@ -1,0 +1,23 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: org.eclectic.frontend.syntax.tests
+Bundle-Vendor: Eclectical
+Bundle-Version: 0.8.6.qualifier
+Bundle-SymbolicName: org.eclectic.frontend.syntax.tests; singleton:=true
+Bundle-ActivationPolicy: lazy
+Require-Bundle: org.eclectic.frontend.syntax;bundle-version="0.8.0",
+ org.eclipse.core.runtime,
+ org.eclipse.xtext,
+ org.eclipse.xtext.junit4,
+ org.eclipse.xtext.ui.junit,
+ org.junit4,
+ org.eclipse.ui.workbench;resolution:=optional,
+ org.eclectic.frontend.syntax.ui;bundle-version="0.8.5",
+ org.eclipse.xtend2.lib,
+ com.google.inject,
+ com.google.guava,
+ org.eclipse.xtext.xbase.lib,
+ org.eclectic.frontend.asm;bundle-version="0.8.5"
+Import-Package: org.apache.log4j,org.apache.commons.logging
+Bundle-RequiredExecutionEnvironment: J2SE-1.5
+

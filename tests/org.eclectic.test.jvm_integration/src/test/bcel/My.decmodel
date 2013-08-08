@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<DecModel:Decoration xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:DecModel="http://www.sei.pku.edu.cn/rsa/decmodel" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore">
+  <genModel href="UML.genmodel#/"/>
+  <importClass>
+    <fullClassName>import java.io.File;</fullClassName>
+    <fullClassName>import java.io.IOException;</fullClassName>
+    <fullClassName>import java.io.InputStream;</fullClassName>
+    <fullClassName>import java.net.URL;</fullClassName>
+    <fullClassName>import java.util.Enumeration;</fullClassName>
+    <fullClassName>import java.util.HashSet;</fullClassName>
+    <fullClassName>import java.util.Set;</fullClassName>
+    <fullClassName>import java.util.jar.JarEntry;</fullClassName>
+    <fullClassName>import org.apache.bcel.classfile.ClassParser;</fullClassName>
+    <fullClassName>import org.apache.bcel.classfile.JavaClass;</fullClassName>
+    <fullClassName>import org.apache.bcel.classfile.Method;</fullClassName>
+    <fullClassName>import org.apache.bcel.classfile.Field;</fullClassName>
+    <fullClassName>import java.util.Random;</fullClassName>
+    <fullClassName>import org.apache.bcel.generic.BasicType;</fullClassName>
+  </importClass>
+  <codeArea/>
+  <mapArea>
+    <globalMap/>
+    <classMap specType="java.util.jar.JarFile">
+      <specCode xsi:type="DecModel:Lookup">
+        <code xsi:type="DecModel:CodeFragment" description="" text="&#x9;&#x9;try {&#xD;&#xA;&#x9;&#x9;&#x9;$result = new java.util.jar.JarFile(&quot;D:\\test\\bcel.jar&quot;);&#xD;&#xA;&#x9;&#x9;&#x9;ImagePool.reset();&#xD;&#xA;&#x9;&#x9;} catch (IOException e) {&#xD;&#xA;&#x9;&#x9;&#x9;// TODO Auto-generated catch block&#xD;&#xA;&#x9;&#x9;&#x9;e.printStackTrace();&#xD;&#xA;&#x9;&#x9;}"/>
+      </specCode>
+      <classRef href="UML.ecore#//Model"/>
+      <featureMap xsi:type="DecModel:FeatureMapForAbstractClass" specType="">
+        <specCode xsi:type="DecModel:ListSub">
+          <code xsi:type="DecModel:CodeFragment" text="&#x9;&#x9;Set&lt;String> pks=new HashSet&lt;String>();&#xD;&#xA;&#x9;&#x9;for(Enumeration&lt;JarEntry> entries =$core.entries();entries.hasMoreElements();){&#xD;&#xA;&#x9;&#x9;&#x9;JarEntry entry=entries.nextElement();&#xD;&#xA;&#x9;&#x9;&#x9;String ename=entry.getName();&#xD;&#xA;&#x9;&#x9;&#x9;if(entry.getName().endsWith(&quot;.class&quot;)){&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;int lst=ename.lastIndexOf(&quot;/&quot;);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;pks.add(ename.substring(0,lst+1));&#xD;&#xA;&#x9;&#x9;&#x9;}&#xD;&#xA;&#x9;&#x9;}&#xD;&#xA;&#x9;&#x9;for(String s:pks){&#xD;&#xA;&#x9;&#x9;&#x9;$result.add(s);&#xD;&#xA;&#x9;&#x9;}&#xD;&#xA;"/>
+        </specCode>
+        <feature xsi:type="ecore:EReference" href="UML.ecore#//Package/packagedElement"/>
+        <class2eclass key="String" value="Package"/>
+      </featureMap>
+    </classMap>
+    <classMap specType="String">
+      <specCode xsi:type="DecModel:Identify">
+        <code xsi:type="DecModel:CodeFragment" text="$result=$core.equals($arg0);"/>
+      </specCode>
+      <specCode xsi:type="DecModel:UtilField">
+        <code xsi:type="DecModel:CodeFragment" text="public static class FieldWrap{&#xD;&#xA;&#x9;JavaClass src;&#xD;&#xA;&#x9;JavaClass tgt;&#xD;&#xA;}&#xD;&#xA;"/>
+      </specCode>
+      <classRef href="UML.ecore#//Package"/>
+      <featureMap>
+        <specCode xsi:type="DecModel:Get">
+          <code xsi:type="DecModel:CodeFragment" text="$feature_name=$core.replace('/','.');"/>
+        </specCode>
+        <feature xsi:type="ecore:EAttribute" href="UML.ecore#//NamedElement/name"/>
+      </featureMap>
+      <featureMap xsi:type="DecModel:FeatureMapForAbstractClass">
+        <specCode xsi:type="DecModel:ListSub">
+          <code xsi:type="DecModel:CodeFragment" text="&#x9;&#x9;try{&#xD;&#xA;&#x9;&#x9;&#x9;ArrayList&lt;PackageImpl.FieldWrap> fields=new ArrayList&lt;PackageImpl.FieldWrap>();&#xD;&#xA;&#x9;&#x9;&#x9;java.util.jar.JarFile jarFile=(java.util.jar.JarFile)((ModelImpl)this.eContainer()).getCore();&#xD;&#xA;&#x9;&#x9;&#x9;for(Enumeration&lt;JarEntry> entries = jarFile.entries(); &#xD;&#xA;&#x9;&#x9;&#x9;&#x9;entries.hasMoreElements();){&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;JarEntry entry=entries.nextElement();&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;String ename=entry.getName();&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;int last=ename.lastIndexOf(&quot;/&quot;);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;String prefix=ename.substring(0,last+1);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;if(ename.endsWith(&quot;.class&quot;) &amp;&amp; prefix.equals($core)){&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;InputStream input=jarFile.getInputStream(entry);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;ClassParser parser=new ClassParser(input, entry.getName());&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;JavaClass clazz=parser.parse();&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;$result.add(clazz);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;Field[] fd=clazz.getFields();&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;for(int i=0;i&lt;fd.length;i++){&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;String tmp=fd[i].getType().getSignature();&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;if(tmp.length()&lt;3) continue;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;String type_str=tmp.substring(1,tmp.length()-1);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;if(!type_str.startsWith($core.toString()))&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;continue;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;String entryPath=type_str+&quot;.class&quot;;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;JarEntry fentry=jarFile.getJarEntry(entryPath);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;InputStream in=jarFile.getInputStream(fentry);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;ClassParser np=new ClassParser(in,fentry.getName());&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;JavaClass tclazz=np.parse();&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;FieldWrap fw=new FieldWrap();&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;fw.src=clazz;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;fw.tgt=tclazz;&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;fields.add(fw);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;}&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;}&#xD;&#xA;&#x9;&#x9;&#x9;}&#x9;&#xD;&#xA;&#x9;&#x9;&#x9;for(FieldWrap fw:fields) $result.add(fw);&#x9;&#x9;&#x9;&#xD;&#xA;&#x9;&#x9;}&#xD;&#xA;&#x9;&#x9;catch(Exception e){&#xD;&#xA;&#x9;&#x9;&#x9;e.printStackTrace();&#xD;&#xA;&#x9;&#x9;}"/>
+        </specCode>
+        <feature xsi:type="ecore:EReference" href="UML.ecore#//Package/packagedElement"/>
+        <class2eclass key="JavaClass" value="Class_"/>
+        <class2eclass key="PackageImpl.FieldWrap" value="Association"/>
+      </featureMap>
+    </classMap>
+    <classMap specType="JavaClass">
+      <specCode xsi:type="DecModel:Identify">
+        <code xsi:type="DecModel:CodeFragment" text="$result=(($spec_type)$core).getClassName().equals((($spec_type)$arg0).getClassName());"/>
+      </specCode>
+      <specCode xsi:type="DecModel:UtilField">
+        <code xsi:type="DecModel:CodeFragment" text="public class ClassWrap{&#xD;&#xA;&#x9;public JavaClass clazz;&#xD;&#xA;}&#xD;&#xA;boolean hasAttribute=false;&#xD;&#xA;ArrayList attr=new ArrayList();"/>
+      </specCode>
+      <classRef href="UML.ecore#//Class"/>
+      <featureMap>
+        <specCode xsi:type="DecModel:Get" description="">
+          <code xsi:type="DecModel:CodeFragment" text="String ename=$core.getClassName();&#xD;&#xA;int lst=ename.lastIndexOf(&quot;.&quot;);&#xD;&#xA;$feature_name=ename.substring(lst+1);"/>
+        </specCode>
+        <feature xsi:type="ecore:EAttribute" href="UML.ecore#//Package/name"/>
+      </featureMap>
+      <featureMap>
+        <specCode xsi:type="DecModel:ListSub">
+          <code xsi:type="DecModel:CodeFragment" text="try{&#xD;&#xA;JavaClass[] sup=$core.getSuperClasses();&#xD;&#xA;for(int i=0;i&lt;sup.length;i++){&#xD;&#xA;&#x9;if(!sup[i].getClassName().startsWith((String)((PackageImpl)eContainer()).getName()))&#xD;&#xA;&#x9;&#x9;break;&#xD;&#xA;&#x9;ClassWrap cw=new ClassWrap();&#xD;&#xA;&#x9;cw.clazz=sup[i];&#xD;&#xA;&#x9;$result.add(cw);&#xD;&#xA;&#x9;break;&#xD;&#xA;}&#xD;&#xA;}&#xD;&#xA;catch(Exception e){}"/>
+        </specCode>
+        <feature xsi:type="ecore:EReference" href="UML.ecore#//Class/generalization"/>
+      </featureMap>
+      <featureMap>
+        <specCode xsi:type="DecModel:ListSub">
+          <code xsi:type="DecModel:CodeFragment" text="&#x9;&#x9;&#x9;if(hasAttribute){&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;return attr;&#xD;&#xA;&#x9;&#x9;&#x9;}&#xD;&#xA;&#x9;&#x9;&#x9;hasAttribute=true;&#x9;&#x9;&#x9;&#xD;&#xA;&#x9;&#x9;&#x9;Field[] fd=$core.getFields();&#xD;&#xA;&#x9;&#x9;&#x9;for(int i=0;i&lt;fd.length;i++){&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;org.apache.bcel.generic.Type tp=fd[i].getType();&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;if(tp instanceof BasicType) {&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;AssociationImpl.ClassWrap cw=new AssociationImpl.ClassWrap();&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;cw.id=AssociationImpl.random.nextLong();&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;cw.name=fd[i].getName();&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;$result.add(cw);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;attr.add(cw);&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;}&#xD;&#xA;&#x9;&#x9;&#x9;}&#xD;&#xA;&#x9;&#x9;&#x9;&#x9;&#x9;"/>
+        </specCode>
+        <feature xsi:type="ecore:EReference" href="UML.ecore#//Class/ownedAttribute"/>
+      </featureMap>
+    </classMap>
+    <classMap specType="ClassImpl.ClassWrap">
+      <specCode xsi:type="DecModel:Identify">
+        <code xsi:type="DecModel:CodeFragment" text="$result=(($spec_type)$core).clazz.getClassName().equals((($spec_type)$arg0).clazz.getClassName());"/>
+      </specCode>
+      <classRef href="UML.ecore#//Generalization"/>
+      <featureMap>
+        <specCode xsi:type="DecModel:Get">
+          <code xsi:type="DecModel:CodeFragment" text="$result=$core.clazz;"/>
+        </specCode>
+        <feature xsi:type="ecore:EReference" href="UML.ecore#//Classifier/general"/>
+      </featureMap>
+    </classMap>
+    <classMap specType="PackageImpl.FieldWrap">
+      <specCode xsi:type="DecModel:Identify">
+        <code xsi:type="DecModel:CodeFragment" text="$result=(($spec_type)$core).src.getClassName().equals((($spec_type)$arg0).src.getClassName())&#xD;&#xA;&#x9;&#x9;&#x9;&amp;&amp;&#xD;&#xA;&#x9;&#x9;(($spec_type)$core).tgt.getClassName().equals((($spec_type)$arg0).tgt.getClassName())&#xD;&#xA;;"/>
+      </specCode>
+      <specCode xsi:type="DecModel:UtilField">
+        <code xsi:type="DecModel:CodeFragment" text="public static Random random=new Random();&#xD;&#xA;&#xD;&#xA;public static class ClassWrap{JavaClass clazz;long id;String name;}&#xD;&#xA;&#xD;&#xA;ClassWrap src=null;&#xD;&#xA;ClassWrap tgt=null;"/>
+      </specCode>
+      <classRef href="UML.ecore#//Association"/>
+      <featureMap>
+        <specCode xsi:type="DecModel:ListSub">
+          <code xsi:type="DecModel:CodeFragment" text="if(src==null || tgt==null){&#xD;&#xA;&#x9;src=new AssociationImpl.ClassWrap();&#xD;&#xA;&#x9;src.clazz=$core.src;&#xD;&#xA;&#x9;src.id=random.nextLong();&#xD;&#xA;&#x9;tgt=new AssociationImpl.ClassWrap();&#xD;&#xA;&#x9;tgt.clazz=$core.tgt;&#xD;&#xA;&#x9;tgt.id=random.nextLong();&#xD;&#xA;}&#xD;&#xA;$result.add(tgt);&#xD;&#xA;$result.add(src);&#xD;&#xA;"/>
+        </specCode>
+        <feature xsi:type="ecore:EReference" href="UML.ecore#//Association/ownedEnd"/>
+      </featureMap>
+      <featureMap>
+        <specCode xsi:type="DecModel:ListSub">
+          <code xsi:type="DecModel:CodeFragment" text="$result.add(src);&#xD;&#xA;$result.add(tgt);"/>
+        </specCode>
+        <feature xsi:type="ecore:EReference" href="UML.ecore#//Association/memberEnd"/>
+      </featureMap>
+    </classMap>
+    <classMap specType="AssociationImpl.ClassWrap">
+      <specCode xsi:type="DecModel:Identify">
+        <code xsi:type="DecModel:CodeFragment" text="$result=(($spec_type)$core).id==(($spec_type)$arg0).id;"/>
+      </specCode>
+      <classRef href="UML.ecore#//Property"/>
+      <featureMap>
+        <specCode xsi:type="DecModel:Get" description="">
+          <code xsi:type="DecModel:CodeFragment" text="$result=$core.clazz;"/>
+        </specCode>
+        <feature xsi:type="ecore:EReference" href="UML.ecore#//Property/type"/>
+      </featureMap>
+      <featureMap specType="">
+        <specCode xsi:type="DecModel:Get">
+          <code xsi:type="DecModel:CodeFragment" text="$feature_name=$core.name;"/>
+        </specCode>
+        <feature xsi:type="ecore:EAttribute" href="UML.ecore#//Package/name"/>
+      </featureMap>
+    </classMap>
+  </mapArea>
+</DecModel:Decoration>

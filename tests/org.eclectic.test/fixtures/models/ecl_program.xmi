@@ -1,0 +1,218 @@
+<?xml version="1.0" encoding="ASCII"?>
+<eclectic_asm_core:TransformationModule xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ec_expr="http://www.modelum.es/eclectic/asm/core/expressions" xmlns:ec_rubytele="http://www.modelum.es/eclectic/asm/rubytele" xmlns:ec_walk="http://www.modelum.es/eclectic/asm/walk" xmlns:eclectic_asm_core="http://www.modelum.es/eclectic/asm/core" xsi:schemaLocation="http://www.modelum.es/eclectic/asm/core/expressions http://www.modelum.es/eclectic#//expressions http://www.modelum.es/eclectic/asm/rubytele http://www.modelum.es/eclectic#//rubytele http://www.modelum.es/eclectic/asm/walk http://www.modelum.es/eclectic#//walk http://www.modelum.es/eclectic/asm/core http://www.modelum.es/eclectic#//core" name="TestUML">
+  <annotations name="main">
+    <parameters xsi:type="eclectic_asm_core:GenericKeywordParameter" keyword="all"/>
+  </annotations>
+  <definitions xsi:type="eclectic_asm_core:TraceInterface" name="rt">
+    <parameters name="uml1"/>
+    <parameters name="uml2"/>
+    <definitions name="class2class">
+      <elements name="s">
+        <type xsi:type="eclectic_asm_core:SimpleType" model="//@definitions.0/@parameters.0" name="Class"/>
+      </elements>
+      <elements name="t">
+        <type xsi:type="eclectic_asm_core:SimpleType" model="//@definitions.0/@parameters.1" name="Class"/>
+      </elements>
+    </definitions>
+    <definitions name="attr2attr">
+      <elements name="s">
+        <type xsi:type="eclectic_asm_core:SimpleType" model="//@definitions.0/@parameters.0" name="Attribute"/>
+      </elements>
+      <elements name="t">
+        <type xsi:type="eclectic_asm_core:SimpleType" model="//@definitions.0/@parameters.1" name="Attribute"/>
+      </elements>
+    </definitions>
+    <definitions name="op2op">
+      <elements name="s">
+        <type xsi:type="eclectic_asm_core:SimpleType" model="//@definitions.0/@parameters.0" name="Operation"/>
+      </elements>
+      <elements name="t">
+        <type xsi:type="eclectic_asm_core:SimpleType" model="//@definitions.0/@parameters.1" name="Operation"/>
+      </elements>
+    </definitions>
+  </definitions>
+  <definitions xsi:type="eclectic_asm_core:NavigationDefinition" name="extension">
+    <inModels name="uml"/>
+    <decorators>
+      <type model="//@definitions.1/@inModels.0" name="Class"/>
+      <methods xsi:type="ec_expr:NavigationMethod" name="nameExt">
+        <expressions xsi:type="ec_expr:MethodCall" row="26" column="19" methodName="concat">
+          <receptor xsi:type="ec_expr:MethodCall" row="26" column="14" methodName="name" isPropertyAccess="true">
+            <receptor xsi:type="ec_expr:SpecialVariableReference"/>
+          </receptor>
+          <actualParameters xsi:type="ec_expr:StringLiteral" value="_x"/>
+        </expressions>
+      </methods>
+    </decorators>
+  </definitions>
+  <definitions xsi:type="eclectic_asm_core:SchedulingDefinition" name="all">
+    <inModels name="uml1">
+      <annotations name="library">
+        <parameters xsi:type="eclectic_asm_core:GenericKeywordParameter" keyword="extension"/>
+      </annotations>
+    </inModels>
+    <outModels name="uml2"/>
+    <executions xsi:type="eclectic_asm_core:Parallel">
+      <executions outModels="//@definitions.2/@outModels.0" inModels="//@definitions.2/@inModels.0" definition="//@definitions.3"/>
+      <executions outModels="//@definitions.2/@outModels.0" inModels="//@definitions.2/@inModels.0" definition="//@definitions.4"/>
+      <executions outModels="//@definitions.2/@outModels.0" inModels="//@definitions.2/@inModels.0" definition="//@definitions.5"/>
+    </executions>
+  </definitions>
+  <definitions xsi:type="ec_rubytele:RubyteleTransformation" name="umlcopy1">
+    <annotations name="implements">
+      <parameters xsi:type="eclectic_asm_core:GenericKeywordParameter" keyword="rt"/>
+    </annotations>
+    <inModels name="uml1">
+      <annotations name="library">
+        <parameters xsi:type="eclectic_asm_core:GenericKeywordParameter" keyword="extension"/>
+      </annotations>
+    </inModels>
+    <outModels name="uml2"/>
+    <rules xsi:type="ec_rubytele:NormalRule" row="43" column="1" name="class2class" implements="//@definitions.0/@definitions.0">
+      <fromPart name="uml1">
+        <type model="//@definitions.3/@inModels.0" name="Class"/>
+      </fromPart>
+      <toPart name="uml2">
+        <type model="//@definitions.3/@outModels.0" name="Class"/>
+      </toPart>
+      <expressions xsi:type="ec_expr:PropertyWrite" row="50" column="7" receptor="//@definitions.3/@rules.0/@toPart.0" propertyName="name">
+        <value xsi:type="ec_expr:MethodCall" row="50" column="28" methodName="nameExt">
+          <receptor xsi:type="ec_expr:VariableReference" variable="//@definitions.3/@rules.0/@fromPart"/>
+        </value>
+      </expressions>
+      <expressions xsi:type="ec_expr:PropertyWrite" row="51" column="7" receptor="//@definitions.3/@rules.0/@toPart.0" propertyName="features">
+        <value xsi:type="ec_expr:MethodCall" row="51" column="130" methodName="flatten">
+          <receptor xsi:type="ec_expr:MethodCall" row="51" column="104" methodName="map">
+            <receptor xsi:type="ec_expr:ResolveTrace" row="51" column="23" trace="//@definitions.0/@definitions.1">
+              <traceExpr traceVar="//@definitions.0/@definitions.1/@elements.0">
+                <expr xsi:type="ec_expr:MethodCall" row="51" column="59" methodName="select">
+                  <receptor xsi:type="ec_expr:MethodCall" row="51" column="50" methodName="features" isPropertyAccess="true">
+                    <receptor xsi:type="ec_expr:VariableReference" variable="//@definitions.3/@rules.0/@fromPart"/>
+                  </receptor>
+                  <actualParameters xsi:type="ec_expr:ClosureDeclaration" row="51" column="66">
+                    <expressions xsi:type="ec_expr:MethodCall" row="51" column="74" methodName="kind_of">
+                      <receptor xsi:type="ec_expr:VariableReference" variable="//@definitions.3/@rules.0/@expressions.1/@value/@receptor/@receptor/@traceExpr/@expr/@actualParameters.0/@formalParameters.0"/>
+                      <actualParameters xsi:type="ec_expr:ModelReference" model="//@definitions.3/@inModels.0" name="Attribute"/>
+                    </expressions>
+                    <formalParameters name="x" row="51" column="67"/>
+                  </actualParameters>
+                </expr>
+              </traceExpr>
+            </receptor>
+            <actualParameters xsi:type="ec_expr:ClosureDeclaration" row="51" column="108">
+              <expressions xsi:type="ec_expr:MethodCall" row="51" column="124" methodName="t" isPropertyAccess="true">
+                <receptor xsi:type="ec_expr:VariableReference" variable="//@definitions.3/@rules.0/@expressions.1/@value/@receptor/@actualParameters.0/@formalParameters.0"/>
+              </expressions>
+              <formalParameters name="trace" row="51" column="109"/>
+            </actualParameters>
+          </receptor>
+        </value>
+      </expressions>
+      <expressions xsi:type="ec_expr:PropertyWrite" row="52" column="7" receptor="//@definitions.3/@rules.0/@toPart.0" propertyName="features">
+        <value xsi:type="ec_expr:MethodCall" row="52" column="126" methodName="flatten">
+          <receptor xsi:type="ec_expr:MethodCall" row="52" column="100" methodName="map">
+            <receptor xsi:type="ec_expr:ResolveTrace" row="52" column="23" trace="//@definitions.0/@definitions.2">
+              <traceExpr traceVar="//@definitions.0/@definitions.2/@elements.0">
+                <expr xsi:type="ec_expr:MethodCall" row="52" column="55" methodName="select">
+                  <receptor xsi:type="ec_expr:MethodCall" row="52" column="46" methodName="features" isPropertyAccess="true">
+                    <receptor xsi:type="ec_expr:VariableReference" variable="//@definitions.3/@rules.0/@fromPart"/>
+                  </receptor>
+                  <actualParameters xsi:type="ec_expr:ClosureDeclaration" row="52" column="62">
+                    <expressions xsi:type="ec_expr:MethodCall" row="52" column="70" methodName="kind_of">
+                      <receptor xsi:type="ec_expr:VariableReference" variable="//@definitions.3/@rules.0/@expressions.2/@value/@receptor/@receptor/@traceExpr/@expr/@actualParameters.0/@formalParameters.0"/>
+                      <actualParameters xsi:type="ec_expr:ModelReference" model="//@definitions.3/@inModels.0" name="Operation"/>
+                    </expressions>
+                    <formalParameters name="x" row="52" column="63"/>
+                  </actualParameters>
+                </expr>
+              </traceExpr>
+            </receptor>
+            <actualParameters xsi:type="ec_expr:ClosureDeclaration" row="52" column="104">
+              <expressions xsi:type="ec_expr:MethodCall" row="52" column="120" methodName="t" isPropertyAccess="true">
+                <receptor xsi:type="ec_expr:VariableReference" variable="//@definitions.3/@rules.0/@expressions.2/@value/@receptor/@actualParameters.0/@formalParameters.0"/>
+              </expressions>
+              <formalParameters name="trace" row="52" column="105"/>
+            </actualParameters>
+          </receptor>
+        </value>
+      </expressions>
+    </rules>
+  </definitions>
+  <definitions xsi:type="ec_rubytele:RubyteleTransformation" name="copy_attrs">
+    <annotations name="implements">
+      <parameters xsi:type="eclectic_asm_core:GenericKeywordParameter" keyword="rt"/>
+    </annotations>
+    <inModels name="uml1">
+      <annotations name="library">
+        <parameters xsi:type="eclectic_asm_core:GenericKeywordParameter" keyword="extension"/>
+      </annotations>
+    </inModels>
+    <outModels name="uml2"/>
+    <rules xsi:type="ec_rubytele:NormalRule" row="64" column="1" name="attr2attr" implements="//@definitions.0/@definitions.1">
+      <fromPart name="uml1">
+        <type model="//@definitions.4/@inModels.0" name="Attribute"/>
+      </fromPart>
+      <toPart name="uml2">
+        <type model="//@definitions.4/@outModels.0" name="Attribute"/>
+      </toPart>
+      <expressions xsi:type="ec_expr:IfExpr" row="72" column="7">
+        <condition xsi:type="ec_expr:VariableReference" variable="//@definitions.4/@rules.0/@fromPart"/>
+        <ifBlock>
+          <expressions xsi:type="ec_expr:PropertyWrite" row="73" column="9" receptor="//@definitions.4/@rules.0/@toPart.0" propertyName="name">
+            <value xsi:type="ec_expr:StringLiteral" value="dont_say_your_age"/>
+          </expressions>
+          <expressions xsi:type="ec_expr:PropertyWrite" row="74" column="9" receptor="//@definitions.4/@rules.0/@toPart.0" propertyName="owner">
+            <value xsi:type="ec_expr:MethodCall" row="74" column="59" methodName="t" isPropertyAccess="true">
+              <receptor xsi:type="ec_expr:ResolveTrace" row="74" column="22" trace="//@definitions.0/@definitions.0">
+                <traceExpr traceVar="//@definitions.0/@definitions.0/@elements.0">
+                  <expr xsi:type="ec_expr:MethodCall" row="74" column="51" methodName="owner" isPropertyAccess="true">
+                    <receptor xsi:type="ec_expr:VariableReference" variable="//@definitions.4/@rules.0/@fromPart"/>
+                  </expr>
+                </traceExpr>
+              </receptor>
+            </value>
+          </expressions>
+        </ifBlock>
+        <elseBlock>
+          <expressions xsi:type="ec_expr:PropertyWrite" row="76" column="9" receptor="//@definitions.4/@rules.0/@toPart.0" propertyName="name">
+            <value xsi:type="ec_expr:MethodCall" row="76" column="26" methodName="name" isPropertyAccess="true">
+              <receptor xsi:type="ec_expr:VariableReference" variable="//@definitions.4/@rules.0/@fromPart"/>
+            </value>
+          </expressions>
+        </elseBlock>
+      </expressions>
+    </rules>
+  </definitions>
+  <definitions xsi:type="ec_walk:WalkTransformation" name="copy_operations">
+    <annotations name="implements">
+      <parameters xsi:type="eclectic_asm_core:GenericKeywordParameter" keyword="op2op">
+        <qualifiers>rt</qualifiers>
+      </parameters>
+    </annotations>
+    <inModels name="uml1">
+      <annotations name="library">
+        <parameters xsi:type="eclectic_asm_core:GenericKeywordParameter" keyword="extension"/>
+      </annotations>
+    </inModels>
+    <outModels name="uml2"/>
+    <rules row="86" column="34">
+      <matchedType model="//@definitions.5/@inModels.0" name="Operation"/>
+      <expressions xsi:type="ec_expr:VariableDeclaration" row="90" column="7" name="op">
+        <value xsi:type="ec_expr:NewObject">
+          <type xsi:type="eclectic_asm_core:SimpleType" model="//@definitions.5/@outModels.0" name="Operation"/>
+        </value>
+      </expressions>
+      <expressions xsi:type="ec_expr:PropertyWrite" row="91" column="7" receptor="//@definitions.5/@rules.0/@expressions.0" propertyName="name">
+        <value xsi:type="ec_expr:MethodCall" row="91" column="22" methodName="name" isPropertyAccess="true">
+          <receptor xsi:type="ec_expr:SpecialVariableReference"/>
+        </value>
+      </expressions>
+      <expressions xsi:type="ec_walk:AssignAttribute" attribute="//@definitions.5/@attributes.0">
+        <right xsi:type="ec_expr:VariableReference" variable="//@definitions.5/@rules.0/@expressions.0"/>
+      </expressions>
+    </rules>
+    <attributes xsi:type="ec_walk:SynthAttribute" name="t">
+      <type xsi:type="eclectic_asm_core:SimpleType" model="//@definitions.5/@outModels.0" name="Operation"/>
+    </attributes>
+  </definitions>
+</eclectic_asm_core:TransformationModule>

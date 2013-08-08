@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="ASCII"?>
+<idc_ast_qool:QoolTransformation xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ecl_meta="http://eclectic.org/ecl_meta" xmlns:idc_ast_extensions="http://eclectic.org/idc/extensions" xmlns:idc_ast_instructions="http://eclectic.org/idc/instructions" xmlns:idc_ast_qool="http://eclectic.org/idc/qool" file="eclectic/process2pms.map" name="process2pms" qualifier="main">
+  <models name="in"/>
+  <models name="out" kind="OUT"/>
+  <segments name="Performer_User">
+    <instructions xsi:type="idc_ast_qool:QForAll" name="forAll_3" getReceptors="//@segments.0/@instructions.0/@instructions.5" setValues="//@segments.0/@instructions.0/@instructions.2" row="3" column="21" file="process2pms.map" queue="//@queues.1">
+      <instructions xsi:type="idc_ast_instructions:Create" name="User_4" setReceptors="//@segments.0/@instructions.0/@instructions.6" setValues="//@segments.0/@instructions.0/@instructions.3" row="3" column="21" file="process2pms.map" model="//@models.1" className="User"/>
+      <instructions xsi:type="idc_ast_instructions:Create" name="trace_5" setReceptors="//@segments.0/@instructions.0/@instructions.2 //@segments.0/@instructions.0/@instructions.3" emitValues="//@segments.0/@instructions.0/@instructions.4" row="3" column="21" file="process2pms.map" model="//@inlineModels.0" className="generic"/>
+      <instructions xsi:type="idc_ast_instructions:Set" row="3" column="21" file="process2pms.map" receptor="//@segments.0/@instructions.0/@instructions.1" featureName="s" value="//@segments.0/@instructions.0"/>
+      <instructions xsi:type="idc_ast_instructions:Set" row="3" column="21" file="process2pms.map" receptor="//@segments.0/@instructions.0/@instructions.1" featureName="t" value="//@segments.0/@instructions.0/@instructions.0"/>
+      <instructions xsi:type="idc_ast_qool:QEmit" row="3" column="21" file="process2pms.map" queue="//@queues.0" value="//@segments.0/@instructions.0/@instructions.1"/>
+      <instructions xsi:type="idc_ast_instructions:Get" name="get_6" setValues="//@segments.0/@instructions.0/@instructions.6" row="4" column="6" file="process2pms.map" receptor="//@segments.0/@instructions.0" featureName="name" kind="TRY_GET_FIRST"/>
+      <instructions xsi:type="idc_ast_instructions:Set" row="4" column="6" file="process2pms.map" receptor="//@segments.0/@instructions.0/@instructions.0" featureName="name" value="//@segments.0/@instructions.0/@instructions.5"/>
+    </instructions>
+  </segments>
+  <segments name="Task_Ticket">
+    <instructions xsi:type="idc_ast_qool:QForAll" name="forAll_7" getReceptors="//@segments.1/@instructions.0/@instructions.5 //@segments.1/@instructions.0/@instructions.7 //@segments.1/@instructions.0/@instructions.9 //@segments.1/@instructions.0/@instructions.13" setValues="//@segments.1/@instructions.0/@instructions.2" row="7" column="19" file="process2pms.map" queue="//@queues.3">
+      <instructions xsi:type="idc_ast_instructions:Create" name="Ticket_8" setReceptors="//@segments.1/@instructions.0/@instructions.6 //@segments.1/@instructions.0/@instructions.8 //@segments.1/@instructions.0/@instructions.12 //@segments.1/@instructions.0/@instructions.16" setValues="//@segments.1/@instructions.0/@instructions.3" row="7" column="19" file="process2pms.map" model="//@models.1" className="Ticket"/>
+      <instructions xsi:type="idc_ast_instructions:Create" name="trace_9" setReceptors="//@segments.1/@instructions.0/@instructions.2 //@segments.1/@instructions.0/@instructions.3" emitValues="//@segments.1/@instructions.0/@instructions.4" row="7" column="19" file="process2pms.map" model="//@inlineModels.0" className="generic"/>
+      <instructions xsi:type="idc_ast_instructions:Set" row="7" column="19" file="process2pms.map" receptor="//@segments.1/@instructions.0/@instructions.1" featureName="s" value="//@segments.1/@instructions.0"/>
+      <instructions xsi:type="idc_ast_instructions:Set" row="7" column="19" file="process2pms.map" receptor="//@segments.1/@instructions.0/@instructions.1" featureName="t" value="//@segments.1/@instructions.0/@instructions.0"/>
+      <instructions xsi:type="idc_ast_qool:QEmit" row="7" column="19" file="process2pms.map" queue="//@queues.0" value="//@segments.1/@instructions.0/@instructions.1"/>
+      <instructions xsi:type="idc_ast_instructions:Get" name="get_10" setValues="//@segments.1/@instructions.0/@instructions.6" row="8" column="11" file="process2pms.map" receptor="//@segments.1/@instructions.0" featureName="_id" kind="TRY_GET_FIRST"/>
+      <instructions xsi:type="idc_ast_instructions:Set" row="8" column="11" file="process2pms.map" receptor="//@segments.1/@instructions.0/@instructions.0" featureName="name" value="//@segments.1/@instructions.0/@instructions.5"/>
+      <instructions xsi:type="idc_ast_instructions:Get" name="get_11" setValues="//@segments.1/@instructions.0/@instructions.8" row="9" column="18" file="process2pms.map" receptor="//@segments.1/@instructions.0" featureName="name" kind="TRY_GET_FIRST"/>
+      <instructions xsi:type="idc_ast_instructions:Set" row="9" column="18" file="process2pms.map" receptor="//@segments.1/@instructions.0/@instructions.0" featureName="description" value="//@segments.1/@instructions.0/@instructions.7"/>
+      <instructions xsi:type="idc_ast_instructions:Get" name="get_12" row="10" column="17" file="process2pms.map" receptor="//@segments.1/@instructions.0" featureName="actor" kind="TRY_GET_FIRST"/>
+      <instructions xsi:type="idc_ast_instructions:ClosureDef" row="10" column="17" file="process2pms.map" name="getter_closure_14">
+        <instructions xsi:type="idc_ast_instructions:Get" name="get_t_16" row="10" column="17" file="process2pms.map" receptor="//@segments.1/@instructions.0/@instructions.10/@formalParameters.0" featureName="t" kind="TRY_GET_FIRST"/>
+        <formalParameters name="getter_closure_param_15" getReceptors="//@segments.1/@instructions.0/@instructions.10/@instructions.0"/>
+      </instructions>
+      <instructions xsi:type="idc_ast_qool:QMatch" name="match_13" setValues="//@segments.1/@instructions.0/@instructions.12" row="10" column="17" file="process2pms.map" queue="//@queues.0" getterClosure="//@segments.1/@instructions.0/@instructions.10">
+        <predicates xsi:type="idc_ast_qool:KindOfPredicate" className="generic" model="//@inlineModels.0"/>
+        <predicates xsi:type="idc_ast_qool:PropertyEqualsPredicate" propertyName="s" value="//@segments.1/@instructions.0/@instructions.9"/>
+      </instructions>
+      <instructions xsi:type="idc_ast_instructions:Set" row="10" column="17" file="process2pms.map" receptor="//@segments.1/@instructions.0/@instructions.0" featureName="assignedTo" value="//@segments.1/@instructions.0/@instructions.11"/>
+      <instructions xsi:type="idc_ast_instructions:Get" name="get_17" row="12" column="17" file="process2pms.map" receptor="//@segments.1/@instructions.0" featureName="ontological_type" kind="TRY_GET_FIRST"/>
+      <instructions xsi:type="idc_ast_instructions:ClosureDef" row="12" column="17" file="process2pms.map" name="getter_closure_19">
+        <instructions xsi:type="idc_ast_instructions:Get" name="get_t_21" row="12" column="17" file="process2pms.map" receptor="//@segments.1/@instructions.0/@instructions.14/@formalParameters.0" featureName="t" kind="TRY_GET_FIRST"/>
+        <formalParameters name="getter_closure_param_20" getReceptors="//@segments.1/@instructions.0/@instructions.14/@instructions.0"/>
+      </instructions>
+      <instructions xsi:type="idc_ast_qool:QMatch" name="match_18" setValues="//@segments.1/@instructions.0/@instructions.16" row="12" column="17" file="process2pms.map" queue="//@queues.0" getterClosure="//@segments.1/@instructions.0/@instructions.14">
+        <predicates xsi:type="idc_ast_qool:KindOfPredicate" className="generic" model="//@inlineModels.0"/>
+        <predicates xsi:type="idc_ast_qool:PropertyEqualsPredicate" propertyName="s" value="//@segments.1/@instructions.0/@instructions.13"/>
+      </instructions>
+      <instructions xsi:type="idc_ast_instructions:Set" row="12" column="17" file="process2pms.map" receptor="//@segments.1/@instructions.0/@instructions.0" featureName="categories" value="//@segments.1/@instructions.0/@instructions.15"/>
+    </instructions>
+  </segments>
+  <segments name="Task_Category">
+    <instructions xsi:type="idc_ast_qool:QForAll" name="forAll_22" getReceptors="//@segments.2/@instructions.0/@instructions.5" setValues="//@segments.2/@instructions.0/@instructions.2" row="15" column="21" file="process2pms.map" queue="//@queues.2">
+      <instructions xsi:type="idc_ast_instructions:Create" name="Category_23" setReceptors="//@segments.2/@instructions.0/@instructions.6" setValues="//@segments.2/@instructions.0/@instructions.3" row="15" column="21" file="process2pms.map" model="//@models.1" className="Category"/>
+      <instructions xsi:type="idc_ast_instructions:Create" name="trace_24" setReceptors="//@segments.2/@instructions.0/@instructions.2 //@segments.2/@instructions.0/@instructions.3" emitValues="//@segments.2/@instructions.0/@instructions.4" row="15" column="21" file="process2pms.map" model="//@inlineModels.0" className="generic"/>
+      <instructions xsi:type="idc_ast_instructions:Set" row="15" column="21" file="process2pms.map" receptor="//@segments.2/@instructions.0/@instructions.1" featureName="s" value="//@segments.2/@instructions.0"/>
+      <instructions xsi:type="idc_ast_instructions:Set" row="15" column="21" file="process2pms.map" receptor="//@segments.2/@instructions.0/@instructions.1" featureName="t" value="//@segments.2/@instructions.0/@instructions.0"/>
+      <instructions xsi:type="idc_ast_qool:QEmit" row="15" column="21" file="process2pms.map" queue="//@queues.0" value="//@segments.2/@instructions.0/@instructions.1"/>
+      <instructions xsi:type="idc_ast_instructions:Get" name="get_25" setValues="//@segments.2/@instructions.0/@instructions.6" row="16" column="13" file="process2pms.map" receptor="//@segments.2/@instructions.0" featureName="name" kind="TRY_GET_FIRST"/>
+      <instructions xsi:type="idc_ast_instructions:Set" row="16" column="13" file="process2pms.map" receptor="//@segments.2/@instructions.0/@instructions.0" featureName="name" value="//@segments.2/@instructions.0/@instructions.5"/>
+    </instructions>
+  </segments>
+  <queues xsi:type="idc_ast_qool:LocalQueue" name="trace_queue"/>
+  <queues xsi:type="idc_ast_qool:ModelElementQueue" name="Performer_0">
+    <type_ model="//@models.0" classifierName="Performer"/>
+  </queues>
+  <queues xsi:type="idc_ast_qool:ModelElementQueue" name="Task_1">
+    <type_ model="//@models.0" classifierName="Task"/>
+    <extension xsi:type="idc_ast_extensions:PotencyExtension" potency="1"/>
+  </queues>
+  <queues xsi:type="idc_ast_qool:ModelElementQueue" name="Task_2">
+    <type_ model="//@models.0" classifierName="Task"/>
+  </queues>
+  <inlineModels name="rt_process2pms">
+    <classifiers xsi:type="ecl_meta:KClass" name="generic">
+      <features xsi:type="ecl_meta:KReference" name="s"/>
+      <features xsi:type="ecl_meta:KReference" name="t"/>
+    </classifiers>
+  </inlineModels>
+</idc_ast_qool:QoolTransformation>

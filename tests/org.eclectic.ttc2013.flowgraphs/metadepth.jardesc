@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jardesc>
+    <jar path="org.eclectic.ttc2013.flowgraphs/lib/metadepth.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/org.eclectic.ttc2013.flowgraphs/metadepth.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="true" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <folder path="/metadepth.core/lib"/>
+        <javaElement handleIdentifier="=metadepth.core/src-commands"/>
+        <javaElement handleIdentifier="=metadepth.core/src"/>
+        <file path="/metadepth.core/.project"/>
+        <folder path="/metadepth.core/gramatica"/>
+        <javaElement handleIdentifier="=metadepth.core/src-epsilon"/>
+        <file path="/metadepth.core/build.properties"/>
+        <javaElement handleIdentifier="=metadepth.shell"/>
+        <javaElement handleIdentifier="=metadepth.syntax"/>
+        <javaElement handleIdentifier="=metadepth.core/test"/>
+        <file path="/metadepth.core/.classpath"/>
+        <folder path="/metadepth.core/design"/>
+        <folder path="/metadepth.core/META-INF"/>
+    </selectedElements>
+</jardesc>

@@ -1,0 +1,87 @@
+@namespace(uri="http://eclectic.org/frontend/taoL", prefix="ec_frontend_taoL")
+package tao;
+
+@namespace(uri="http://eclectic.org/frontend/dep", prefix="ec_frontend_dep")
+package dep {
+   
+   class NamedElement { }
+   class TransformationDefinition { }
+   class TransformationDefinitionParameter { }
+   class LocatedElement { }      
+   
+   class ClassUse { }
+   class Variable { }
+   class Expression { }
+   
+   class Statement { }
+}
+
+class TaoTransformation extends dep.TransformationDefinition {
+   // ref dep.TransformationDefinitionParameter[+] left;
+   // ref dep.TransformationDefinitionParameter[+] right; 
+
+   val Template[*] templates;
+}
+
+class TemplateParameter extends dep.Variable {
+   val dep.ClassUse[1] type;
+}
+
+/* How to make this an optional variable */
+class ObjectInstantiation extends dep.Variable, dep.Statement {    
+   val dep.ClassUse[1] type;
+   val Assignment[*] assigments;
+}
+
+class TemplateRootObject extends ObjectInstantiation {
+   
+}
+
+class Template extends dep.NamedElement, dep.LocatedElement {
+   val TemplateParameter[*] parameters;
+   val  TemplateRootObject[*] roots; 
+}
+
+abstract class Assignment extends dep.Statement {
+   
+}
+
+class AttributeAssigment extends Assignment {
+   attr String[1] targetFeature;
+   val  SourceExpression[1] expr;
+}
+
+abstract class SourceExpression extends dep.LocatedElement {  
+}
+
+class WithOptionalVariableExpression extends SourceExpression {
+   val  ObjectSourceVariable[0..1] variable;
+   val  dep.Expression[1] expr;
+}
+
+class ObjectSourceVariable extends dep.Variable { }
+
+/*
+class GetExpression extends SourceExpression, dep.Variable {
+   attr String[1] sourceFeature;
+   ref  dep.Variable[0..1] receptor;   
+}
+
+class StringConstant extends SourceExpression {
+   attr String[1] string;
+}
+*/
+
+abstract class ReferenceAssignment extends Assignment, dep.Variable {
+   attr String[1] targetFeature;
+   val  SourceExpression[0..1] expr;
+   attr boolean[1] multivalued = false;
+}
+
+class ObjectSyntax extends ReferenceAssignment {
+	val ObjectInstantiation[1] object;
+}
+
+class Invocation extends ReferenceAssignment {
+   ref Template[1] template;
+}

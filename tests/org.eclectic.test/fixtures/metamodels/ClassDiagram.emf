@@ -1,0 +1,45 @@
+@namespace(uri="http://www.modelum.es/eclectic/test/classdiagram", prefix="classdiagram")
+package ClassDiagram;
+
+class Model {
+   val Classifier[*] classifiers;   
+}
+
+class Class extends Classifier {
+  val StructuralFeature[*]#owner features;
+  ref Class[*]#childs parents;
+  ref Class[*]#parents childs;
+}
+
+class Classifier {
+  attr String name;
+  //ref TypedElement[*]#type typeOf;
+  //ref TypedElement[*]#type typeOf;
+}
+
+abstract class StructuralFeature extends TypedElement {
+  ref Class[1]#features owner;
+  attr String name;
+  attr String visibility;
+}
+
+class TypedElement {
+  ref Classifier#typeOf type;
+}
+
+class PrimitiveType extends Classifier {
+}
+
+class Operation extends StructuralFeature {
+  ref Parameter[*]#paramOf params;
+}
+
+class Parameter extends TypedElement {
+  ref Operation[1]#params paramOf;
+  attr String name;
+}
+
+class Attribute extends StructuralFeature {
+  attr boolean multivalued;
+}
+

@@ -1,0 +1,38 @@
+@namespace(uri="http://eclectic.org/frontend/imperativeL", prefix="ec_frontend_imperativeL")
+package imperative;
+
+@namespace(uri="http://eclectic.org/frontend/dep", prefix="ec_frontend_dep")
+package dep {
+   
+   class Variable { }
+   class NamedElement { }
+   class TransformationDefinition { }
+   class TransformationDefinitionParameter { }
+   class LocatedElement { }
+   
+   class ClassUse { }           
+   class Expression { }   
+   class Statement { }
+   class TypedWithClass { }   
+}
+
+class ImperativeTransformation extends dep.TransformationDefinition {
+   val MethodDefinition[*] methods;
+}
+
+class MethodDefinition extends dep.LocatedElement {
+	attr String[1] name;
+	val MethodParameter[*] formalParameters;
+	val MethodSelf[0..1] self;
+
+	val dep.ClassUse[1] type;
+	val dep.Statement[*] statements; 
+}
+
+class MethodSelf extends dep.Variable {
+   
+}
+
+class MethodParameter extends dep.Variable {
+   
+}

@@ -1,0 +1,17 @@
+/**
+ * Test if expressions 
+ */
+qool test_if_expr_forall ( in ) -> ( in ) 
+
+model queue mPlaces : in!Place 
+
+segment main
+	forall p from mPlaces
+	 where p.name.eq('p1')
+	 
+	 
+	 "Changing".println(p.name)
+	 p.name = 'p1_changed'
+	end
+
+end

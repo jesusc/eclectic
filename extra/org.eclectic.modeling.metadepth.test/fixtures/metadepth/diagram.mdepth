@@ -1,0 +1,27 @@
+
+ClassDiagram Test {
+
+  Class pet {
+    name = "Pet";
+    features = [pet_name, pet_age];
+  }
+
+  Attribute pet_name {
+  	name = "pet_name";
+  	type = PString;
+  }
+
+  Attribute pet_age {
+  	name = "pet_age";
+  	type = PInteger;
+  }
+  
+
+  Class PInteger {
+  	name = "Integer";
+  }
+  Class PString  {
+  	name = "String";
+  }
+
+}

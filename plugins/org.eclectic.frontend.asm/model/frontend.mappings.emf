@@ -1,0 +1,239 @@
+@namespace(uri="http://eclectic.org/frontend/mappingL", prefix="ec_frontend_mappingL")
+package mappings;
+
+// import "platform:/resource/org.eclectic.frontend.asm/model/eclectic.frontend.ecore";
+
+@namespace(uri="http://eclectic.org/frontend/dep", prefix="ec_frontend_dep")
+package dep {
+   
+   class NamedElement { }
+   class TransformationDefinition { }
+   class TransformationDefinitionParameter { }
+   class LocatedElement { }      
+   
+   class ClassUse { }
+   class UseDeclaration { }
+
+   class ResolveLink { }
+   class Variable { }
+}
+
+class MappingTransformation extends dep.TransformationDefinition {
+   // ref dep.TransformationDefinitionParameter[1] left;
+   // ref dep.TransformationDefinitionParameter[1] right; 
+
+   val Delegate[*] delegates;
+   val Context[*] contexts;
+}
+
+class MappingVariable extends dep.Variable { }
+
+class MatchedElement extends dep.ClassUse, MappingVariable {
+}
+
+// The alternative to a delegate is a converter that matches classes (and with wildcards)
+// and returns an external resolve element or an internal one...
+class Delegate extends dep.LocatedElement {
+   val MatchedElement[*] left;
+
+   // Copied from ResolveLink. TODO: Factorize 
+   attr Boolean[1] isExternal = false;
+   ref dep.UseDeclaration[0..1] module;
+   attr String[1] linkName;
+   attr String[0..1] featureName;
+
+
+   val Tag[*] tags;
+}
+
+class Context extends dep.LocatedElement {
+   val MatchedElement[*] left;
+   val MatchedElement[*] right;
+   
+   // Para mantener la compatibili-dad con el código scala..
+   // this should be derived now
+   // ref MappingElement[*] mappings;
+   val MappingElement[*] mappings;
+   val C2CModifier[*] modifiers; 
+   
+   // This is not really needed but facilitates the xText part
+   val Section[*] sections;
+
+   val Tag[*] tags;
+}
+
+class Section extends dep.LocatedElement  {
+   attr String[1] sectionType;
+   val MappingElement[*] mappings;
+}
+
+abstract class MappingElement extends dep.LocatedElement { 
+} 
+abstract class ClassMapping   extends MappingElement { } 
+abstract class Feature2Feature extends MappingElement { 
+	val FeatureRef[0..1] leftFeature; // This is because of the template language, but it is actually the right way of doing it 
+	val Converter[0..1] converter;
+}
+
+class AttributeMapping extends Feature2Feature {
+   val AttributeRef[*] left;      
+   val AttributeRightPart[1] rightPart;
+}
+
+abstract class AttributeRightPart {
+}
+
+class AttributeIsString extends AttributeRightPart {
+   attr String[1] strValue;
+}
+
+class AttributeIsBoolean extends AttributeRightPart {
+   attr Boolean[1] boolValue;
+}
+
+class AttributeIsDouble extends AttributeRightPart {
+   attr Double[1] doubleValue;
+}
+
+class AttributeIsResolveLink extends AttributeRightPart {
+   val dep.ResolveLink[1] resolveLink;
+}
+
+
+class AttributeIsInteger extends AttributeRightPart {
+   attr int[1] intValue;
+}
+class Converter {
+   attr Boolean[1] isExternal = false;
+   // attr String[0..1] moduleName;
+   ref dep.UseDeclaration[0..1] module;
+   attr String[1] converterName;
+}
+
+class Tag extends dep.NamedElement {
+   
+}
+
+class Class2Class extends ClassMapping {
+  attr MappingCardinality[1] cardinality = 0;
+  
+  val C2CModifier[*] modifiers;
+  
+  val ClassRef[+] left;
+  val ClassRef[+] right;
+
+  val Attribute2Attribute[*]#context scopedAttributes; 
+}
+
+abstract class C2CModifier extends MappingElement { }
+class RelatedBy extends C2CModifier {
+   val AttributeRef[1] attribute;
+}
+class LinkedBy extends C2CModifier {
+   val AttributeRef[1] attribute;
+   ref MatchedElement[1] linkedElement;
+}
+class EqualityFilter extends C2CModifier {
+   val AttributeRef[1] attribute;
+   attr String[1] filter;
+}
+
+abstract class Operator extends dep.LocatedElement  { }
+class Split extends Operator {
+	val ClassMapping[*] mappings;	    
+}
+
+class Join extends Operator {
+   val ClassMapping[*] mappings;
+}
+
+
+// Weird this Feature2Feature inheritace
+class Attribute2Attribute extends Feature2Feature, AttributeRightPart {
+   attr MappingCardinality[1] cardinality;
+
+   ref Class2Class[0..1]#scopedAttributes context;
+
+   // val AttributeRef[+] left;
+   val AttributeRef[+] right;
+
+   val AttributeModifier[*] modifiers;
+}
+
+
+class Reference2Reference extends Feature2Feature {
+   attr MappingCardinality[1] cardinality;
+
+   val ReferenceRef[*] left;
+   val ReferenceRef[+] right;
+
+   // TODO: RESOLVER DEBE SER EXPLICITO?
+   attr String[0..1] resolverName;
+}
+
+/* BEGIN-OF Modifiers */
+enum MappingCardinality {
+   OneToOne = 0;
+   NToOne   = 1;
+   OneToN   = 2;      
+}
+
+abstract class Modifier { }
+abstract class AttributeModifier extends Modifier { }
+
+class ConvertModifier extends AttributeModifier {
+	attr String[1] converter;  
+}
+
+abstract class DefaultValue extends AttributeModifier { }
+class IntDefaultValue extends DefaultValue {
+   attr Integer[1] defaultValue;
+} 
+
+
+/* END-OF Modifiers */
+
+
+/* BEGIN-OF Metamodel refs */
+	/*
+	class ClassDef {	  
+	  attr String[1] className;
+	}
+	*/
+
+	abstract class MetamodelElementRef { }
+	
+	class ClassRef extends MetamodelElementRef {	  
+	  ref dep.ClassUse[1] klass;
+	}
+	
+	// Making FeatureRef inherit from Feature2Feature is a trick to
+	// allow this xText rule... (in the meta-compiler template language)
+	/*
+FeatureMapping returns mappings::Feature2Feature:
+	FeatureRef (
+		('=' {mappings::AttributeMapping.leftFeature = current}  rightPart=AttributeRightPart) 
+	|
+		('<-' {mappings::AttributeMapping.leftFeature = current} right+=ReferenceRef)
+	)
+;
+	
+	*/
+	class FeatureRef extends MetamodelElementRef, Feature2Feature {
+	  ref MatchedElement[1] referredElement;  
+	  attr String[1] featureName;
+	  attr boolean[1] multivalued = false;	   
+	}
+	
+	class AttributeRef extends MetamodelElementRef {
+	  ref MatchedElement[1] referredElement;  
+	  attr String[1] featureName;
+	  attr boolean[1] multivalued = false;
+	}
+	
+	class ReferenceRef extends MetamodelElementRef {
+	  ref MatchedElement[1] referredElement;
+	  attr String[1] featureName;
+	 attr boolean[1] multivalued = false;
+	}
+/* END-OF Metamodel refs */

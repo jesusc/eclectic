@@ -1,0 +1,75 @@
+api bcel described by "http://bcel"
+
+generic mapper test.bcel.BcelMapper
+
+metaclass JavaClass to org.apache.bcel.classfile.JavaClass {
+	empty constructor  // I should have something like "readonly" o "no-constructor"
+
+	attr name : String
+		get method getClassName() : java.lang.String
+	
+	ref methods*: Method
+		get method getMethods() : Array<Method>
+
+	ref fields*: Field
+		get method getFields() : Array<Field>
+
+	ref superclass: JavaClass
+		get method getSuperClass() : JavaClass
+	
+}
+
+metaclass Method to org.apache.bcel.classfile.Method {
+	empty constructor 
+
+	attr name     : String  get method getName() : java.lang.String
+	attr isStatic : Boolean get method isStatic() : boolean
+	attr isFinal  : Boolean get method isFinal() : boolean	
+	attr isAbstract : Boolean get method isAbstract() : boolean
+
+}
+
+metaclass Field to org.apache.bcel.classfile.Field {
+	empty constructor 
+
+	attr name     : String  get method getName() : java.lang.String
+	attr isStatic : Boolean get method isStatic() : boolean
+	attr isFinal  : Boolean get method isFinal() : boolean	
+
+	attr accessFlags : AccessFlags
+		get method getAccessFlags() : AccessFlags	
+
+    attr isPrimitive : Boolean
+		get generic isFieldPrimitive() : boolean
+
+	ref refType : JavaClass 
+		get generic getFieldType() : org.apache.bcel.classfile.JavaClass
+		
+	// refType should be called only when isPrimitive == false
+}
+
+metaclass Type to org.apache.bcel.^generic.Type {
+	empty constructor
+}
+
+// extends Type
+metaclass BasicType to org.apache.bcel.^generic.BasicType {
+	empty constructor
+	attr name     : String  get method getSignature() : java.lang.String	
+}
+
+metaclass ObjectType to org.apache.bcel.^generic.ObjectType {
+	empty constructor
+	attr name     : String  get method getSignature() : java.lang.String	
+}
+// problema para transformar object type a Java class -> ligados por nombre
+
+
+metaclass AccessFlags to org.apache.bcel.classfile.AccessFlags {
+	empty constructor 
+
+	attr isPublic    : Boolean get method isPublic() : boolean	
+	attr isPrivate   : Boolean get method isPrivate() : boolean
+	attr isProtected : Boolean get method isProtected() : boolean
+
+}

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<uml:Model xmi:version="2.1" xmlns:xmi="http://schema.omg.org/spec/XMI/2.1" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:uml="http://www.eclipse.org/uml2/3.0.0/UML" xmi:id="_y6GX4Dg2EeGympW-8WiyVQ" name="Model">
+  <packagedElement xmi:type="uml:Class" xmi:id="_AxuPADg3EeGympW-8WiyVQ" name="Bank">
+    <ownedAttribute xmi:id="_MQta0Dg3EeGympW-8WiyVQ" name="customer" type="_FlJhwDg3EeGympW-8WiyVQ" association="_MQxsQDg3EeGympW-8WiyVQ">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_MQta0Tg3EeGympW-8WiyVQ" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_MQta0jg3EeGympW-8WiyVQ" value="1"/>
+    </ownedAttribute>
+    <ownedAttribute xmi:id="_aijIwDg3EeGympW-8WiyVQ" name="name" visibility="public" type="_wWq3kEc5EeGztKzkkURVpA">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_cSaj4Dg3EeGympW-8WiyVQ" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_cSA7QDg3EeGympW-8WiyVQ" value="1"/>
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_cSrCkDg3EeGympW-8WiyVQ">
+        <value xsi:nil="true"/>
+      </defaultValue>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_FlJhwDg3EeGympW-8WiyVQ" name="Customer">
+    <ownedAttribute xmi:id="_hwqf0Dg4EeGKKplqIp2J4g" name="fullName" visibility="public" type="_wWq3kEc5EeGztKzkkURVpA">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_j9kcQDg4EeGKKplqIp2J4g" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_j9j1MDg4EeGKKplqIp2J4g" value="1"/>
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_j9kcQTg4EeGKKplqIp2J4g">
+        <value xsi:nil="true"/>
+      </defaultValue>
+    </ownedAttribute>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Class" xmi:id="_GVq_wDg3EeGympW-8WiyVQ" name="Account">
+    <ownedAttribute xmi:id="_lKPqwDg4EeGKKplqIp2J4g" name="number" visibility="public" type="_mAxawUc5EeGztKzkkURVpA">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_mknXADg4EeGKKplqIp2J4g" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_mkmv8Dg4EeGKKplqIp2J4g" value="1"/>
+      <defaultValue xmi:type="uml:LiteralString" xmi:id="_mkpzQDg4EeGKKplqIp2J4g">
+        <value xsi:nil="true"/>
+      </defaultValue>
+    </ownedAttribute>
+    <ownedOperation xmi:id="_EaGQ0UmDEeGYqKEUvuGNaw" name="getCash">
+      <ownedParameter xmi:id="_HhBlgEmDEeGYqKEUvuGNaw" type="_-_8_sEc6EeGztKzkkURVpA" direction="return"/>
+      <ownedParameter xmi:id="_OhG9EEmDEeGYqKEUvuGNaw" name="amount" type="_mAxawUc5EeGztKzkkURVpA"/>
+    </ownedOperation>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_MQxsQDg3EeGympW-8WiyVQ" name="bank_customer_0" memberEnd="_MQxsQTg3EeGympW-8WiyVQ _MQta0Dg3EeGympW-8WiyVQ">
+    <ownedEnd xmi:id="_MQxsQTg3EeGympW-8WiyVQ" name="bank" type="_AxuPADg3EeGympW-8WiyVQ" association="_MQxsQDg3EeGympW-8WiyVQ">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_MQxsQjg3EeGympW-8WiyVQ" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_MQxsQzg3EeGympW-8WiyVQ" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:Association" xmi:id="_NyOQ4Dg3EeGympW-8WiyVQ" name="customer_account_0" memberEnd="_NyOQ4Tg3EeGympW-8WiyVQ _NyLNkDg3EeGympW-8WiyVQ">
+    <ownedEnd xmi:id="_NyOQ4Tg3EeGympW-8WiyVQ" name="customer" type="_FlJhwDg3EeGympW-8WiyVQ" association="_NyOQ4Dg3EeGympW-8WiyVQ">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_NyOQ4jg3EeGympW-8WiyVQ" value="1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_NyOQ4zg3EeGympW-8WiyVQ" value="1"/>
+    </ownedEnd>
+    <ownedEnd xmi:id="_NyLNkDg3EeGympW-8WiyVQ" name="account" type="_GVq_wDg3EeGympW-8WiyVQ" association="_NyOQ4Dg3EeGympW-8WiyVQ">
+      <upperValue xmi:type="uml:LiteralUnlimitedNatural" xmi:id="_NyLNkTg3EeGympW-8WiyVQ" value="-1"/>
+      <lowerValue xmi:type="uml:LiteralInteger" xmi:id="_NyL0oDg3EeGympW-8WiyVQ" value="1"/>
+    </ownedEnd>
+  </packagedElement>
+  <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_mAxawUc5EeGztKzkkURVpA" name="Integer"/>
+  <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_wWq3kEc5EeGztKzkkURVpA" name="String"/>
+  <packagedElement xmi:type="uml:PrimitiveType" xmi:id="_-_8_sEc6EeGztKzkkURVpA" name="Boolean"/>
+</uml:Model>

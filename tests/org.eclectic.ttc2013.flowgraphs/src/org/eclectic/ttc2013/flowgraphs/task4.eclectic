@@ -1,0 +1,102 @@
+eclectic task4 (dsl) -> (report)
+
+scripting task4_script(dsl, flow) -> (report)
+	
+	model inline
+		class FlowLink
+			ref source : _!String
+			ref target : _!String
+		end
+	end
+	
+	model queue mFlowInstr : flow!FlowInstr
+	model queue mControlFlowLink : dsl!ControlFlowLink
+	model queue mDataFlowLink    : dsl!DataFlowLink
+	
+	local queue flow_cfLinks : inline!FlowLink
+	local queue flow_dfLinks : inline!FlowLink
+
+	local queue dsl_cfLinks  : inline!FlowLink
+	local queue dsl_dfLinks  : inline!FlowLink
+	
+	segment find_flow_links
+
+		forall flow_instr from mFlowInstr
+			flow_instr.cfNext.each { |target|
+				lnk = inline!FlowLink.new			
+				lnk.source = flow_instr.txt
+				lnk.target = target.txt
+				emit lnk to flow_cfLinks
+			}
+
+			flow_instr.dfNext.each { |target|
+				lnk = inline!FlowLink.new			
+				lnk.source = flow_instr.txt
+				lnk.target = target.txt
+				emit lnk to flow_dfLinks
+			}			
+		end
+
+		forall control_flow from mControlFlowLink
+			lnk = inline!FlowLink.new			
+			lnk.source = control_flow.left
+			lnk.target = control_flow.right
+			emit lnk to dsl_cfLinks
+		end
+		
+		forall data_flow from mDataFlowLink
+			lnk = inline!FlowLink.new			
+			lnk.source = data_flow.left
+			lnk.target = data_flow.right
+			emit lnk to dsl_dfLinks
+		end
+		
+	end
+	
+	segment validate
+		check_false_link = { |type, lnk, dsl_links|
+			dsl_links.find { |cf| 
+				cf.left.eq(lnk.source).and(
+					cf.right.eq(lnk.target)
+				)
+			}.if_nil {
+				lnk.source.concat(' ==> ').concat(lnk.target).println(type.concat(" false link: "))
+			}			
+		}
+
+		dsl_expected_cfs = dsl!ControlFlowLink.all_instances		
+		dsl_expected_dfs = dsl!DataFlowLink.all_instances
+
+		// For any cfNext or dfNext link in the model, it has to check
+		// if it is also defined in the specification.
+		forall cfLink from flow_cfLinks
+			check_false_link.call('Control', cfLink, dsl_expected_cfs)
+		end
+		
+		forall dfLink from flow_dfLinks
+			check_false_link.call('Data', dfLink, dsl_expected_dfs)
+		end
+
+
+		// Check that every link in the specification occurs in the flow graph
+		flow_instrs = flow!FlowInstr.all_instances		
+
+		check_missing_link = { |type, lnk, featureName|
+			flow_instrs.find { |fi| 
+				fi.txt.eq(lnk.source).and(fi.get(featureName).map { |n| n.txt }.include(lnk.target))
+			}.if_nil {
+				lnk.source.concat(' ==> ').concat(lnk.target).println(type.concat(" missing link: "))
+			}			
+		}
+
+		forall dsl_cfLink from dsl_cfLinks
+			check_missing_link.call('Control', dsl_cfLink, 'cfNext')
+		end
+		
+		forall dsl_dfLink from dsl_dfLinks
+			check_missing_link.call('Data', dsl_dfLink, 'dfNext')
+		end
+		
+	end
+
+end

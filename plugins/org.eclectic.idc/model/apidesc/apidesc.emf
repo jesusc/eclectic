@@ -1,0 +1,151 @@
+@namespace(uri="http://eclectic.org/apidesc", prefix="apidesc_mm")
+package apidesc;
+
+// There would be a compilation process from high-level mapping definition
+// (that has facilities such as api2mol) to this
+
+class ApiDescription {
+	attr String[1] apiName;
+	attr String[1] metamodelName;
+	
+	attr String[0..1] mapperClassName;
+	
+	val ClassMapping[*] classMappings;
+	val DeclaredElement[*] declaredElements;
+}
+
+abstract class ClassMapping { }
+
+class SimpleClassMapping extends ClassMapping{
+   attr String[1] metaclassName;
+   attr String[1] canonicalClassName;
+
+   val FeatureMapping[*] featureMappings;
+   val CreationMechanism[1] creation;
+}
+
+abstract class CreationMechanism {  
+   val Statement[*] statement;
+}
+
+abstract class Statement {
+   
+}
+
+class SetFeature extends Statement {
+   ref FeatureMapping[1] feature; 
+   attr ReturnKind[1] valueKind;
+   attr String[0..1] strValue;
+   attr int[0..1] intValue;
+   attr boolean[0..1] boolValue;
+   // and so on... for instance, empty array
+}
+
+
+
+class Constructor extends CreationMechanism {
+ 	// currently empty constructor  
+    ref FeatureMapping[*] parameters;
+}
+
+
+abstract class FeatureMapping {
+   attr String[1] featureName;   
+   
+   attr String[0..1] constructorType;
+  
+   val SetMechanism[0..1] setMethod;
+   val GetMechanism[0..1] getMethod;
+
+   // This is if the features is seen as multivalued
+   attr boolean[1] isMultivalued = false;
+}
+
+abstract class SetMechanism {
+}
+class SimpleSet extends SetMechanism {
+   val Method[1] setter; 
+}
+
+abstract class GetMechanism { }
+class SimpleGet extends GetMechanism {
+   attr String[0..1] debugName;
+   val Method[1] getter; 
+}
+
+class GenericGet extends SimpleGet { }
+class GenericSet extends SimpleSet { }
+
+enum ReturnKind {
+   SINGLE_OBJECT     = 0;
+   PRIMITIVE_INTEGER = 1;
+   PRIMITIVE_STRING  = 2;
+   PRIMITIVE_BOOLEAN = 3;
+   PRIMITIVE_DOUBLE  = 4;
+   PRIMITIVE_FLOAT   = 5;
+   ARRAY             = 6;
+   COLLECTION        = 7;  
+   VOID              = 8;
+}
+
+class Method {
+   attr String[1] name;
+   attr String[*] parameterTypes;
+   attr String[0..1] returnType;   
+   
+   attr Boolean[1] returnVoid = false;
+   attr Boolean[1] returnArray = false;
+   attr Boolean[1] returnCollection = false;
+   
+   // Not working well with xText...
+   // attr ReturnKind[1] returnKind = 0;
+}
+
+abstract class AttributeMapping extends FeatureMapping {
+	// attr PrimitiveType[1] type = 1;
+	attr String[1] type;
+}
+
+enum PrimitiveType {
+   PRIMITIVE_INTEGER = 1;
+   PRIMITIVE_STRING  = 2;
+   PRIMITIVE_BOOLEAN = 3;
+   PRIMITIVE_DOUBLE  = 4;
+   PRIMITIVE_FLOAT   = 5;
+}
+
+class SimpleAttributeMapping extends AttributeMapping {
+
+}
+
+class SimpleReferenceMapping extends FeatureMapping {
+	ref ClassMapping[1] type;
+}
+
+class DeclaredElement {
+   attr String[0..1] name;
+}
+
+@namespace(uri="http://eclectic.org/apidesc/patterns", prefix="apidesc_mm_patterns")
+package patterns {
+   class IteratorDescription extends DeclaredElement {       
+      attr String iteratorClass;
+      val Method[1] hasFinished;
+      val Method[1] nextElement;
+      val Method[0..1] currentElement;      
+   }
+   
+   class IteratorGetter extends GetMechanism {
+      val Method[1] getIterator;
+      ref IteratorDescription[1] iterator;
+   }
+
+   class ObserverDescription extends DeclaredElement {       
+      attr String observerClass;
+      val UpdateMethod[*] updateMethods;
+   }
+  
+   class UpdateMethod extends Method {
+      attr int[*] interest;
+   }
+}

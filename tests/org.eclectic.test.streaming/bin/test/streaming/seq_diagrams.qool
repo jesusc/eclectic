@@ -1,0 +1,182 @@
+qool dtrace2seq_diagrams(trc) -> (seq)
+trc : 'platform:/resource/org.eclectic.test.streaming/src/test/streaming/dtrace.streamdesc' // stream specification
+
+model rt 
+  class generic
+	ref s : _!Any
+	ref t : _!Any
+  end
+end 
+
+// Required for the allInstances!!
+model queue allInstancesMethodExecution : trc!MethodExecution
+
+ 
+model queue mLocalMethodExecution : trc!LocalExecution
+model queue mRemoteMethodExecution : trc!RemoteMethodExecution
+
+model queue mLocalInstance   : trc!LocalInstance
+model queue mRemoteInstance  : trc!RemoteInstance
+model queue mClass           : trc!Class
+
+local queue TraceQ : rt!generic with access-by s!
+
+ 
+segment ruleMethodExecutions	
+	unknown_class = seq!Class.new
+	unknown_class.name = "Unknown"
+
+	forall exec from mLocalMethodExecution
+		where exec.caller.is_nil.not
+		
+		msg = seq!Operation.new
+		msg.name = exec.methodName
+		
+		lnk = rt!generic.new
+		lnk.s = exec
+		lnk.t = msg
+		emit lnk to TraceQ
+		
+		caller_receptor_f = { exec.caller.receptor }
+		caller_receptor = caller_receptor_f.call
+		receptor        = exec.receptor
+
+		debug = {
+			"Local method call".println("")
+			exec.methodName.println("Method: ")
+			caller_receptor.println("Caller receptor: ")
+			receptor.println("Receptor: ")
+			"--".println("")	
+		}
+		// debug.call
+
+		resolve_bindings = {
+			// Source and target of the message
+			caller_receptor.is_nil.if_else({
+				unknown = seq!Instance.new
+				unknown.clazz = unknown_class
+				msg.sourceClassifier = unknown
+			}, {
+				msg.sourceClassifier = TraceQ[#kindOf(rt!generic), #p(s, caller_receptor)].t						
+			})
+	
+			
+			msg.targetClassifier = TraceQ[#kindOf(rt!generic), #p(s, receptor)].t
+
+			/*
+			// Compute the following messages
+			deal_with_next_executions = {		
+				next_executions = trc!MethodExecution.all_instances.select { |me|
+					me.caller.eq(exec).
+					and( me.timestamp.gt(exec.timestamp) )
+				}
+					
+				// next_executions.println("..")
+				
+				// use forall to attach a closure to the iteration of next_executions
+				mappedExecutions = next_executions.map { |me2|
+					retrieve_msg = TraceQ[#kindOf(rt!generic), #p(s, me2)].t
+					retrieve_msg
+				}
+	
+				msg.followingMessages = mappedExecutions
+			}
+			deal_with_next_executions.call
+			*/
+		}
+		resolve_bindings.call
+    end
+end
+
+segment remoteMethods
+
+	forall exec from mRemoteMethodExecution		
+		msg = seq!Operation.new
+		msg.name = exec.methodName
+
+		lnk = rt!generic.new
+		lnk.s = exec
+		lnk.t = msg
+		emit lnk to TraceQ
+		
+		remote_receptor_f = { exec.caller.caller.receptor }
+		remote_receptor = remote_receptor_f.call
+		receptor        = exec.receptor
+
+		debug = {
+			"Remote method call".println("")
+			exec.methodName.println("Method: ")
+			remote_receptor.println("Caller receptor: ")
+			receptor.println("Receptor: ")
+			"--".println("")
+
+		}
+		// debug.call
+
+	
+		// Source and target of the message
+		retrieve_traces = {
+			msg.sourceClassifier = TraceQ[#kindOf(rt!generic), #p(s, remote_receptor)].t								
+			msg.targetClassifier = TraceQ[#kindOf(rt!generic), #p(s, receptor)].t
+		}
+		retrieve_traces.call
+
+		// Compute following messages		
+		next_executions = trc!MethodExecution.all_instances.select { |me|
+			me.caller.eq(exec).
+			and( me.timestamp.gt(exec.timestamp) )
+		}
+		
+		// use forall to attach a closure to the iteration of next_executions
+		msg.followingMessages = next_executions.map { |me|
+			retrieve_msg = TraceQ[#kindOf(rt!generic), #p(s, me)].t
+			retrieve_msg
+		}
+		
+    end
+
+end
+
+
+segment ruleLocalInstance
+	forall li from mLocalInstance
+		ins = seq!Instance.new
+		ins.objectId = li.objectId
+	
+		lnk = rt!generic.new
+		lnk.s = li
+		lnk.t = ins
+		emit lnk to TraceQ
+		
+		ins.clazz = TraceQ[#kindOf(rt!generic), #p(s, li.clazz)].t		
+        ins.debugName = li.clazz.name.concat("-") //.concat(li.objectId)
+	end
+end
+
+segment ruleRemoteInstance
+	forall ri from mRemoteInstance
+		ins = seq!Instance.new
+		ins.objectId = ri.objectId
+	
+		lnk = rt!generic.new
+		lnk.s = ri
+		lnk.t = ins
+		emit lnk to TraceQ
+
+		ins.clazz = TraceQ[#kindOf(rt!generic), #p(s, ri.clazz)].t
+        ins.debugName = ri.clazz.name.concat("-") //.concat(ri.objectId)
+	end
+end
+
+
+segment ruleClass
+	forall sc from mClass
+		tc = seq!Class.new
+		tc.name = sc.name
+	
+		lnk = rt!generic.new
+		lnk.s = sc
+		lnk.t = tc
+		emit lnk to TraceQ
+	end
+end

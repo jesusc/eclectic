@@ -1,0 +1,30 @@
+stream dtrace for "http://eclectic.org/streaming/dynamic_trace"
+
+// Keys
+key(Class) = name
+key(LocalInstance) = objectId
+
+/*
+key(LocalExecution) = methodName
+key(RemoteCall) = methodName
+key(RemoteMethodExecution) = methodName // TODO: NEED MULTIPLE KEYS
+*/
+
+key(LocalExecution) = debugId
+key(RemoteCall) = debugId
+key(RemoteMethodExecution) = debugId
+
+// Windows
+sliding for LocalExecution        = 500 elements 
+sliding for RemoteMethodExecution = 300 elements
+sliding for MethodExecution       = 800 elements 
+
+sliding for Class          = 100 elements 
+sliding for LocalInstance  = 200 elements 
+
+
+ 
+//sliding(MethodExecution) = 200 secs
+
+// Fragment
+// cross(LocalExecution.caller 

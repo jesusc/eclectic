@@ -1,0 +1,49 @@
+@namespace(uri="http://eclectic.org/streamdesc", prefix="streamdesc_mm")
+package streamdesc;
+
+class StreamDescription {
+	attr String[1] streamName;
+	attr String[1] metamodelName;
+	
+	val KeySpec[*] keys;
+	val SlidingWindow[*] windows;
+}
+
+abstract class SlidingWindow {
+   attr String[1] className;
+}
+
+class ElementSlidingWindow extends SlidingWindow {
+   attr int[1] elements;
+}
+
+class TimeSlidingWindow extends SlidingWindow  {
+   attr int[1] seconds;   
+}
+
+class KeySpec {
+   attr String[1] className;
+   attr String[1] featureName;
+}
+
+@namespace(uri="http://eclectic.org/streamdesc/runtime", prefix="streamdesc_runtime_mm")
+package runtime {
+   class StreamedFragment {
+      attr long[1] timestamp;
+      val EObject[*] elements;
+	  ref EObject[*] nonProxyElements;
+	  ref EObject[*] proxyElements;	  
+      val Annotation[*] annotations;
+   }
+   
+   abstract class Annotation {
+      ref EObject[1] object;
+   }
+   
+   class IsProxyAnnotation extends Annotation {
+		ref EObject[1] referenceSource;  
+        attr String[1] referenceName;
+   }
+   
+}
+

@@ -1,0 +1,152 @@
+Model TextualSyntax {
+  abstract Node SyntaxElement {
+    name        : String;
+    propagates  : boolean; 				// whether this declaration propagates down the different meta-levels... 
+    
+    // tempExp     : String[*] {ordered};
+    tempExp : TempExp[1];
+    
+    
+    creationExp : String[*] {ordered};
+    potency     : int = 1;       
+  }
+  
+  abstract Node TempExp {
+    elements : TempExpElement[*] {ordered};
+  }  
+
+  Node AndTempExp : TempExp {
+  }
+  Node OrTempExp : TempExp {
+  }
+
+
+  abstract Node TempExpElement { 
+  	 syntaxId : String[0..1];
+  }
+  
+  Node TokenElement : TempExpElement {
+	token : String[1];  
+  }
+  
+  Node TemplateRefElement : TempExpElement {
+	featureName  : String[1];
+	templateName : String[0..1]; // this is here to facilitate bootstrapping
+	template_ : TContainer[1];  // to allow references to enum templates
+  }
+  
+  Node GroupElement : TempExpElement {
+     tempExp : TempExp[1];
+     // kind : GroupKind[1];
+     kind : String[1];
+  }
+
+  enum GroupKind { star, plus, optional }
+
+  Node FieldElement : TempExpElement {
+       fieldName : String[1];  
+  }
+
+  // Begin-of Reserved elements (linguistic layer)
+  Node IdReservedElement : TempExpElement { }  
+  Node ImportsReservedElement  : TempExpElement { }  
+  Node TypeReservedElement     : TempExpElement { }  
+  Node TypeNameReservedElement : TempExpElement { }  
+  Node FieldLingExtReservedElement : TempExpElement { }  
+  Node LingExtsReservedElement  : TempExpElement { }  
+  Node LingInstsReservedElement : TempExpElement { }  
+  Node FieldLingInstsReservedElement : TempExpElement { }  
+  Node SupersReservedElement      : TempExpElement { }  
+  Node CardinalityReservedElement : TempExpElement { }  
+  Node ConstraintsReservedElement : TempExpElement { }     
+  // End-of Reserved
+  
+  abstract Node TContainer : SyntaxElement {
+    lrefs : TReference[*];
+    actionRules : ActionRule[*] { ordered } ;
+    overridenTemplate : TContainer;
+  }
+
+  Node TModel[1] : TContainer {    
+    refModel : String; // poor's man approach: we do not have references to models...
+    elements : SyntaxElement[*];
+  }
+  
+  Node TNode : TContainer {
+    refNode : Node;
+  }
+  
+  Node TEnum : TContainer {
+    refNode : Node;
+    cases   : EnumCase[1..*];
+  }
+  
+  Node EnumCase {
+    token : String;
+    strValue : String; // So far only strings 
+  }
+  
+  Node TExtra : SyntaxElement {
+  }
+  
+  Node TField : SyntaxElement {			// How fields should be instantiated
+    refNode : Node;
+    refName : String;
+  }
+  
+  Node TReference : TField {			// how references should be instantiated...
+  }
+      
+
+  //   
+  // Begin-of Actions
+  //
+  
+  abstract Node ActionRule {
+  }
+
+  // An action rule that is executed just after a syntactic element of the template is processed.   
+  Node ElementActionRule : ActionRule {
+  	element : TempExpElement[1];
+  	elementId : String[0..1]; // until we have scoped resolution  	  
+  
+    action : Action[1];
+  }  
+  
+  abstract Node Action { }
+  
+  Node SetAttribute : Action {
+    featureName : String;
+    
+  	strValue : String[0..1];
+  	intValue : int[0..1];
+  } 
+  
+  Node StringIsId : Action {
+  }
+
+  Node FieldRedefinedBy : Action {
+    newFeatureName : String;
+  }
+
+  //   
+  // End-of Actions
+  //
+  
+      
+  enum CommentType { singleline, multiline, none }
+  enum StringType { singleQuote, doubleQuote }
+  
+  //comments : CommentType;
+  //strings  : StringType;
+  chars    : boolean;
+  permitsExtension 		: boolean = false;
+  genPackage 			: String = "serializers"; 		    	// name of the package in which code will be generated
+  fileExtension 		: String="";			// file extension associated with the grammar
+  permitsLoad 			: boolean = true;		// whether we want to be able to write "load 'pp'" -> and generate support for loading...
+  flingInstTerminator 	: String=";";			// The terminator of field linguistic instances
+  flingExtTerminator    : String=";";			// The terminator of field linguistic extensions
+  
+  backtracking : boolean = true;
+  parserCompiler : String = "default";
+}

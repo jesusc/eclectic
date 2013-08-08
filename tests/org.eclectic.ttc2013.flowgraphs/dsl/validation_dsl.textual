@@ -1,0 +1,22 @@
+load "validation_dsl"
+
+Syntax ValidationDSLSyntax for ValidationDSL [ ".validate" ] { 
+   permitsLoad = false;
+   backtracking = false;
+   
+   model template ValidationDSL@1 for "ValidationDSL" 
+   		"validate" ^Id 
+   			(_:ControlFlowLinkTemplate)*
+   			(_:DataFlowLinkTemplate)*
+   		;
+   
+   
+   node template ControlFlowLinkTemplate@1 for ControlFlowLink
+   		"cfNext" ":" #left "-->" #right 
+   		;
+
+   node template DataFlowLinkTemplate@1 for DataFlowLink
+   		"dfNext" ":" #left "-->" #right 
+   		;
+	
+}

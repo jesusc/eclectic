@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ <copyright>
+ </copyright>
+
+ $Id$
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://eclectic.org/idc"
+            class="org.eclectic.idc.IdcPackage"
+            genModel="model/idc/idc.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://eclectic.org/idc/core"
+            class="org.eclectic.idc.core.CorePackage"
+            genModel="model/idc/idc.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://eclectic.org/idc/mappings"
+            class="org.eclectic.idc.mappings.MappingsPackage"
+            genModel="model/idc/idc.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://eclectic.org/idc/instructions"
+            class="org.eclectic.idc.instr.InstrPackage"
+            genModel="model/idc/idc.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://eclectic.org/idc/scheduling"
+            class="org.eclectic.idc.scheduling.SchedulingPackage"
+            genModel="model/idc/idc.genmodel"/>
+   </extension>
+   <extension
+         point="org.eclipse.emf.ecore.generated_package">
+      <package
+            class="org.eclectic.idc.qool.QoolPackage"
+            genModel="model/idc/idc.genmodel"
+            uri="http://eclectic.org/idc/qool">
+      </package>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://eclectic.org/ecl_meta"
+            class="org.eclectic.idc.ecl_meta.Ecl_metaPackage"
+            genModel="model/idc/idc.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://eclectic.org/apidesc"
+            class="org.eclectic.apidesc.ApidescPackage"
+            genModel="model/apidesc/apidesc.genmodel"/>
+   </extension>
+   
+   
+   <extension
+         point="org.eclipse.emf.ecore.factory_override">
+      <factory
+            class="org.eclectic.idc.core.jvmgen.CoreFactoryJVMGen"
+            uri="http://eclectic.org/idc/core">
+      </factory>
+      <factory
+            class="org.eclectic.idc.instr.jvmgen.InstrFactoryJVMGen"
+            uri="http://eclectic.org/idc/instructions">
+      </factory>
+      <factory
+            class="org.eclectic.idc.qool.jvmgen.QoolFactoryJVMGen"
+            uri="http://eclectic.org/idc/qool">
+      </factory>
+      <factory
+            class="org.eclectic.idc.scheduling.jvmgen.SchedulingFactoryJVMGen"
+            uri="http://eclectic.org/idc/scheduling">
+      </factory>
+      <factory
+            class="org.eclectic.apidesc.jvmgen.ApidescFactoryJVMGen"
+            uri="http://eclectic.org/apidesc">
+      </factory>
+   </extension>
+
+</plugin>

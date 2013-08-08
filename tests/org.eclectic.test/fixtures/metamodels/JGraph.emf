@@ -1,0 +1,23 @@
+@namespace(uri="http://org.eclectic/jgraph", prefix="jgraph_mm")
+package JGraph;
+
+class Graph {
+   val Cell[*] cells;
+}
+
+class Cell {
+   attr String[1] ~id;
+   attr String[1] value;
+   attr String[1] style;
+   attr boolean[1] vertex = false;
+   attr boolean[1] edge = false;
+   
+   val Geometry[1] geometry;
+   ref Cell[0..1] source;
+   ref Cell[0..1] target;
+}
+
+class Geometry {
+   attr double[1] width;
+   attr double[1] height;   
+}

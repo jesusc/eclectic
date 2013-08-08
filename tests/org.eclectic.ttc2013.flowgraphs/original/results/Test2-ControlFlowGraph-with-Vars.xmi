@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowgraph="http://flowgraph/1.0">
+  <flowgraph:Method txt="testMethod()" cfNext="/0/@stmts.0" def="/2">
+    <stmts xsi:type="flowgraph:SimpleStmt" txt="int i = a * 2;" cfNext="/0/@stmts.1/@expr" cfPrev="/0" def="/1" use="/2"/>
+    <stmts xsi:type="flowgraph:Loop" txt="while">
+      <expr txt="i > a" cfNext="/0/@stmts.1/@body/@stmts.0/@expr /0/@exit" cfPrev="/0/@stmts.0 /0/@stmts.1/@body/@stmts.1 /0/@stmts.1/@body/@stmts.0/@else/@then/@stmts.0" use="/1 /2"/>
+      <body xsi:type="flowgraph:Block" txt="\{...\}">
+        <stmts xsi:type="flowgraph:If" txt="if">
+          <expr txt="a &lt; 1" cfNext="/0/@stmts.1/@body/@stmts.0/@then/@stmts.0 /0/@stmts.1/@body/@stmts.0/@else/@expr" cfPrev="/0/@stmts.1/@expr" use="/2"/>
+          <then xsi:type="flowgraph:Block" txt="\{...\}">
+            <stmts xsi:type="flowgraph:Return" txt="return;" cfNext="/0/@exit" cfPrev="/0/@stmts.1/@body/@stmts.0/@expr"/>
+          </then>
+          <else xsi:type="flowgraph:If" txt="if">
+            <expr txt="a == 0" cfNext="/0/@stmts.1/@body/@stmts.0/@else/@then/@stmts.0 /0/@stmts.1/@body/@stmts.1" cfPrev="/0/@stmts.1/@body/@stmts.0/@expr" use="/2"/>
+            <then xsi:type="flowgraph:Block" txt="\{...\}">
+              <stmts xsi:type="flowgraph:Continue" txt="continue;" cfNext="/0/@stmts.1/@expr" cfPrev="/0/@stmts.1/@body/@stmts.0/@else/@expr"/>
+            </then>
+          </else>
+        </stmts>
+        <stmts xsi:type="flowgraph:SimpleStmt" txt="i++;" cfNext="/0/@stmts.1/@expr" cfPrev="/0/@stmts.1/@body/@stmts.0/@else/@expr" def="/1" use="/1"/>
+      </body>
+    </stmts>
+    <exit txt="Exit" cfPrev="/0/@stmts.1/@body/@stmts.0/@then/@stmts.0 /0/@stmts.1/@expr"/>
+  </flowgraph:Method>
+  <flowgraph:Var txt="i" definers="/0/@stmts.0 /0/@stmts.1/@body/@stmts.1" users="/0/@stmts.1/@expr /0/@stmts.1/@body/@stmts.1"/>
+  <flowgraph:Param txt="a" definers="/0" users="/0/@stmts.0 /0/@stmts.1/@expr /0/@stmts.1/@body/@stmts.0/@expr /0/@stmts.1/@body/@stmts.0/@else/@expr"/>
+</xmi:XMI>

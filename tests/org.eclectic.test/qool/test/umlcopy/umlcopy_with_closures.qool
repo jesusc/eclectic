@@ -1,0 +1,89 @@
+qool umlcopy_with_qool(in) -> (out)
+
+model rt 
+  class class2class 
+	attr s :  in!Class 
+	attr t : out!Class 
+  end
+
+  class attr2attr 
+	attr s :  in!Attribute 
+	attr t : out!Attribute 
+  end
+end 
+
+// local queue traceQ : core_!Object
+local queue traceQ : in!Object__ // THIS IS JUST A TEMPORARY TRICK, I NEED TO FIND A GOOD WAY OF DOING THIS!
+local queue qClass : in!Class
+local queue qAttr : in!Attr
+
+model queue mClass : in!Class
+model queue mAttr  : in!Attribute
+
+segment findClasses // : pattern
+ 	forall c1 from mClass
+		emit c1 to qClass
+	end
+end
+
+segment attribute2attribute 
+forall src from mAttr
+  
+  tgt2 = out!Attribute.new
+
+  tgt2.name = src.name 
+
+  trace2 = rt!attr2attr.new
+  trace2.s = src
+  trace2.t = tgt2 
+
+  emit trace2 to traceQ
+  
+  // p*(s, src)]... multiple matching
+  trace_type = traceQ[ #kindOf(rt!class2class), #p(s, src.type)]
+  trace_type.println("caca")
+end
+end
+
+
+segment class2class // : rule
+forall c1 from qClass 
+
+  tgt   = out!Class.new   
+  tgt.name = c1.name
+  
+  trace = rt!class2class.new
+  trace.s = c1
+  trace.t = tgt 
+
+  f = out!Attribute.new
+  f.name = "caca"
+  tgt.features = f
+trace.println("trace")
+  emit trace to traceQ
+
+  forall attrTrace from traceQ
+         where c1.features.include(attrTrace.s)
+  
+     tgt.features = attrTrace.t
+        
+//    attrTrace.println("xxxxx")
+//    attrTrace.t.println("...")
+//    tgt.println("---")
+    //tgt.name = "xxx"
+    
+    
+  end
+  
+end
+end 
+
+
+
+// xtext scopes!
+// http://blog.efftinge.de/2009/01/xtext-scopes-and-emf-index.html
+
+// How could i possibly support rule inheritance in qool?????
+
+// pattern rule communication could be another queue
+

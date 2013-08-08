@@ -1,0 +1,20 @@
+@namespace(uri="http://www.modelum.es/eclectic/test/professor1", prefix="professor1")
+package Professor1;
+
+class Model {
+   val Professor[*] professors;   
+   val Publication[*] publications;
+}
+
+class Professor {
+   attr String name;
+   attr String[0..1] dateOfBirth; // TODO: IT SHOULD BE DATE
+   attr int[1] salary;
+   ref Publication[*] publications;
+}
+
+class Publication {
+	
+      attr String name;
+      attr String[1] type;
+}

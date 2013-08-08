@@ -1,0 +1,21 @@
+qool reflective_metadepth(in) -> (out)
+
+model rt 
+  class generic 
+	ref s : _!Any 
+	ref t : _!Any 
+  end
+end 
+
+local queue traceQ : _!Any
+
+model queue mProduct : in!Product
+
+segment allProducts
+  forall p from mProduct
+  	cb = out!CheckButton.new
+    cb.name = p.name //.concat("_cbutton")
+  end
+end
+
+

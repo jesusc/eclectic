@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jardesc>
+    <jar path="/tmp/eclectic.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/modelum.eclectic.frontend/desc.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="true" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="true" exportOutputFolder="false">
+        <javaElement handleIdentifier="=modelum.eclectic.scala"/>
+        <javaElement handleIdentifier="=modelum.eclectic.compiler"/>
+        <javaElement handleIdentifier="=modelum.eclectic.frontend.syntax"/>
+        <javaElement handleIdentifier="=modelum.eclectic.emf"/>
+        <file path="/ContinuationSupport/.classpath"/>
+        <file path="/ContinuationSupport/.project"/>
+        <javaElement handleIdentifier="=modelum.eclectic.frontend"/>
+        <javaElement handleIdentifier="=ContinuationSupport/src"/>
+        <folder path="/ContinuationSupport/lib"/>
+        <javaElement handleIdentifier="=modelum.eclectic.frontend.syntax.koan.ui"/>
+    </selectedElements>
+</jardesc>

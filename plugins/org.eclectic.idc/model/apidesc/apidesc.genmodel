@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclectic.idc/src-gen"
+    modelPluginID="org.eclectic.idc" modelName="Apidesc" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false">
+  <foreignModel>apidesc.ecore</foreignModel>
+  <genPackages prefix="Apidesc" basePackage="org.eclectic" disposableProviderFactory="true"
+      ecorePackage="apidesc.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="apidesc.ecore#//ReturnKind">
+      <genEnumLiterals ecoreEnumLiteral="apidesc.ecore#//ReturnKind/SINGLE_OBJECT"/>
+      <genEnumLiterals ecoreEnumLiteral="apidesc.ecore#//ReturnKind/PRIMITIVE_INTEGER"/>
+      <genEnumLiterals ecoreEnumLiteral="apidesc.ecore#//ReturnKind/PRIMITIVE_STRING"/>
+      <genEnumLiterals ecoreEnumLiteral="apidesc.ecore#//ReturnKind/PRIMITIVE_BOOLEAN"/>
+      <genEnumLiterals ecoreEnumLiteral="apidesc.ecore#//ReturnKind/PRIMITIVE_DOUBLE"/>
+      <genEnumLiterals ecoreEnumLiteral="apidesc.ecore#//ReturnKind/PRIMITIVE_FLOAT"/>
+      <genEnumLiterals ecoreEnumLiteral="apidesc.ecore#//ReturnKind/ARRAY"/>
+      <genEnumLiterals ecoreEnumLiteral="apidesc.ecore#//ReturnKind/COLLECTION"/>
+      <genEnumLiterals ecoreEnumLiteral="apidesc.ecore#//ReturnKind/VOID"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="apidesc.ecore#//PrimitiveType">
+      <genEnumLiterals ecoreEnumLiteral="apidesc.ecore#//PrimitiveType/PRIMITIVE_INTEGER"/>
+      <genEnumLiterals ecoreEnumLiteral="apidesc.ecore#//PrimitiveType/PRIMITIVE_STRING"/>
+      <genEnumLiterals ecoreEnumLiteral="apidesc.ecore#//PrimitiveType/PRIMITIVE_BOOLEAN"/>
+      <genEnumLiterals ecoreEnumLiteral="apidesc.ecore#//PrimitiveType/PRIMITIVE_DOUBLE"/>
+      <genEnumLiterals ecoreEnumLiteral="apidesc.ecore#//PrimitiveType/PRIMITIVE_FLOAT"/>
+    </genEnums>
+    <genClasses ecoreClass="apidesc.ecore#//ApiDescription">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute apidesc.ecore#//ApiDescription/apiName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute apidesc.ecore#//ApiDescription/metamodelName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute apidesc.ecore#//ApiDescription/mapperClassName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference apidesc.ecore#//ApiDescription/classMappings"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference apidesc.ecore#//ApiDescription/declaredElements"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="apidesc.ecore#//ClassMapping"/>
+    <genClasses ecoreClass="apidesc.ecore#//SimpleClassMapping">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute apidesc.ecore#//SimpleClassMapping/metaclassName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute apidesc.ecore#//SimpleClassMapping/canonicalClassName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference apidesc.ecore#//SimpleClassMapping/featureMappings"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference apidesc.ecore#//SimpleClassMapping/creation"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="apidesc.ecore#//CreationMechanism">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference apidesc.ecore#//CreationMechanism/statement"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="apidesc.ecore#//Statement"/>
+    <genClasses ecoreClass="apidesc.ecore#//SetFeature">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference apidesc.ecore#//SetFeature/feature"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute apidesc.ecore#//SetFeature/valueKind"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute apidesc.ecore#//SetFeature/strValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute apidesc.ecore#//SetFeature/intValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute apidesc.ecore#//SetFeature/boolValue"/>
+    </genClasses>
+    <genClasses ecoreClass="apidesc.ecore#//Constructor">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference apidesc.ecore#//Constructor/parameters"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="apidesc.ecore#//FeatureMapping">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute apidesc.ecore#//FeatureMapping/featureName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute apidesc.ecore#//FeatureMapping/constructorType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference apidesc.ecore#//FeatureMapping/setMethod"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EReference apidesc.ecore#//FeatureMapping/getMethod"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute apidesc.ecore#//FeatureMapping/isMultivalued"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="apidesc.ecore#//SetMechanism"/>
+    <genClasses ecoreClass="apidesc.ecore#//SimpleSet">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference apidesc.ecore#//SimpleSet/setter"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="apidesc.ecore#//GetMechanism"/>
+    <genClasses ecoreClass="apidesc.ecore#//SimpleGet">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute apidesc.ecore#//SimpleGet/debugName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference apidesc.ecore#//SimpleGet/getter"/>
+    </genClasses>
+    <genClasses ecoreClass="apidesc.ecore#//GenericGet"/>
+    <genClasses ecoreClass="apidesc.ecore#//GenericSet"/>
+    <genClasses ecoreClass="apidesc.ecore#//Method">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute apidesc.ecore#//Method/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute apidesc.ecore#//Method/parameterTypes"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute apidesc.ecore#//Method/returnType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute apidesc.ecore#//Method/returnVoid"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute apidesc.ecore#//Method/returnArray"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute apidesc.ecore#//Method/returnCollection"/>
+    </genClasses>
+    <genClasses ecoreClass="apidesc.ecore#//AttributeMapping">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute apidesc.ecore#//AttributeMapping/type"/>
+    </genClasses>
+    <genClasses ecoreClass="apidesc.ecore#//SimpleAttributeMapping"/>
+    <genClasses ecoreClass="apidesc.ecore#//SimpleReferenceMapping">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference apidesc.ecore#//SimpleReferenceMapping/type"/>
+    </genClasses>
+    <genClasses ecoreClass="apidesc.ecore#//DeclaredElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute apidesc.ecore#//DeclaredElement/name"/>
+    </genClasses>
+    <nestedGenPackages prefix="Patterns" basePackage="org.eclectic.apidesc" disposableProviderFactory="true"
+        ecorePackage="apidesc.ecore#//patterns">
+      <genClasses ecoreClass="apidesc.ecore#//patterns/IteratorDescription">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute apidesc.ecore#//patterns/IteratorDescription/iteratorClass"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference apidesc.ecore#//patterns/IteratorDescription/hasFinished"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference apidesc.ecore#//patterns/IteratorDescription/nextElement"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference apidesc.ecore#//patterns/IteratorDescription/currentElement"/>
+      </genClasses>
+      <genClasses ecoreClass="apidesc.ecore#//patterns/IteratorGetter">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference apidesc.ecore#//patterns/IteratorGetter/getIterator"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference apidesc.ecore#//patterns/IteratorGetter/iterator"/>
+      </genClasses>
+      <genClasses ecoreClass="apidesc.ecore#//patterns/ObserverDescription">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute apidesc.ecore#//patterns/ObserverDescription/observerClass"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference apidesc.ecore#//patterns/ObserverDescription/updateMethods"/>
+      </genClasses>
+      <genClasses ecoreClass="apidesc.ecore#//patterns/UpdateMethod">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute apidesc.ecore#//patterns/UpdateMethod/interest"/>
+      </genClasses>
+    </nestedGenPackages>
+  </genPackages>
+</genmodel:GenModel>

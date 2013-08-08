@@ -1,0 +1,8 @@
+<ecore:EPackage name='TestMerge' nsPrefix='test_merge' xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns:ecore='http://www.eclipse.org/emf/2002/Ecore' xmi:version='2.0' nsURI='http://gts.inf.um.es/test_merge' xmlns:xmi='http://www.omg.org/XMI'>
+  <eClassifiers name='A' xsi:type='ecore:EClass'>
+    <eStructuralFeatures name='attr1' xsi:type='ecore:EAttribute' eType='ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString'/>
+    <eStructuralFeatures name='b' containment='true' xsi:type='ecore:EReference' eType='#//B'/>
+  </eClassifiers>
+  <eClassifiers name='B' xsi:type='ecore:EClass'/>
+  <eClassifiers name='C' xsi:type='ecore:EClass'/>
+</ecore:EPackage>

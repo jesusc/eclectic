@@ -1,0 +1,553 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclectic.test.streaming.largemodels/src-gen"
+    modelPluginID="org.eclectic.test.streaming.largemodels" modelName="JDTAST" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false">
+  <foreignModel>file:/home/jesus/third-party/datasets/src/JDTAST.ecore</foreignModel>
+  <genPackages prefix="Core" disposableProviderFactory="true" ecorePackage="JDTAST2.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="JDTAST2.ecore#//Modifiers">
+      <genEnumLiterals ecoreEnumLiteral="JDTAST2.ecore#//Modifiers/abstract"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST2.ecore#//Modifiers/annotation"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST2.ecore#//Modifiers/bridge"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST2.ecore#//Modifiers/default"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST2.ecore#//Modifiers/deprecated"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST2.ecore#//Modifiers/enum"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST2.ecore#//Modifiers/final"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST2.ecore#//Modifiers/interface"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST2.ecore#//Modifiers/native"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST2.ecore#//Modifiers/private"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST2.ecore#//Modifiers/protected"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST2.ecore#//Modifiers/public"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST2.ecore#//Modifiers/static"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST2.ecore#//Modifiers/strictfp"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST2.ecore#//Modifiers/super"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST2.ecore#//Modifiers/synchronized"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST2.ecore#//Modifiers/synthetic"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST2.ecore#//Modifiers/transient"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST2.ecore#//Modifiers/varargs"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST2.ecore#//Modifiers/volatile"/>
+    </genEnums>
+    <genClasses image="false" ecoreClass="JDTAST2.ecore#//IJavaElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//IJavaElement/elementName"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="JDTAST2.ecore#//PhysicalElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//PhysicalElement/path"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//PhysicalElement/isReadOnly"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST2.ecore#//IJavaModel">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST2.ecore#//IJavaModel/javaProjects"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST2.ecore#//IJavaModel/externalPackageFragmentRoots"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST2.ecore#//IJavaProject">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST2.ecore#//IJavaProject/packageFragmentRoots"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference JDTAST2.ecore#//IJavaProject/externalPackageFragmentRoots"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference JDTAST2.ecore#//IJavaProject/requiredProjects"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="JDTAST2.ecore#//IPackageFragmentRoot">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST2.ecore#//IPackageFragmentRoot/packageFragments"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST2.ecore#//BinaryPackageFragmentRoot"/>
+    <genClasses ecoreClass="JDTAST2.ecore#//SourcePackageFragmentRoot"/>
+    <genClasses ecoreClass="JDTAST2.ecore#//IPackageFragment">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//IPackageFragment/isDefaultPackage"/>
+      <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference JDTAST2.ecore#//IPackageFragment/packageFragmentRoot"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST2.ecore#//IPackageFragment/classFiles"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST2.ecore#//IPackageFragment/compilationUnits"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="JDTAST2.ecore#//ITypeRoot"/>
+    <genClasses ecoreClass="JDTAST2.ecore#//ICompilationUnit">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference JDTAST2.ecore#//ICompilationUnit/allType"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST2.ecore#//ICompilationUnit/imports"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST2.ecore#//ICompilationUnit/types"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference JDTAST2.ecore#//ICompilationUnit/primary"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST2.ecore#//ICompilationUnit/ast"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST2.ecore#//IClassFile">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//IClassFile/isClass"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//IClassFile/isInterface"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST2.ecore#//IClassFile/type"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="JDTAST2.ecore#//ISourceReference">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//ISourceReference/source"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST2.ecore#//ISourceReference/sourceRange"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST2.ecore#//IImportDeclaration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//IImportDeclaration/isOnDemand"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//IImportDeclaration/isStatic"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST2.ecore#//ISourceRange">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//ISourceRange/length"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//ISourceRange/offset"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="JDTAST2.ecore#//IMember">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST2.ecore#//IMember/javadocRange"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST2.ecore#//IMember/nameRange"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST2.ecore#//IType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//IType/fullyQualifiedName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//IType/fullyQualifiedParametrizedName"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST2.ecore#//IType/initializers"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST2.ecore#//IType/fields"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST2.ecore#//IType/methods"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST2.ecore#//IType/types"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference JDTAST2.ecore#//IType/typeParameters"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST2.ecore#//ITypeParameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//ITypeParameter/bounds"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST2.ecore#//IInitializer"/>
+    <genClasses ecoreClass="JDTAST2.ecore#//IField">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//IField/constant"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//IField/isEnumConstant"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//IField/typeSignature"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//IField/isVolatile"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//IField/isTransient"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST2.ecore#//IMethod">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//IMethod/returnType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//IMethod/isConstructor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//IMethod/isMainMethod"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST2.ecore#//IMethod/parameters"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//IMethod/exceptionTypes"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST2.ecore#//Parameter">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//Parameter/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST2.ecore#//Parameter/type"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="DOM" disposableProviderFactory="true" ecorePackage="JDTAST.ecore#/">
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="JDTAST.ecore#//AssignmentOperatorKind">
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//AssignmentOperatorKind/right_shift_signed_assign"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//AssignmentOperatorKind/bit_xor_assign"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//AssignmentOperatorKind/times_assign"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//AssignmentOperatorKind/divide_assign"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//AssignmentOperatorKind/minus_assign"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//AssignmentOperatorKind/bit_or_assign"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//AssignmentOperatorKind/plus_assign"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//AssignmentOperatorKind/assign"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//AssignmentOperatorKind/right_shift_unsigned_assign"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//AssignmentOperatorKind/remainder_assign"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//AssignmentOperatorKind/bit_and_assign"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//AssignmentOperatorKind/left_shift_assign"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="JDTAST.ecore#//InfixExpressionOperatorKind">
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//InfixExpressionOperatorKind/greater_equals"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//InfixExpressionOperatorKind/or"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//InfixExpressionOperatorKind/right_shift_signed"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//InfixExpressionOperatorKind/minus"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//InfixExpressionOperatorKind/xor"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//InfixExpressionOperatorKind/less_equals"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//InfixExpressionOperatorKind/equals"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//InfixExpressionOperatorKind/not_equals"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//InfixExpressionOperatorKind/and"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//InfixExpressionOperatorKind/plus"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//InfixExpressionOperatorKind/greater"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//InfixExpressionOperatorKind/conditional_or"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//InfixExpressionOperatorKind/remainder"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//InfixExpressionOperatorKind/less"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//InfixExpressionOperatorKind/left_shift"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//InfixExpressionOperatorKind/right_shift_unsigned"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//InfixExpressionOperatorKind/conditional_and"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//InfixExpressionOperatorKind/times"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//InfixExpressionOperatorKind/divide"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="JDTAST.ecore#//PostfixExpressionOperatorKind">
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//PostfixExpressionOperatorKind/increment"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//PostfixExpressionOperatorKind/decrement"/>
+    </genEnums>
+    <genEnums typeSafeEnumCompatible="false" ecoreEnum="JDTAST.ecore#//PrefixExpressionOperatorKind">
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//PrefixExpressionOperatorKind/minus"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//PrefixExpressionOperatorKind/not"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//PrefixExpressionOperatorKind/decrement"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//PrefixExpressionOperatorKind/complement"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//PrefixExpressionOperatorKind/increment"/>
+      <genEnumLiterals ecoreEnumLiteral="JDTAST.ecore#//PrefixExpressionOperatorKind/plus"/>
+    </genEnums>
+    <genClasses ecoreClass="JDTAST.ecore#//AST">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//AST/compilationUnits"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="JDTAST.ecore#//ASTNode"/>
+    <genClasses ecoreClass="JDTAST.ecore#//AnonymousClassDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//AnonymousClassDeclaration/bodyDeclarations"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="JDTAST.ecore#//BodyDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//BodyDeclaration/modifiers"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//BodyDeclaration/javadoc"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//CatchClause">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//CatchClause/body"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//CatchClause/exception"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="JDTAST.ecore#//Comment">
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference JDTAST.ecore#//Comment/alternateRoot"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//CompilationUnit">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//CompilationUnit/comments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//CompilationUnit/package"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//CompilationUnit/imports"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//CompilationUnit/types"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="JDTAST.ecore#//Expression">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//Expression/resolveBoxing"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//Expression/resolveUnboxing"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference JDTAST.ecore#//Expression/typeBinding"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//ImportDeclaration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//ImportDeclaration/onDemand"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//ImportDeclaration/static"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ImportDeclaration/name"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//MemberRef">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//MemberRef/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//MemberRef/qualifier"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//MemberValuePair">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//MemberValuePair/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//MemberValuePair/value"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//MethodRef">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//MethodRef/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//MethodRef/qualifier"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//MethodRef/parameters"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//MethodRefParameter">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//MethodRefParameter/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//MethodRefParameter/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//MethodRefParameter/varargs"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="JDTAST.ecore#//ExtendedModifier"/>
+    <genClasses ecoreClass="JDTAST.ecore#//Modifier">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//Modifier/abstract"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//Modifier/final"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//Modifier/native"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//Modifier/none"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//Modifier/private"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//Modifier/protected"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//Modifier/public"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//Modifier/static"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//Modifier/strictfp"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//Modifier/synchronized"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//Modifier/transient"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//Modifier/volatile"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//PackageDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//PackageDeclaration/annotations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//PackageDeclaration/javadoc"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//PackageDeclaration/name"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference JDTAST.ecore#//PackageDeclaration/binding"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="JDTAST.ecore#//Statement"/>
+    <genClasses ecoreClass="JDTAST.ecore#//TagElement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//TagElement/fragments"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//TagElement/tagName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//TagElement/nested"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//TextElement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//TextElement/text"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="JDTAST.ecore#//Type"/>
+    <genClasses ecoreClass="JDTAST.ecore#//TypeParameter">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//TypeParameter/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//TypeParameter/typeBounds"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="JDTAST.ecore#//VariableDeclaration">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//VariableDeclaration/extraDimensions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//VariableDeclaration/initializer"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//VariableDeclaration/name"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="JDTAST.ecore#//AbstractTypeDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//AbstractTypeDeclaration/bodyDeclarations"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//AbstractTypeDeclaration/name"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//AbstractTypeDeclaration/localTypeDeclaration"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//AbstractTypeDeclaration/memberTypeDeclaration"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//AbstractTypeDeclaration/packageMemberTypeDeclaration"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//AnnotationTypeMemberDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//AnnotationTypeMemberDeclaration/default"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//AnnotationTypeMemberDeclaration/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//AnnotationTypeMemberDeclaration/type"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//EnumConstantDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//EnumConstantDeclaration/arguments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//EnumConstantDeclaration/anonymousClassDeclaration"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//EnumConstantDeclaration/name"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//FieldDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//FieldDeclaration/fragments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//FieldDeclaration/type"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//Initializer">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//Initializer/body"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//MethodDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//MethodDeclaration/body"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//MethodDeclaration/extraDimensions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//MethodDeclaration/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//MethodDeclaration/returnType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//MethodDeclaration/constructor"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//MethodDeclaration/varargs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//MethodDeclaration/parameters"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//MethodDeclaration/thrownExceptions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//MethodDeclaration/typeParameters"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference JDTAST.ecore#//MethodDeclaration/binding"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//AnnotationTypeDeclaration"/>
+    <genClasses ecoreClass="JDTAST.ecore#//EnumDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//EnumDeclaration/superInterfaceTypes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//EnumDeclaration/enumConstants"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//TypeDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//TypeDeclaration/superclassType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//TypeDeclaration/interface"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//TypeDeclaration/superInterfaceTypes"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//TypeDeclaration/typeParameters"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//BlockComment"/>
+    <genClasses ecoreClass="JDTAST.ecore#//Javadoc">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//Javadoc/tags"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//LineComment"/>
+    <genClasses image="false" ecoreClass="JDTAST.ecore#//Annotation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//Annotation/typeName"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//ArrayAccess">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ArrayAccess/array"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ArrayAccess/index"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//ArrayCreation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ArrayCreation/dimensions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ArrayCreation/initializer"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ArrayCreation/type"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//ArrayInitializer">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ArrayInitializer/expressions"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//Assignment">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//Assignment/leftHandSide"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//Assignment/operator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//Assignment/rightHandSide"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//BooleanLiteral">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//BooleanLiteral/booleanValue"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//CastExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//CastExpression/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//CastExpression/type"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//CharacterLiteral">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//CharacterLiteral/charValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//CharacterLiteral/escapedValue"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//ClassInstanceCreation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ClassInstanceCreation/arguments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ClassInstanceCreation/anonymousClassDeclaration"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ClassInstanceCreation/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ClassInstanceCreation/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ClassInstanceCreation/typeArguments"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//ConditionalExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ConditionalExpression/elseExpression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ConditionalExpression/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ConditionalExpression/thenExpression"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//FieldAccess">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//FieldAccess/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//FieldAccess/name"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//InfixExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//InfixExpression/extendedOperands"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//InfixExpression/leftOperand"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//InfixExpression/operator"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//InfixExpression/rightOperand"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//InstanceofExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//InstanceofExpression/leftOperand"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//InstanceofExpression/rightOperand"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//MethodInvocation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//MethodInvocation/arguments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//MethodInvocation/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//MethodInvocation/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//MethodInvocation/typeArguments"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference JDTAST.ecore#//MethodInvocation/methodBinding"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="JDTAST.ecore#//Name">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//Name/fullyQualifiedName"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//NullLiteral"/>
+    <genClasses ecoreClass="JDTAST.ecore#//NumberLiteral">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//NumberLiteral/token"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//ParenthesizedExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ParenthesizedExpression/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//PostfixExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//PostfixExpression/operand"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//PostfixExpression/operator"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//PrefixExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//PrefixExpression/operand"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//PrefixExpression/operator"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//StringLiteral">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//StringLiteral/escapedValue"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//StringLiteral/literalValue"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//SuperFieldAccess">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//SuperFieldAccess/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//SuperFieldAccess/qualifier"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//SuperMethodInvocation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//SuperMethodInvocation/arguments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//SuperMethodInvocation/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//SuperMethodInvocation/qualifier"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//SuperMethodInvocation/typeArguments"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//ThisExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ThisExpression/qualifier"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//TypeLiteral">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//TypeLiteral/type"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//VariableDeclarationExpression">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//VariableDeclarationExpression/fragments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//VariableDeclarationExpression/modifiers"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//VariableDeclarationExpression/type"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//AssertStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//AssertStatement/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//AssertStatement/message"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//Block">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//Block/statements"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//BreakStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//BreakStatement/label"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//ConstructorInvocation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ConstructorInvocation/arguments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ConstructorInvocation/typeArguments"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//ContinueStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ContinueStatement/label"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//DoStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//DoStatement/body"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//DoStatement/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//EmptyStatement"/>
+    <genClasses ecoreClass="JDTAST.ecore#//EnhancedForStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//EnhancedForStatement/body"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//EnhancedForStatement/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//EnhancedForStatement/parameter"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//ExpressionStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ExpressionStatement/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//ForStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ForStatement/body"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ForStatement/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ForStatement/initializers"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ForStatement/updaters"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//IfStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//IfStatement/elseStatement"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//IfStatement/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//IfStatement/thenStatement"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//LabeledStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//LabeledStatement/body"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//LabeledStatement/label"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//ReturnStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ReturnStatement/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//SuperConstructorInvocation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//SuperConstructorInvocation/arguments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//SuperConstructorInvocation/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//SuperConstructorInvocation/typeArguments"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//SwitchCase">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//SwitchCase/expression"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//SwitchCase/default"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//SwitchStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//SwitchStatement/expression"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//SwitchStatement/statements"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//SynchronizedStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//SynchronizedStatement/body"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//SynchronizedStatement/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//ThrowStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ThrowStatement/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//TryStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//TryStatement/catchClauses"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//TryStatement/body"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//TryStatement/finally"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//TypeDeclarationStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//TypeDeclarationStatement/declaration"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//VariableDeclarationStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//VariableDeclarationStatement/fragments"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//VariableDeclarationStatement/modifiers"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//VariableDeclarationStatement/type"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//WhileStatement">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//WhileStatement/body"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//WhileStatement/expression"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//ArrayType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ArrayType/componentType"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//ArrayType/dimensions"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ArrayType/elementType"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//ParameterizedType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ParameterizedType/type"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//ParameterizedType/typeArguments"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//PrimitiveType">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//PrimitiveType/code"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//QualifiedType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//QualifiedType/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//QualifiedType/qualifier"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//SimpleType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//SimpleType/name"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//WildcardType">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//WildcardType/bound"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//WildcardType/upperBound"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//SingleVariableDeclaration">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//SingleVariableDeclaration/type"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//SingleVariableDeclaration/varargs"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//SingleVariableDeclaration/modifiers"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//VariableDeclarationFragment"/>
+    <genClasses ecoreClass="JDTAST.ecore#//QualifiedName">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//QualifiedName/name"/>
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//QualifiedName/qualifier"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//SimpleName">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//SimpleName/identifier"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute JDTAST.ecore#//SimpleName/declaration"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//MarkerAnnotation"/>
+    <genClasses ecoreClass="JDTAST.ecore#//NormalAnnotation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//NormalAnnotation/values"/>
+    </genClasses>
+    <genClasses ecoreClass="JDTAST.ecore#//SingleMemberAnnotation">
+      <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference JDTAST.ecore#//SingleMemberAnnotation/value"/>
+    </genClasses>
+  </genPackages>
+  <genPackages prefix="PrimitiveTypes" disposableProviderFactory="true" ecorePackage="JDTAST1.ecore#/">
+    <genDataTypes ecoreDataType="JDTAST1.ecore#//String"/>
+    <genDataTypes ecoreDataType="JDTAST1.ecore#//Boolean"/>
+    <genDataTypes ecoreDataType="JDTAST1.ecore#//Integer"/>
+  </genPackages>
+</genmodel:GenModel>

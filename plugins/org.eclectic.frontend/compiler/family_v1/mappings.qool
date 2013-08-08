@@ -1,0 +1,907 @@
+// 
+// This is the compiler from Mappings to Qool 
+// 
+
+qool mappings2idc(in) -> (idc)
+
+model rt 
+  class generic 
+	ref s : _!Any 
+	ref t : _!Any 
+  end
+
+  class var2var
+    ref s : _!Any
+    ref t : idc!Variable
+  end
+  
+  class instr
+    ref s    :  _!Any
+    ref list : idc!Instruction*
+  end
+  
+  class queue_link
+    att name   : _!String
+    ref queue_ : idc!Queue
+    ref class_use : in!ClassUse // optional
+  end
+  
+end 
+
+local queue instrQ      : rt!instr
+local queue lineQ       : rt!instr
+local queue varsQ       : rt!var2var
+local queue genericQ    : rt!generic
+local queue queueByName : rt!queue_link
+
+model queue mMappingTransformation : in!MappingTransformation
+model queue mContext               : in!Context
+model queue mDelegate              : in!Delegate
+
+
+// Implemented natively in Java
+// def in!ClassUse.id_string
+//   self.model.name.concat("!").concat(self.name)
+// end
+
+
+segment models
+  forall mt_1 from mMappingTransformation
+  	qt_1 = genericQ[ #kindOf(rt!generic), #p(s, mt_1) ].t
+  	
+	// Begin-of ModelDefinition 
+    model_def_transformer =  { |kind_of_model|
+      result_1 = { |transf_def_param_1|
+         
+         mp_1 = idc!ModelDefinition.new
+         mp_1.name = transf_def_param_1.name
+         mp_1.kind = kind_of_model
+
+		 // opposites does not work... xtext issue?
+         /*
+         mp_1.metamodel = transf_def_param_1.annotatedWith.
+         	select { |a| a.kind_of(in!MetamodelModelAnnotation) }.map { |a|  
+      			d = idc!MetamodelDefinition.new
+      			d.path = a.metamodel
+      			d 
+      		}.first // I should have a way to check there is only one
+      	 */
+      	 
+      	 annotatedWith = mt_1.annotations.select { |a| a.annotatedElement.eq(transf_def_param_1) }	
+      	 mp_1.metamodel = annotatedWith.select { |a| a.kind_of(in!MetamodelModelAnnotation) }.map { |a|  
+      			d = idc!MetamodelDefinition.new
+      			d.path = a.metamodel
+      			d 
+      		}.first // I should have a way to check there is only one
+      		
+         trace_in_model_to_model = rt!generic.new
+         trace_in_model_to_model.s = transf_def_param_1
+         trace_in_model_to_model.t = mp_1
+      
+         emit trace_in_model_to_model to genericQ
+        
+         mp_1 
+      }
+      result_1
+    }
+    
+    qt_1.models = mt_1.inModels.map (model_def_transformer.call("IN") )
+    qt_1.models = mt_1.outModels.map(model_def_transformer.call("OUT") )
+    // End-of ModelDefinition
+
+    // Begin-of-imported
+    /*
+    uses_transformer = { |ecl_transf, idc_transf|
+       idc_transf.importedModels = ecl_transf.uses.map { |u|
+       	 name = u.as.if_nil { u.module }
+         idc  = idc!ImportedModel.new
+         idc.name = name
+
+         use_trace = rt!generic.new
+         use_trace.s = u
+         use_trace.t = idc
+      
+         emit use_trace to genericQ
+
+         idc
+       }
+    }
+	*/
+
+    uses_transformer = { |ecl_transf, idc_transf|
+       idc_transf.importedModels = ecl_transf.uses.map { |u|
+       	 name = u.as.if_nil { u.module }
+         idc  = idc!ImportedModel.new
+         idc.name = name
+
+         use_trace = rt!generic.new
+         use_trace.s = u
+         use_trace.t = idc
+      
+         emit use_trace to genericQ
+
+         // compute capabilities (copied from attribution, but adapted for delegates!!)
+         // TODO: Deal with links that do not have module
+         idc.capabilityQueues = in!Delegate.all_instances.select { |r| r.module.eq(u) }.uniq_by { |r| r.linkName }.map { |r|
+            q = idc!RequiredQueue.new
+            q.name = r.linkName
+            
+            tlink = rt!queue_link.new
+            tlink.name   = r.queue_id_string
+            tlink.queue_ = q
+            emit tlink to queueByName
+            
+            q
+         }  
+         
+         // I should compute into the capabilities the structure of the trace model
+	 
+         idc
+       }
+    }
+    uses_transformer.call(mt_1, qt_1)
+    // End-of-imported
+  	
+  end
+end
+
+segment high_level
+  forall mt_1 from mMappingTransformation
+    qt_1      = idc!QoolTransformation.new
+    qt_1.name = mt_1.name
+    qt_1.qualifier = "main"
+    qt_1.file = "eclectic/".concat(mt_1.file) // TODO: Compute the package somehow
+    
+    transf_trace_link = rt!generic.new
+    transf_trace_link.s = mt_1
+    transf_trace_link.t = qt_1
+
+    emit transf_trace_link to genericQ
+
+
+    // Begin-of Traces
+    trace_def_transformer = { |x| 
+    	inlineModel = idc!InlineModel.new
+    	inlineModel.name = "rt_".concat(mt_1.name)
+    
+    	trace_link_type      = idc!KClass.new
+    	trace_link_type.name = "generic"
+    
+    	source_trace_feature = idc!KReference.new
+    	target_trace_feature = idc!KReference.new
+    	source_trace_feature.name = "s"
+    	target_trace_feature.name = "t"
+
+		trace_link_type.features = source_trace_feature
+		trace_link_type.features = target_trace_feature
+    
+    	inlineModel.classifiers = trace_link_type
+    	qt_1.inlineModels = inlineModel
+    	
+        inline_model_trace_link = rt!generic.new
+        inline_model_trace_link.s = mt_1
+    	inline_model_trace_link.t = qt_1
+    	
+    	emit inline_model_trace_link to genericQ
+    }
+    
+    trace_def_transformer.call("dummy")
+    // End-of Traces
+    
+    // Begin-of Queue
+    trace_queue_transformer = {
+      trace_queue = idc!LocalQueue.new
+      trace_queue.name = "trace_queue"
+      qt_1.queues = trace_queue
+    
+      queue_trace_link = rt!queue_link.new
+      queue_trace_link.name   = "TRACE_QUEUE"
+      queue_trace_link.queue_ = trace_queue
+    
+      emit queue_trace_link to queueByName
+      trace_queue
+    }
+    
+    trace_queue = trace_queue_transformer.call
+    
+    // one queue per different class use
+    class_use_to_model_queue = { |x|
+	    in!ClassUse.all_instances.select { |c| mt_1.inModels.includes(c.^model) }.uniq_by { |c| c.id_string  }.each { |c|
+	    	model_queue = idc!ModelElementQueue.new
+	    	model_queue.name = c.className.next_id
+	    	type_info   = idc!TypeInfo.new
+	    	type_info.^model =  genericQ[ #kindOf(rt!generic), #p(s, c.^model) ].t
+	    	type_info.classifierName = c.className
+	    	type_info.strictType = c.strictType
+	    	model_queue.type_ = type_info
+	
+			qt_1.queues = model_queue
+	
+	    	model_queue_trace_link = rt!queue_link.new
+	        model_queue_trace_link.name   = c.id_string
+	    	model_queue_trace_link.queue_ = model_queue
+	        model_queue_trace_link.class_use = c
+	    	      
+	    	emit model_queue_trace_link to queueByName
+	    }
+    }
+    class_use_to_model_queue.call("dummy")
+    // End-of Queues
+
+    // create interface queues
+    tag_transformer = { |x|
+       in!Tag.all_instances.uniq_by { |c| c.name  }.each { |tag|
+         trace_queue = idc!LocalQueue.new
+         trace_queue.name = tag.name
+         qt_1.queues = trace_queue
+         qt_1.provided = trace_queue
+     
+         queue_trace_link = rt!queue_link.new
+         queue_trace_link.name   = tag.name
+         queue_trace_link.queue_ = trace_queue
+    
+         emit queue_trace_link to queueByName
+       }
+    }
+    
+    tag_transformer.call("dummy")
+    
+    // Begin-of Context
+    context_transformer =  { |ctx|
+        // create segment
+		segment_obj      = idc!Segment.new
+    	segment_obj.name = ctx.left.concat(ctx.right).map { |c| c.className }.join("_")        
+        segment_obj.instructions = instrQ[ #kindOf(rt!instr), #p(s, ctx) ].list    
+       
+        segment_obj
+    }
+    
+	qt_1.segments = mt_1.contexts.map(context_transformer)	
+	// End-of Context
+
+    delegate_transformer =  { |delegate|
+        // create segment
+		segment_obj      = idc!Segment.new
+    	segment_obj.name = delegate.left.map { |c| c.className }.add(delegate.module.module.concat(delegate.linkName)).join("_")        
+        segment_obj.instructions = instrQ[ #kindOf(rt!instr), #p(s, delegate) ].list    
+       
+        segment_obj
+    }
+    
+	qt_1.segments = mt_1.delegates.map(delegate_transformer)	
+	
+	 
+  end
+end
+
+
+segment delegates
+  forall delegate from mDelegate
+    inlineModel = { 
+    	genericQ[ #kindOf(rt!generic), #p(s, delegate._refContainer) ].t.inlineModels.first
+    }.call
+
+    class_use = delegate.left.first
+
+    left_class_use_transformer = { |delegate, class_use|    
+      for_all        = idc!QForAll.new
+      for_all.name   = "forAll".next_id    
+      for_all.^queue = {  |x|
+      	queueByName[ #kindOf(rt!queue_link), #p(name, class_use.id_string) ].queue_
+	  }.call("dummy")
+	  
+      // expr_var   = varsQ[ #kindOf(rt!var2var), #p(s, resolve_link.expr) ].t
+
+      // repeated from attribution#resolveLink   
+      create_match = {  
+        match_instr = idc!QMatch.new
+        match_instr.name = "match".next_id
+        match_instr.^queue = queueByName[ #kindOf(rt!queue_link), #p(name, delegate.queue_id_string) ].queue_
+        eq_pred  = idc!PropertyEqualsPredicate.new
+        eq_pred.propertyName = "s" // default name for the first source property
+        eq_pred.value = for_all
+        // match_instr.predicates = kind_pred
+        match_instr.predicates = eq_pred       
+        match_instr
+      }
+      
+      create_get = { |featureName, receptor|
+        get_t = idc!Get.new
+        get_t.name = "get_t".next_id
+        get_t.featureName = featureName
+        get_t.receptor    = receptor
+        get_t.kind        = "TRY_GET_FIRST"
+        get_t
+      }
+
+      match_instr = create_match.call
+      get_t       = create_get.call(delegate.featureName.if_nil { delegate.linkName } , match_instr)
+
+	  emitTraces = {
+ 
+      create = idc!Create.new
+      create.name   = "trace".next_id
+      create.^model = inlineModel
+      create.className = "generic" // TODO:  Hard-coded!
+        
+      set = idc!Set.new
+      set.featureName = "s" // TODO: hard-coded
+      set.receptor    = create
+      set.value       = for_all
+        
+      set2 = idc!Set.new
+      set2.featureName = "t" // TODO: hard-coded
+      set2.receptor    = create
+      set2.value       = get_t
+ 
+      emit_stm = idc!QEmit.new      
+      emit_stm.^queue = { queueByName[ #kindOf(rt!queue_link), #p(name, "TRACE_QUEUE") ].queue_ }.call 
+      emit_stm.value = create
+
+	      emitLineQ = {
+	      instr_trace = rt!instr.new
+	      instr_trace.s = delegate
+	      instr_trace.list = match_instr
+	      instr_trace.list = get_t
+	      instr_trace.list = create
+	      instr_trace.list = set
+	      instr_trace.list = set2
+	      instr_trace.list = emit_stm
+	      emit instr_trace to lineQ
+	      }.call
+
+	      addForallInstructions = {
+		  for_all.instructions = match_instr
+		  for_all.instructions = get_t
+	 	  for_all.instructions = create
+	 	  for_all.instructions = set
+	 	  for_all.instructions = set2
+	 	  for_all.instructions = emit_stm
+		  }.call
+
+      }.call
+      
+	  // copied (and with a small adaptation) from the original definition of tags -> perhaps a rule for tags could be created    
+      setTagTracesIfNeeded = {
+	      ctx = delegate
+	      trace_creator = { |inline_model, class_name, source_feature, target_feature, queue_name|
+	        create = idc!Create.new
+	        create.name   = "trace".next_id
+	        create.^model = inline_model
+	        create.className = class_name
+	        
+	        set = idc!Set.new
+	        set.featureName = source_feature
+	        set.receptor    = create
+	        set.value       = for_all
+	        
+	        set2 = idc!Set.new
+	        set2.featureName = target_feature
+	        set2.receptor    = create
+	        set2.value       = get_t	        
+	        // set2.value       = varsQ[ #kindOf(rt!var2var), #p(s, ctx.right.first) ].t
+	
+	        emit_stm = idc!QEmit.new      
+	        emit_stm.^queue = queueByName[ #kindOf(rt!queue_link), #p(name, queue_name) ].queue_ 
+	        emit_stm.value = create
+	        
+	        for_all.instructions = create
+	        for_all.instructions = set
+	        for_all.instructions = set2
+	        for_all.instructions = emit_stm
+	 
+	 		auxEmitInstr = {
+		    instr_trace = rt!instr.new
+	        instr_trace.s = ctx
+	        instr_trace.list = create
+	        instr_trace.list = set
+	        instr_trace.list = set2
+	        instr_trace.list = emit_stm
+	        emit instr_trace to lineQ
+	      	}.call
+	      }
+	      // End-of Create-Trace
+	      
+	      // Begin-of interface tags
+	      ctx.tags.each { |tag|
+	        // TODO: Consider a classifier for each tag
+	        trace_creator.call(inlineModel, "generic", "s", "t", tag.name)
+	      }
+		  // end-of trace creator // COPIED!!
+	  }.call
+	 	  
+ 	  for_all
+    }
+
+    
+    instructions = left_class_use_transformer.call(delegate, class_use)    
+
+    instr_trace = rt!instr.new
+    instr_trace.s = delegate
+    instr_trace.list = instructions 
+    
+    emit instr_trace to instrQ 
+  end
+end
+
+segment contexts
+  forall ctx from mContext
+    l = _!List.new
+    
+    /*
+    // TODO: Consider more that one left in the context
+    external_forall = idc!QForAll.new
+    ctx.left.fold( external_forall ) { |inner_for_all, class_use|
+    	inner_for_all.name = "forAll".next_id(class-use)
+    	idc!QForAll.new    	
+    	// inner_for_all.queue = 
+    	// ref Queue[1] queue;
+    	// class_use.className 
+    	// class_use.model
+    } 
+    */
+    
+    inlineModel = { |x|
+    	genericQ[ #kindOf(rt!generic), #p(s, ctx._refContainer) ].t.inlineModels.first
+    }.call("dummy")
+    
+    class_use = ctx.left.first
+    
+    left_class_use_transformer = { |ctx, class_use|    
+      for_all        = idc!QForAll.new
+      for_all.name   = "forAll".next_id    
+      for_all.^queue = {  |x|
+      	queueByName[ #kindOf(rt!queue_link), #p(name, class_use.id_string) ].queue_
+	  }.call("dummy")
+	  
+      var2var_t = rt!var2var.new
+      var2var_t.s = class_use
+      var2var_t.t = for_all
+      emit var2var_t to varsQ           
+
+      // add the create instructions
+      ctx.right.each { |r|
+        create = idc!Create.new
+        create.name   = r.className.next_id
+        create.^model =  genericQ[ #kindOf(rt!generic), #p(s, r.^model) ].t
+        create.className = r.className        
+
+    	var2var_t = rt!var2var.new
+        var2var_t.s = r
+    	var2var_t.t = create
+    	emit var2var_t to varsQ         
+ 
+        instr_trace = rt!instr.new
+        instr_trace.s = ctx
+        instr_trace.list = create
+        emit instr_trace to lineQ
+        
+        
+        for_all.instructions = create  
+      }
+      // end-of create 
+     
+      
+      get_attribute_transformer = { |attr|
+        get = idc!Get.new
+        get.name = "get".next_id
+        get.featureName = attr.featureName
+        get.receptor    = varsQ[ #kindOf(rt!var2var), #p(s, attr.referredElement) ].t
+        get.kind        = "TRY_GET_FIRST"
+        get                             
+      }
+      
+      // Begin-of Create-Trace
+      // TODO: Consider that each context with a tag may generate a separate classifier
+      //       in a model called "exportedModel"
+      trace_creator = { |inline_model, class_name, source_feature, target_feature, queue_name|
+        create = idc!Create.new
+        create.name   = "trace".next_id
+        create.^model = inline_model
+        create.className = class_name
+        
+        set = idc!Set.new
+        set.featureName = source_feature
+        set.receptor    = create
+        set.value       = for_all
+        
+        set2 = idc!Set.new
+        set2.featureName = target_feature
+        set2.receptor    = create
+        set2.value       = varsQ[ #kindOf(rt!var2var), #p(s, ctx.right.first) ].t
+
+        emit_stm = idc!QEmit.new      
+        emit_stm.^queue = queueByName[ #kindOf(rt!queue_link), #p(name, queue_name) ].queue_ 
+        emit_stm.value = create
+        
+        for_all.instructions = create
+        for_all.instructions = set
+        for_all.instructions = set2
+        for_all.instructions = emit_stm
+ 
+	    instr_trace = rt!instr.new
+        instr_trace.s = ctx
+        instr_trace.list = create
+        instr_trace.list = set
+        instr_trace.list = set2
+        instr_trace.list = emit_stm
+        emit instr_trace to lineQ
+      }
+      trace_creator.call(inlineModel, "generic", "s", "t", "TRACE_QUEUE")
+      // End-of Create-Trace
+      
+      // Begin-of interface tags
+      ctx.tags.each { |tag|
+        // TODO: Consider a classifier for each tag
+        trace_creator.call(inlineModel, "generic", "s", "t", tag.name)
+      }
+      // End-of interface tags
+     
+      
+      // Begin-of Modifiers
+      linking_modifier_transformer = { |linked_by|
+        set = idc!Set.new
+        set.featureName = linked_by.attribute.featureName
+        set.receptor    = varsQ[ #kindOf(rt!var2var), #p(s, linked_by.attribute.referredElement) ].t
+        set.value       = varsQ[ #kindOf(rt!var2var), #p(s, linked_by.linkedElement) ].t
+ 
+        instr_trace = rt!instr.new
+        instr_trace.s = linked_by
+        instr_trace.list = set
+        emit instr_trace to lineQ
+        
+        set
+      }      
+           
+      for_all.instructions = ctx.modifiers.select { |m| m.kind_of(in!LinkedBy) }.map(linking_modifier_transformer)
+      // End-of Modifiers
+      
+      
+     
+      // Begin-of Attribute2Attribute
+      attr2attr_instruction_creator = { |for_all|
+	      ctx.mappings.select { |m| m.kind_of(in!AttributeMapping) }.
+	                   select { |m| m.rightPart.kind_of(in!Attribute2Attribute) }.each { |a2a|
+	        sourceAttr = a2a.rightPart.right.first
+	        targetAttr = a2a.left.first
+	
+			// If I do "get_attribute_transformer(sourceAttr)" it returns the closure object!! 
+	        get = get_attribute_transformer.call(sourceAttr)
+	        
+	        set = idc!Set.new
+	        set.featureName = targetAttr.featureName
+	        set.receptor    = varsQ[ #kindOf(rt!var2var), #p(s, targetAttr.referredElement) ].t
+	        set.value       = get 
+	
+	        for_all.instructions = get
+	        for_all.instructions = set
+	        
+	        instr_trace = rt!instr.new
+            instr_trace.s = a2a           
+            instr_trace.list = get
+            instr_trace.list = set
+            emit instr_trace to lineQ
+	                
+	      }
+
+          // AttributeIsString
+	      ctx.mappings.select { |m| m.kind_of(in!AttributeMapping) }.
+	                   select { |m| m.rightPart.kind_of(in!AttributeIsString) }.each { |a2a|
+	        str_value  = a2a.rightPart.strValue
+	        targetAttr = a2a.left.first
+	
+	        lit = idc!Literal.new
+	        lit.name = "string".next_id
+            lit.stringValue = str_value
+            lit.kind        = "STRING"
+	               
+	        set = idc!Set.new
+	        set.featureName = targetAttr.featureName
+	        set.receptor    = varsQ[ #kindOf(rt!var2var), #p(s, targetAttr.referredElement) ].t
+	        set.value       = lit 
+	
+	        for_all.instructions = lit
+	        for_all.instructions = set
+	        
+	        instr_trace = rt!instr.new
+            instr_trace.s = a2a           
+            instr_trace.list = lit
+            instr_trace.list = set
+            emit instr_trace to lineQ
+	                
+	      }
+
+          // AttributeIsBoolean
+	      ctx.mappings.select { |m| m.kind_of(in!AttributeMapping) }.
+	                   select { |m| m.rightPart.kind_of(in!AttributeIsBoolean) }.each { |a2a|
+	        bool_value  = a2a.rightPart.boolValue
+	        targetAttr = a2a.left.first
+	
+	        lit = idc!Literal.new
+	        lit.name = "bool".next_id
+            lit.booleanValue = bool_value
+            lit.kind        = "BOOLEAN"
+	               
+	        set = idc!Set.new
+	        set.featureName = targetAttr.featureName
+	        set.receptor    = varsQ[ #kindOf(rt!var2var), #p(s, targetAttr.referredElement) ].t
+	        set.value       = lit 
+	
+	        for_all.instructions = lit
+	        for_all.instructions = set
+	        
+	        instr_trace = rt!instr.new
+            instr_trace.s = a2a           
+            instr_trace.list = lit
+            instr_trace.list = set
+            emit instr_trace to lineQ
+	                
+	      }
+
+          // AttributeIsInteger
+	      ctx.mappings.select { |m| m.kind_of(in!AttributeMapping) }.
+	                   select { |m| m.rightPart.kind_of(in!AttributeIsInteger) }.each { |a2a|
+	        int_value  = a2a.rightPart.intValue
+	        targetAttr = a2a.left.first
+	
+	        lit = idc!Literal.new
+	        lit.name = "int".next_id
+            lit.intValue = int_value
+            lit.kind        = "INTEGER"
+	               
+	        set = idc!Set.new
+	        set.featureName = targetAttr.featureName
+	        set.receptor    = varsQ[ #kindOf(rt!var2var), #p(s, targetAttr.referredElement) ].t
+	        set.value       = lit 
+	
+	        for_all.instructions = lit
+	        for_all.instructions = set
+	        
+	        instr_trace = rt!instr.new
+            instr_trace.s = a2a           
+            instr_trace.list = lit
+            instr_trace.list = set
+            emit instr_trace to lineQ	                
+	      }
+
+          // AttributeIsDouble
+	      ctx.mappings.select { |m| m.kind_of(in!AttributeMapping) }.
+	                   select { |m| m.rightPart.kind_of(in!AttributeIsDouble) }.each { |a2a|
+	        double_value  = a2a.rightPart.doubleValue
+	        targetAttr = a2a.left.first
+	
+	        lit = idc!Literal.new
+	        lit.name = "double".next_id
+            lit.doubleValue = double_value
+            lit.kind        = "DOUBLE"
+	               
+	        set = idc!Set.new
+	        set.featureName = targetAttr.featureName
+	        set.receptor    = varsQ[ #kindOf(rt!var2var), #p(s, targetAttr.referredElement) ].t
+	        set.value       = lit 
+	
+	        for_all.instructions = lit
+	        for_all.instructions = set
+	        
+	        instr_trace = rt!instr.new
+            instr_trace.s = a2a           
+            instr_trace.list = lit
+            instr_trace.list = set
+            emit instr_trace to lineQ
+	                
+	      }
+
+      }
+      attr2attr_instruction_creator.call(for_all)
+      // End-of Attribute2Attribute
+
+      create_get = { |featureName, receptor|
+        get_t = idc!Get.new
+        get_t.name = "get_t".next_id
+        get_t.featureName = featureName
+        get_t.receptor    = receptor
+        get_t.kind        = "TRY_GET_FIRST"
+        get_t
+      }
+
+      // Begin-of Reference2Reference
+      reference2reference_creator = {
+	      ctx.mappings.select { |m| m.kind_of(in!Reference2Reference) }.select { |r| r.converter.is_nil }.each { |r2r|
+	        sourceRef = r2r.right.first
+	        targetRef = r2r.left.first
+	
+			// If I do "get_attribute_transformer(sourceAttr)" it returns the closure object!! 
+	        get = get_attribute_transformer.call(sourceRef)
+	        
+	        // This provokes: Invalid operand (must be a signed byte): 128 
+	        // when trying to match varsQ, why?
+	        //get = idc!Get.new
+	        //get.name = "get".next_id
+	        //get.featureName = sourceRef.featureName
+	        //get.receptor    = varsQ[ #kindOf(rt!var2var), #p(s, sourceRef.referredElement) ].t
+	        //get.kind        = "TRY_GET_FIRST"
+	        
+	        
+	        // to deal with multivalued seamlessly... 
+	    	getter_closure_creator = { |feature_name, match_instr|
+			     getter_closure = idc!ClosureDef.new
+		     	 getter_closure.name = "getter_closure".next_id
+		         getter_closure_param = idc!Parameter.new
+		         getter_closure_param.name = "getter_closure_param".next_id
+		         getter_closure.formalParameters = getter_closure_param
+		    
+	             get_t = create_get.call(feature_name, getter_closure_param)
+		         getter_closure.instructions = get_t
+
+                 instr_trace = rt!instr.new
+                 instr_trace.s = r2r
+                 instr_trace.list = get_t
+                 emit instr_trace to lineQ
+            		     
+		         getter_closure
+	        }     
+	        
+	        match_instr_creator = { |x|
+	          match_instr = idc!QMatch.new
+	          match_instr.name = "match".next_id
+	          match_instr.^queue = queueByName[ #kindOf(rt!queue_link), #p(name, "TRACE_QUEUE") ].queue_
+	          kind_pred  = idc!KindOfPredicate.new
+	          kind_pred.className = "generic"
+	          kind_pred.^model = inlineModel
+	          eq_pred  = idc!PropertyEqualsPredicate.new
+	          eq_pred.propertyName = "s"
+	          eq_pred.value = get
+	          match_instr.predicates = kind_pred
+	          match_instr.predicates = eq_pred       
+	          match_instr
+	        }
+	        
+	        match_instr = match_instr_creator.call("dummy")
+	        
+	        getter_closure = getter_closure_creator.call("t", match_instr)
+	        match_instr.getterClosure = getter_closure
+																																																																																																															        
+	        // AGAIN: FAILS WITH THE SAME PROBLEM AS ABOVE WHEN VALIDATION!!
+	        //get_t = idc!Get.new
+	        //get_t.name = "get_t".next_id
+	        //get_t.featureName = "t"
+	        //get_t.receptor    = match_instr
+	        //get_t.kind        = "TRY_GET_FIRST"
+	        
+	        set_closure_to_avoid_failure = { |targetRef|
+	          set = idc!Set.new
+	          set.featureName = targetRef.featureName
+	          set.receptor    = varsQ[ #kindOf(rt!var2var), #p(s, targetRef.referredElement) ].t
+	          set.value       = match_instr // directly fed from the get instruction
+	          set        
+	        }
+	        set = set_closure_to_avoid_failure.call(targetRef)        
+	
+	        for_all.instructions = get
+	        for_all.instructions = getter_closure
+	        for_all.instructions = match_instr
+	        for_all.instructions = set        
+
+            instr_trace = rt!instr.new
+            instr_trace.s = r2r
+            instr_trace.list = get
+            instr_trace.list = getter_closure
+            instr_trace.list = match_instr
+            instr_trace.list = set
+            emit instr_trace to lineQ
+
+	      }
+      }
+      reference2reference_creator.call
+      // End-of Ref2Ref
+
+      // Ref-to-ref with converter
+   	  reference2reference_with_converter = {
+         ctx.mappings.select { |m| m.kind_of(in!Reference2Reference) }.select { |r| r.converter }.each { |r2r|
+           sourceRef = r2r.right.first
+           targetRef = r2r.left.first 
+
+           get = get_attribute_transformer.call(sourceRef)
+           meta = idc!ReadMeta.new
+           meta.name  = "read_meta".next_id
+           meta.^model = { genericQ[ #kindOf(rt!generic), #p(s, r2r.converter.module) ].t }.call
+           meta.kind = "MODEL"
+           // TODO: If there is no module, then the module is selfModule
+           
+           create_converter_call = {
+             converter_call = idc!MethodCall.new   
+             converter_call.name = r2r.converter.converterName.next_id
+             converter_call.receptor = meta
+             converter_call.actualParameters = get
+             converter_call.methodName = r2r.converter.converterName
+
+             type_info   = idc!TypeInfo.new
+	    	 type_info.^model =  { genericQ[ #kindOf(rt!generic), #p(s, r2r.converter.module) ].t }.call
+	    	 // type_info.classifierName = // JUST THE MODEL!
+	     
+             converter_call.receptorType = type_info
+             converter_call
+           }
+           converter_call = create_converter_call.call
+            
+           // TODO: Repeated from above
+           set_closure_to_avoid_failure = { |targetRef|
+	          set = idc!Set.new
+	          set.featureName = targetRef.featureName
+	          set.receptor    = varsQ[ #kindOf(rt!var2var), #p(s, targetRef.referredElement) ].t
+	          set.value       = converter_call
+	          set        
+	       }
+	       set = set_closure_to_avoid_failure.call(targetRef)        
+	       
+	       for_all.instructions = get
+	       for_all.instructions = meta
+	       for_all.instructions = converter_call             
+	       for_all.instructions = set             
+ 
+           // to lineQ
+           instr_trace = rt!instr.new
+           instr_trace.s = r2r
+           instr_trace.list = get
+           instr_trace.list = meta
+           instr_trace.list = converter_call
+           instr_trace.list = set
+           emit instr_trace to lineQ
+ 
+         }
+      } 
+      reference2reference_with_converter.call
+      
+      
+      for_all
+    }
+    
+    instructions = left_class_use_transformer.call(ctx, class_use)    
+
+    instr_trace = rt!instr.new
+    instr_trace.s = ctx
+    instr_trace.list = instructions 
+    
+    emit instr_trace to instrQ 
+  end
+end
+
+segment line_numbers
+  forall instr_trace from instrQ
+    instr_trace.list.each { |idc_instr|
+      idc_instr.row    = instr_trace.s.row
+      idc_instr.column = instr_trace.s.column
+      idc_instr.file   = instr_trace.s.file
+    }
+  end
+end
+
+// This is needed because I cannot map a ctx to instr, and again ctx to the the create instr than come from the inner elements
+segment line_numbers_2
+  forall instr_trace from lineQ
+    instr_trace.list.each { |idc_instr|
+      idc_instr.row    = instr_trace.s.row
+      idc_instr.column = instr_trace.s.column
+      idc_instr.file   = instr_trace.s.file
+    }
+  end
+end
+
+// Different segments of this kinds will be in charge of translating
+// differently the annotations according to some context of use (e.g., using metadepth or emf)
+// 
+// In any case, I had to modify id_string to consider queues to be different when PotencyAnnotation is different
+segment copy_annotations_for_class_use
+  
+  forall queue_trace_link from queueByName
+     where queue_trace_link.class_use
+    
+     ann = queue_trace_link.class_use.potencyAnnotation
+     ann.is_nil.if_else({ |v| "nothing" }, { |v|
+     	extension = idc!PotencyExtension.new
+     	extension.potency = ann.value
+     	q = queue_trace_link.queue_
+     	q.extension = extension
+     })
+  end
+end

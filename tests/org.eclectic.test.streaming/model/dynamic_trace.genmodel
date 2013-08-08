@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclectic.test.streaming/src-gen"
+    modelPluginID="org.eclectic.test.streaming" modelName="Dynamic_trace" modelPluginClass=""
+    importerID="org.eclipse.emf.importer.ecore" complianceLevel="6.0" copyrightFields="false">
+  <foreignModel>dynamic_trace.ecore</foreignModel>
+  <genPackages prefix="DTrace" basePackage="org.eclectic.test.streaming" disposableProviderFactory="true"
+      ecorePackage="dynamic_trace.ecore#/">
+    <genClasses image="false" ecoreClass="dynamic_trace.ecore#//ExecutionStatement">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dynamic_trace.ecore#//ExecutionStatement/timestamp"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dynamic_trace.ecore#//ExecutionStatement/nodeId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dynamic_trace.ecore#//ExecutionStatement/statementSrc"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="dynamic_trace.ecore#//MethodExecution">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dynamic_trace.ecore#//MethodExecution/methodName"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dynamic_trace.ecore#//MethodExecution/debugId"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dynamic_trace.ecore#//MethodExecution/caller"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dynamic_trace.ecore#//MethodExecution/callee"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dynamic_trace.ecore#//MethodExecution/receptor"/>
+    </genClasses>
+    <genClasses ecoreClass="dynamic_trace.ecore#//LocalExecution">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dynamic_trace.ecore#//LocalExecution/isCreate"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dynamic_trace.ecore#//LocalExecution/isDestroy"/>
+    </genClasses>
+    <genClasses ecoreClass="dynamic_trace.ecore#//RemoteCall"/>
+    <genClasses ecoreClass="dynamic_trace.ecore#//RemoteMethodExecution">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dynamic_trace.ecore#//RemoteMethodExecution/clientTimestamp"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dynamic_trace.ecore#//RemoteMethodExecution/clientNodeId"/>
+    </genClasses>
+    <genClasses image="false" ecoreClass="dynamic_trace.ecore#//Classifier"/>
+    <genClasses ecoreClass="dynamic_trace.ecore#//Instance">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dynamic_trace.ecore#//Instance/objectId"/>
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dynamic_trace.ecore#//Instance/objectId_hex"/>
+      <genFeatures notify="false" createChild="false" propertySortChoices="true" ecoreFeature="ecore:EReference dynamic_trace.ecore#//Instance/clazz"/>
+    </genClasses>
+    <genClasses ecoreClass="dynamic_trace.ecore#//LocalInstance"/>
+    <genClasses ecoreClass="dynamic_trace.ecore#//RemoteInstance">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dynamic_trace.ecore#//RemoteInstance/nodeId"/>
+    </genClasses>
+    <genClasses ecoreClass="dynamic_trace.ecore#//Class">
+      <genFeatures createChild="false" ecoreFeature="ecore:EAttribute dynamic_trace.ecore#//Class/name"/>
+    </genClasses>
+  </genPackages>
+</genmodel:GenModel>

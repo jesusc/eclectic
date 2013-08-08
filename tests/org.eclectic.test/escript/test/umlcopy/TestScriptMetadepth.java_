@@ -1,0 +1,141 @@
+package test.umlcopy;
+
+import static org.junit.Assert.*;
+
+import java.io.IOException;
+import java.util.Date;
+import java.util.List;
+
+import meteoric.at3rdx.kernel.Model;
+import meteoric.at3rdx.kernel.ModelFactory;
+import meteoric.at3rdx.kernel.VirtualMachine;
+import meteoric.at3rdx.parse.ASTVisitorInterpreter;
+import meteoric.at3rdx.parse.metaDepthInterpreter;
+import meteoric.at3rdx.parse.exceptions.MDinvalidElementCreation;
+import modelum.eclectic.jvm.test.ScriptCompiler;
+
+import org.eclectic.capi.EclecticException;
+import org.eclectic.frontend.ScriptParseUtil;
+import org.eclectic.frontend.ScriptStandaloneSetup;
+import org.eclectic.idc.datatypes.JavaListConverter;
+import org.eclectic.idc.jvm.JVMCompilationResult;
+import org.eclectic.idc.jvm.runtime.StandaloneIdc;
+import org.eclectic.modeling.emf.BasicEMFModel;
+import org.eclectic.modeling.emf.EMFLoader;
+import org.eclectic.modeling.emf.ModelManager;
+import org.eclectic.modeling.metadepth.MetadepthModel;
+import org.eclipse.emf.common.util.EList;
+import org.eclipse.emf.ecore.EObject;
+import org.eclipse.emf.ecore.resource.Resource.Diagnostic;
+import org.eclipse.emf.ecore.xmi.impl.XMIResourceImpl;
+import org.eclipse.xtext.resource.XtextResource;
+import org.junit.BeforeClass;
+import org.junit.Test;
+
+import com.google.inject.Injector;
+
+public class TestScriptMetadepth {
+
+	public static void main(String[] args) throws Exception {
+		setUp();
+		new TestScriptMetadepth().testExecute2();
+		// new TestScript().testClosuresCall();
+	}
+	
+	@BeforeClass 
+	public static void setUp() {
+		StandaloneIdc.init();		
+	}
+
+	@Test
+	public void testExecute1() throws Exception{
+		JVMCompilationResult executor = new ScriptCompiler().execute("escript/test/umlcopy/umlcopy.escript");
+
+		String d = "/home/jesusc/usr/qool/workspace/org.eclectic.test/";
+		
+		// Declare models
+		ModelManager manager = new ModelManager();
+		EMFLoader    loader  = new EMFLoader(new JavaListConverter());
+		BasicEMFModel in  = loader.basicModelFromFile(
+				d + "fixtures/metamodels/ClassDiagram.ecore", 
+				d + "fixtures/models/pets.xmi"); 
+		
+		/*
+		BasicEMFModel out = loader.basicEmptyModelFromFile(
+				d + "fixtures/metamodels/ClassDiagram.ecore", 
+				d + "_tmp/output.xmi"); 
+		*/
+		
+		Model classDiagramMM = loadModel(withDir("fixtures/metadepth/class_diagram.mdepth"), "ClassDiagram");
+
+		String type 	 = "ClassDiagram";
+		Model  metaModel = VirtualMachine.instance().getModel(type);
+
+		ModelFactory mf   = metaModel.getFactory();
+		Model outputModel = mf.createModel("OUT");
+		
+		// classDiagramMM.addChildren(outputModel);
+		// outputModel.setContainer(classDiagramMM);
+		
+		// VirtualMachine.instance().addModel(outputModel);
+		MetadepthModel out = new MetadepthModel(
+				classDiagramMM, 
+				outputModel, 
+				new JavaListConverter());								
+		
+		manager.register("in", in);
+		manager.register("out", out);
+		
+		// Execute
+		executor.execute(manager, "umlcopy");
+		
+		// Serialize
+		out.serialize();		
+	}
+
+	@Test
+	public void testExecute2() throws Exception{
+		JVMCompilationResult executor = new ScriptCompiler().execute("escript/test/umlcopy/umlcopy-closures.escript");
+
+		String d = "/home/jesusc/usr/qool/workspace/org.eclectic.test/";
+		ModelManager manager = new ModelManager();
+		
+		Model classDiagramMM1 = loadModel(withDir("fixtures/metadepth/class_diagram.mdepth"), "ClassDiagram");
+		Model inputModel1 = loadModel(withDir("fixtures/metadepth/diagram.mdepth"), "Test");
+		
+		MetadepthModel in = new MetadepthModel(
+				classDiagramMM1, 
+				inputModel1, 
+				new JavaListConverter());								
+		
+
+		// output
+		EMFLoader     loader = new EMFLoader(new JavaListConverter());
+		BasicEMFModel out    = loader.basicEmptyModelFromFile(
+				withDir("fixtures/metamodels/ClassDiagram.ecore"), 
+				withDir("_tmp/output.xmi")); 
+		
+		
+		manager.register("in", in);
+		manager.register("out", out);
+		
+		// Execute
+		executor.execute(manager, "umlcopy");
+		
+		// Serialize
+		out.serialize();		
+	}
+
+	public String withDir(String f) {
+		String d = "/home/jesusc/usr/qool/workspace/org.eclectic.test/";
+		return d + f;
+	}
+	
+	protected Model loadModel(String fileName, String modelName) throws Exception {
+		metaDepthInterpreter in = new metaDepthInterpreter();
+		in.parse(fileName);
+		in.interpret();
+		
+		return VirtualMachine.instance().getModel(modelName);
+	}
+}

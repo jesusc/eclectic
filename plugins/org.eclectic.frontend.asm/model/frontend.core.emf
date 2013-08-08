@@ -1,0 +1,306 @@
+@namespace(uri="http://eclectic.org/frontend/core", prefix="eclectic_frontend_core")
+package core;
+
+abstract class LocatedElement {
+   attr int row;
+   attr int column;
+   attr String file;
+   // Transient is needed to allow text serialization...  
+}
+
+abstract class NamedElement {
+   attr String[1] name;
+}
+
+
+abstract class DefinitionParameter extends NamedElement { }
+class ModuleParameter extends DefinitionParameter { }
+
+abstract class ModuleDefinition extends LocatedElement, NamedElement, AnnotableElement { 
+}
+
+abstract class AnnotableElement { 
+  ref Annotation[*]#annotatedElement annotatedWith;
+}
+
+class ImplicitlyAnnotableElement {
+   val SingleAnnotation[*] annotations;
+}
+
+abstract class Annotation {
+//   ref AnnotableElement[1]#annotations annotable;
+	ref AnnotableElement[0..1]#annotatedWith annotatedElement;
+}
+
+class OptimizationsAnnotation extends Annotation {
+	attr boolean enabled = false;
+}
+
+// With respect to annotations, it would be interesting to have
+// a rewriting that change generic annotations for specific ones. 
+class MetamodelModelAnnotation extends Annotation {
+  // The annotatedElement should be redefined to be a model
+  // ref RepresentModel[1] model;
+  attr String metamodel;   
+}
+
+abstract class SingleAnnotation extends Annotation {
+}
+
+class PotencyAnnotation extends SingleAnnotation {
+   attr Integer[1] value;
+} 
+
+class GenericAnnotation {
+   attr String[1] name;
+   val AnnotationParameter[+] parameters;
+}
+
+abstract class AnnotationParameter { }
+
+
+// This is a mark for those 'variables' that may represent a model 
+abstract class RepresentModel extends AnnotableElement { }
+abstract class TransformationDefinition extends ModuleDefinition {
+   val TransformationDefinitionParameter[*] inModels;
+   val TransformationDefinitionParameter[*] outModels; 
+   val ImportedModel[*] importedModels;
+   val InlineModel[*] inlineModels;
+ 
+   val Annotation[*] annotations;  
+   val UseDeclaration[*] uses;
+
+   val RequireDeclaration[*] requires;
+}
+
+class EclecticTransformationDefinition extends TransformationDefinition {
+   val TransformationDefinition[*] transformations;
+}
+
+class TransformationDefinitionParameter extends DefinitionParameter, RepresentModel { }
+class ImportedModel extends RepresentModel, NamedElement { }
+
+class UseDeclaration extends RepresentModel {
+   attr String[1] module;
+   attr String[0..1] as;
+}
+
+
+// This should replace use declarations in the future
+class RequireDeclaration extends RepresentModel { 
+	attr String[1] name;
+	attr String[0..1] default;
+	val RequireParameter[*] parameters;
+}
+
+abstract class RequireParameter {
+   attr String[0..1] formalParameterName;
+}
+
+class RequireModelParameter extends RequireParameter {
+   ref RepresentModel[1] model;
+}
+
+/** Expressions */
+abstract class Variable { 
+	// attr String[1] name;
+	attr String[0..1] name;
+    // To avoid problems with TAO and xText, where variable names are implicit...
+}
+
+abstract class Statement extends LocatedElement  { }
+abstract class Expression extends Statement { }
+
+class DefineVariable extends Statement, Variable { 
+	val Expression[1] expression;
+}
+
+class PropertyWrite extends Expression {
+	attr String[1] property;
+	ref Variable[1] receptor; 
+	val Expression[1] expression;
+}
+
+class ModelReference extends ClassUse, Expression { }
+
+class VariableReference extends Expression {
+   ref Variable[1] variable;
+}
+
+class MethodCall extends Expression {
+   val Expression[1] receptor;
+   attr String[1] methodName;
+   val Expression[*] parameters;
+   attr boolean[1] withParameters = false;
+}
+
+class KeywordMethodCall extends Expression {
+   val Expression[1] receptor;
+   val KeywordParameter[*] parameters;
+}
+
+class KeywordParameter {
+   attr String[1] keyword;
+   val Expression[1] value;   
+}
+
+class BinaryExpr extends Expression {
+   val Expression[1] left;
+   val Expression[1] right;
+   attr BinaryOp[1] binaryOp;
+}
+
+class ClosureDeclaration extends Expression {
+	val Statement[*] statements;
+	val ClosureParameter[*] formalParameters;     	
+}
+ 
+class ClosureParameter extends Variable {
+   
+}
+
+class ResolveLink extends Expression {
+   val Expression[1] expr;
+   attr Boolean[1] isExternal = false;
+   ref UseDeclaration[0..1] module;
+
+   attr String[1] linkName;
+   attr String[0..1] featureName;
+}
+  
+
+enum BinaryOp {
+   EQUAL = 0; ADD = 1; SUB = 2; MUL = 3; DIV = 3; 
+}
+
+class IfExpr extends Expression {
+   val IfBranch[1] then;
+   val IfBranch[*] elsifs;
+   val IfBranch[0..1] else;
+}
+
+class IfBranch {
+   val Expression[0..1] condition; // none if it an else
+   val Statement[*] statements;
+}
+
+class NumLiteral extends Expression {
+   attr int[1] value;
+}
+
+class DoubleLiteral extends Expression {
+   attr double[1] value;
+}
+
+class StringLiteral extends Expression {
+   attr String[1] value;
+}
+
+class BooleanLiteral extends Expression {
+   attr boolean[1] value;
+}
+
+
+
+
+
+/** Type declaration */
+abstract class TypeExpression {
+}
+
+class ClassUse extends TypeExpression, ImplicitlyAnnotableElement {
+   ref  RepresentModel[1] model;
+   attr String[1] className;
+
+   attr boolean strictType = false; // whether not to include subclasses
+}
+
+// This does not seems to be used, because traces are not used anymore, but inline models
+class TraceUse extends TypeExpression {
+   ref TraceDefinition[1] trace;
+}
+
+
+abstract class TypedWithClass {
+   val ClassUse[1] type_;
+}
+
+/** Trace definition */
+class TraceInterface extends ModuleDefinition {
+    
+  // val TracedModelParameter[+] parameters;  
+  val TraceDefinition[*] definitions;
+}
+
+class TracedModelParameter extends DefinitionParameter, RepresentModel { }
+
+class TraceDefinition extends NamedElement {
+  val TraceElement[+] elements;
+}
+
+class TraceElement extends NamedElement {
+   val TypeExpression[1] type;
+} 
+
+/* Inline model definition */
+class InlineModel extends ModuleDefinition, RepresentModel {    
+  val InlineClass[*] classes;
+}
+
+class InlineClass extends NamedElement {
+  val InlineFeature[*] features;
+}
+
+
+class InlineFeature extends NamedElement {
+   val TypeExpression[1] type;
+   attr boolean multivalued = false;
+} 
+
+class InlineAttribute extends InlineFeature { }
+class InlineReference extends InlineFeature { }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/// DELETE???
+class MatchTrace extends Expression {      	
+   	ref TraceDefinition[1] trace;
+   	val TraceCompareExpression[1] traceExpr;
+   	
+   	attr ResolveTraceCardinality[1] cardinality = 0;
+}  
+  
+class TraceCompareExpression {  
+	attr boolean[1] multivaluedTag = false;
+   
+	ref TraceElement[1] traceVar;   	
+	val Expression[1] expr;
+}  
+  
+enum ResolveTraceCardinality {
+	ONE_ONE = 0;
+	ZERO_OR_ONE = 1;	
+	MANY = 2;          
+}
+
+class PutTrace extends Expression {
+   ref TraceDefinition[1] trace;
+   val PutTraceParameter[*] parameters;
+}
+
+class PutTraceParameter {
+   val Expression[1] value;
+   ref TraceElement[1] traceVar;
+}
+

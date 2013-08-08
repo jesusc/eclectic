@@ -1,0 +1,34 @@
+@namespace(
+	uri="http://eclectic.org/streaming/simplified_seq_diagram",
+	prefix="seq_diagram")
+package seqdiagram;
+
+abstract class Message {
+	ref Message[*] followingMessages;
+	
+	ref Classifier[0..1] sourceClassifier;
+	ref Classifier[1] targetClassifier;
+}
+
+class Operation extends Message {
+   attr String[1] name;
+}
+
+abstract class Classifier {
+ 
+}
+
+class Instance extends Classifier {
+   attr String debugName;
+   attr int objectId;
+   attr int nodeId;
+
+   attr String objectId_hex;
+
+   ref Class[1] clazz;
+}
+
+class Class extends Classifier {
+   attr String[1] name;  
+}
+

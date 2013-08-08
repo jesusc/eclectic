@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.6"/>
+	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry kind="src" path="qool"/>
+	<classpathentry kind="src" path="mappings"/>
+	<classpathentry kind="src" path="family"/>
+	<classpathentry kind="src" path="api"/>
+	<classpathentry kind="src" path="escript"/>
+	<classpathentry kind="lib" path="lib/jgraphx.jar"/>
+	<classpathentry kind="lib" path="lib/scala.library_2.9.0.final.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

@@ -1,0 +1,38 @@
+mappings jar2uml(jar) -> (uml)
+jar : 'platform:/resource/org.eclectic.test.jvm_integration/src/test/bcel/bcel.apidesc'
+
+uses jar_util 
+
+from  j : jar!JavaClass
+  to  c : uml!Class
+  
+  c.name = j.name
+  c.ownedAttribute  <- j.fields
+  c.ownedOperation  <- j.methods
+  c.superClass      <- j.superclass
+end
+
+from m : jar!Method
+  to o : uml!Operation
+  
+  o.name = m.name
+  o.isAbstract = m.isAbstract
+  o.isStatic   = m.isStatic
+  o.isLeaf     = m.isFinal
+  // p.visibility = m.accessFlags convert jar_util.toUmlVisibility   
+end
+
+from m : jar!Field 
+  to p : uml!Property
+  
+  p.name = m.name
+  p.isStatic = m.isStatic
+  p.isReadOnly = m.isFinal
+  p.isLeaf     = m.isFinal
+  
+  p.type       <- m.refType
+  // p.visibility = m.accessFlags convert jar_util.toUmlVisibility   
+end
+
+
+			

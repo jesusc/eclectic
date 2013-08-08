@@ -1,0 +1,155 @@
+@namespace(uri="http://eclectic.org/frontend/qoolL", prefix="ec_frontend_qoolL")
+package qool;
+
+@namespace(uri="http://eclectic.org/frontend/dep", prefix="ec_frontend_dep")
+package dep {
+   
+   class Variable { }
+   class NamedElement { }
+   class TransformationDefinition { }
+   class TraceInterface { }
+   class TransformationDefinitionParameter { }
+   class LocatedElement { }
+   
+   class ClassUse { }           
+   class Expression { }   
+   class Statement { }
+   class TypeExpression { }   
+   
+   class InlineModel { }
+}
+
+class QoolTransformation extends dep.TransformationDefinition {
+   // val dep.TraceInterface[1] traceInterface;
+   val QoolQueue[*] queues;
+   val Segment[*] segments;
+   
+   // Inherited from TransformationDefinition, to enable implicit inline models!
+   // val dep.InlineModel[*] inlineModels;
+}
+
+// -- 
+// -- Queues 
+// --
+abstract class QoolQueue extends dep.LocatedElement, dep.NamedElement {
+	val QueueOptimization[*] optimizations;
+}
+
+abstract class QueueOptimization { }
+class AccessByFeatureOptimization extends QueueOptimization {
+	attr String[1] featureName;
+	attr boolean[1] force = false; 
+}
+
+class LocalQueue extends QoolQueue {
+   val dep.TypeExpression[1] type_;
+}
+
+class ModelElementQueue extends QoolQueue {
+   val dep.ClassUse[1] class_;    
+   val dep.ClassUse[*] additionals;
+}
+
+// -- 
+// -- Segments
+// --
+
+// Provide is forbidden here, is this wrong??
+class Segment extends dep.NamedElement {
+   val dep.Statement[*] statements; 
+}
+
+class IteratorStatement extends dep.Statement, dep.Variable {
+   val dep.Expression[0..1] condition;
+   val dep.Statement[*] statements;   
+}
+
+class ForAllStatement extends IteratorStatement {
+   ref QoolQueue[1] queue;
+}
+
+class ForEachStatement extends IteratorStatement {
+   val dep.Expression[1] collection;
+}
+
+class EmitStatement extends dep.Statement {
+   ref QoolQueue[1] queue;
+   val dep.Expression[1] value;
+}
+
+class MatchExpression extends dep.Expression {
+   ref QoolQueue[1] queue;
+   val MatchPredicate[+] predicates;
+}
+
+// trace_type = traceQ[kindOf(class2class), p(s, src.type)]
+abstract class MatchPredicate { }
+class KindOfPredicate extends MatchPredicate {
+   val dep.ClassUse[1] class_; 
+}
+class PropertyEqualsPredicate extends MatchPredicate {
+   attr String[1] propertyName;
+   val dep.Expression[1] value;
+}
+
+// Begin-of invocation
+
+abstract class InvokeTransformation extends dep.Expression{
+   // Not clear whether importing the transformation first with "uses"
+   attr String[1] transformationName;     
+   
+  	val InvocationParameter[*] sourceModels; 
+  	val InvocationParameter[*] targetModels;   	
+  	val NamedInvocationParameter[*] parameters;
+
+  	ref dep.Variable[0..1] inputViewFilter;     
+
+  	// Variant 1: explicit invocation of rule
+  	attr String[0..1] entryPointName;
+  	val dep.Expression[*] entryPointParameters;
+}
+  
+class InvokeExternal extends InvokeTransformation {
+  	
+  	// Variant 2: execute all, and select output element
+  	val dep.Expression[0..1] outputResolutionSourceElement;
+  	// I have to find a way to connect the transformation explicitly
+  	// So far, I had used requiredQueues, but this time requiredQueues must be
+  	// associated to the transformation declared "inline" in this invocation
+  	attr String[0..1] queueName;
+  	attr String[0..1] traceAttributeName;
+    // result = invoke-external transformationName(in = modelSrc) -> (out = modelTgt)
+	//			 input-view-filter filter_view
+	//			 output-element src_element[queueName.traceAttributeName]
+  }
+
+  class InvokeInternal extends InvokeTransformation {
+  }
+  
+  class InvocationParameter {
+  	ref  dep.TransformationDefinitionParameter[1] model; 
+    attr String[1] calleeModelName;
+  }
+
+  class NamedInvocationParameter {
+     attr String[1] formalName;
+     val dep.Expression[1] actualParameter;
+  }
+// End-of invocation
+
+@namespace(uri="http://eclectic.org/frontend/qoolL/facilities", prefix="qool_facilities")
+package facilities {
+	class Copier extends dep.Expression {
+	   val dep.Expression[*] objects;
+	   val CopierCallbackDefinition[*] callbacks;
+	   ref dep.TransformationDefinitionParameter[1] copyInModel;
+	}
+	
+	class CopierCallbackDefinition {
+	   attr boolean[1] stop = false;
+	   val dep.Expression[1] trigger;
+	   val dep.Expression[1] action;
+	}
+
+}
+  

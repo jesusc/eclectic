@@ -1,0 +1,25 @@
+api ant described by "http://ant"
+
+generic mapper test.ant.AntMapper
+iterator Enumeration : java.util.Enumeration {
+	finished hasMoreElements() : boolean
+	next     nextElement() : java.lang.Object
+}
+
+metaclass Project to org.apache.tools.ant.Project {
+	empty constructor
+	attr name : String
+		get method getName() : String
+	
+	ref targets* : Target
+		get generic getTargets(org.apache.tools.ant.Project) : Array<org.apache.tools.ant.Target>
+}
+
+metaclass Target to org.apache.tools.ant.Target {
+	empty constructor
+	attr name : String
+		get method getName() : String
+
+	ref dependencies* : Target
+		get iterator Enumeration method getDependencies() : java.util.Enumeration 
+}

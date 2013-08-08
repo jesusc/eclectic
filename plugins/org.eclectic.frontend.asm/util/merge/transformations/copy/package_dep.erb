@@ -1,0 +1,15 @@
+top_rule 'EPackage' do
+   from Source::EPackage
+   to Resulting::EPackage
+   filter { |c| c.metaclass == Source::EPackage && ! c.is_dep? }
+   mapping do |s, t|
+      t.nsURI = s.nsURI
+      t.nsPrefix = s.nsPrefix
+      t.eFactoryInstance = s.eFactoryInstance
+      t.eClassifiers = s.eClassifiers
+      t.eSubpackages = s.eSubpackages.reject { |sub| sub.is_dep? }
+      t.eSuperPackage = s.eSuperPackage # The same creation_condition
+      t.name = s.name
+      t.eAnnotations = s.eAnnotations
+   end
+end

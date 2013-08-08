@@ -1,0 +1,40 @@
+// TODO: Deal with scopes for variables properly (xText)
+mappings struct (uml) -> (java)
+  uses java_conventions
+  uses gen_java
+
+  [classifier]
+  from c : uml!Class 
+    to cd: java!ClassDeclaration, cu : java!CompilationUnit
+    linking cd.originalCompilationUnit = cu
+
+    cd.name = c.name convert java_conventions.camelCase
+    cd.bodyDeclarations <- c.ownedAttribute
+    cd.bodyDeclarations <- c.ownedOperation
+  
+    //generalization <- superclass 
+  end
+
+  [classifier]
+  from up : uml!PrimitiveType
+    to jp : java!PrimitiveType
+    // Map subclasses independently
+    jp.name = up.name
+  end
+
+  [get]
+  from a : uml!Property to get: java!MethodDeclaration, 
+                             ta: java!TypeAccess
+    linking get.returnType = ta
+    get.name = a.name convert java_conventions.getterName 
+    ta.type  <- a.type
+  end
+
+  [operation]
+  from o : uml!Operation to m: java!MethodDeclaration, b : java!Block
+    linking m.body = b
+    
+    m.name = o.name convert java_conventions.getterName 
+ 
+    b.statements <- o.pre convert gen_java.mapPrecondition
+  end

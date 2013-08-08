@@ -1,0 +1,10 @@
+constraints for Company {
+
+	context Account 
+		pre getCash: 
+			let size : Integer = 1
+			in size
+			-- in size < 1000
+		description: "Simple constraint: integers"
+	
+}  

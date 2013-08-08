@@ -1,0 +1,912 @@
+/**
+ * Eclectic syntax. It is a merge of the syntax of all sublanguages
+ */
+grammar org.eclectic.frontend.Eclectic with org.eclectic.frontend.syntax.Expressions
+
+import "platform:/resource/org.eclectic.frontend.asm/model/eclectic.frontend.ecore" 
+
+import "http://www.eclipse.org/emf/2002/Ecore" as ecore
+
+import "platform:/resource/org.eclectic.frontend.asm/model/eclectic.frontend.ecore#//core" as core
+import "platform:/resource/org.eclectic.frontend.asm/model/eclectic.frontend.ecore#//mappings" as mappings
+import "platform:/resource/org.eclectic.frontend.asm/model/eclectic.frontend.ecore#//imperative" as imperative
+
+import "platform:/resource/org.eclectic.frontend.asm/model/eclectic.frontend.ecore#//qool" as qool
+import "platform:/resource/org.eclectic.frontend.asm/model/eclectic.frontend.ecore#//qool/facilities" as facilities
+
+//import "platform:/resource/modelum.eclectic.compiler/model/family/eclectic.frontend.ecore#//frontend" as frontend
+import "platform:/resource/org.eclectic.frontend.asm/model/eclectic.frontend.ecore#//tao" as tao
+
+import "platform:/resource/org.eclectic.frontend.asm/model/eclectic.frontend.ecore#//patterns" as pat
+
+import "platform:/resource/org.eclectic.frontend.asm/model/eclectic.frontend.ecore#//attribution" as attr
+
+
+EclecticTransformationDefinition returns core::EclecticTransformationDefinition: 
+	"eclectic" name=ID 	'(' (inModels+=TransformationDefinitionParameter) ("," inModels+=TransformationDefinitionParameter)* ')' '->' '(' outModels+=TransformationDefinitionParameter ("," outModels+=TransformationDefinitionParameter)* ')'
+	
+	(transformations+=MemberLanguageTransformationDefinition)+
+;
+
+MemberLanguageTransformationDefinition returns core::TransformationDefinition:
+	  MappingTransformation
+	| NavigationLibrary
+	| QoolTransformation
+	| TaoTransformation
+	| AttributionTransformation
+    | PatternSpecification
+;
+
+//
+// Begin-of Mappings
+//
+
+MappingTransformation returns mappings::MappingTransformation:
+	'mappings'
+	name=EString
+	// '(' left=[core::TransformationDefinitionParameter|EString] ')'
+	//'(' (inModels+=TransformationDefinitionParameter {mappings::MappingTransformation.left = current}) ')'
+	'(' (inModels+=TransformationDefinitionParameter) ')'
+	'->'
+	'(' outModels+=TransformationDefinitionParameter ')'
+
+	(annotations+=Annotation)*
+
+	(uses+=UsesStatements)*
+	(requires+=RequireDeclaration)*
+	
+	(delegates+=Delegate)*
+	( contexts+=Context )+
+    
+    "end"
+    ;
+
+// @common
+Annotation returns core::Annotation:
+	MetamodelModelAnnotation
+	| OptimizationsAnnotation
+;
+
+OptimizationsAnnotation returns core::OptimizationsAnnotation: 
+	"optimizations" ":" enabled?="enabled"
+;
+
+
+
+MetamodelModelAnnotation returns core::MetamodelModelAnnotation:
+	annotatedElement=[core::RepresentModel] ":" metamodel=STRING
+;
+
+UsesStatements returns core::UseDeclaration: 
+	UseDeclaration // TODO: Allow several declarations together
+;
+
+UseDeclaration returns core::UseDeclaration: 
+	"uses" module=EString ("as" ^as=EString)?
+;
+
+RequireDeclaration returns core::RequireDeclaration: 
+	"require" name=EString ("(" parameters+=RequireModelParameter ("," parameters+=RequireModelParameter)* ")")? ("=" default=EString)?
+;
+
+RequireParameter returns core::RequireParameter: 
+	RequireModelParameter
+;
+
+
+RequireModelParameter returns core::RequireModelParameter: 
+	(formalParameterName=EString "=")? model=[core::RepresentModel]
+;
+
+
+TransformationDefinitionParameter returns core::TransformationDefinitionParameter:
+	{core::TransformationDefinitionParameter}
+	name=EString
+	;
+	
+/*
+ClassUse returns core::ClassUse :
+	model=[core::RepresentModel] "!" className=ID	
+;
+*/
+// Using Expressions as superlanguage makes that [a] does not work because of conflicts
+	
+// end-of-common
+
+
+Delegate returns mappings::Delegate :
+	(tags += Tag)*	
+	"delegate" "from" left+=MatchedElement ( "," left+=MatchedElement)*  
+	      'to' ( module=[core::UseDeclaration] isExternal?="!") linkName=EString ("." featureName=EString)?
+	;
+
+
+Context returns mappings::Context :
+	(tags += Tag)*
+	"from" left+=MatchedElement ( "," left+=MatchedElement)*  'to' right+=MatchedElement ( "," right+=MatchedElement)*	
+    	(modifiers+=C2CModifier)*
+		// (mappings += (Attribute2Attribute | AttributeIsString | Reference2Reference) )*
+		(mappings += (AttributeMapping | Reference2Reference) )*
+	"end"
+	;
+
+Tag returns mappings::Tag: 
+	"[" name=EString "]"
+;
+
+
+MatchedElement returns mappings::MatchedElement: 
+	(name=ID ":")? model=[core::RepresentModel] "!" className=ID	
+	(annotations+=SingleAnnotation)? (strictType ?= "!")?
+;
+
+SingleAnnotation returns core::SingleAnnotation :
+	PotencyAnnotation
+;
+
+PotencyAnnotation returns core::PotencyAnnotation: 
+	("@" | "^") value=INT
+; // copied from expressions
+
+
+C2CModifier returns mappings::C2CModifier: 
+	LinkedBy
+;
+
+// linking cd.originalCompilationUnit = cu
+LinkedBy returns mappings::LinkedBy: 
+	"linking" attribute=AttributeRef "=" linkedElement=[mappings::MatchedElement]	
+;
+
+AttributeMapping returns mappings::AttributeMapping :
+	left+=AttributeRef ( "," left+=AttributeRef)*  '=' rightPart=AttributeRightPart
+;
+
+AttributeRightPart returns mappings::AttributeRightPart:
+	AttributeIsString 
+	| AttributeIsBoolean	
+	| AttributeIsDouble	
+	| AttributeIsInteger
+	| Attribute2Attribute	
+	| AttributeIsResolveLink
+;
+
+
+Attribute2Attribute returns mappings::Attribute2Attribute :
+   right+=AttributeRef ( "," right+=AttributeRef)*
+   (converter=Converter)?	
+;	
+
+AttributeIsString returns mappings::AttributeIsString :
+   strValue=StrictString
+;
+
+AttributeIsBoolean returns mappings::AttributeIsBoolean :
+   boolValue=EBoolean
+;
+
+AttributeIsDouble returns mappings::AttributeIsDouble :
+   doubleValue=EDouble
+;
+
+AttributeIsInteger returns mappings::AttributeIsInteger :
+   intValue=EInt
+;
+
+AttributeIsResolveLink returns mappings::AttributeIsResolveLink: 
+	resolveLink = ResolveLinkInMapping
+;
+
+ResolveLinkInMapping returns core::ResolveLink: 
+	module=[core::UseDeclaration] isExternal?="!" linkName=EString ("." featureName=EString)?  
+		"[" expr=ResolveLinkInMappingVarRef "]"
+;
+
+ResolveLinkInMappingVarRef returns core::VariableReference: 
+	variable=[core::Variable] 
+;
+
+AttributeRef returns mappings::AttributeRef : 
+	(referredElement=[mappings::MatchedElement]	 '.')? featureName = EString (multivalued?="*")?
+	;
+
+Reference2Reference returns mappings::Reference2Reference :
+   left+=ReferenceRef ( "," left+=ReferenceRef)*  '<-' right+=ReferenceRef ( "," right+=ReferenceRef)*	
+	(converter=Converter)?	
+;	
+
+ReferenceRef returns mappings::ReferenceRef : 
+	(referredElement=[mappings::MatchedElement] '.')? featureName=EString (multivalued?="*")?
+	;
+
+Converter returns mappings::Converter: 
+	"convert" (module=[core::UseDeclaration] isExternal?=".")? converterName=EString
+;
+
+
+// Not sure if this has be factorized somewhere...
+EString returns ecore::EString:
+	STRING | ID;
+
+EDouble returns ecore::EDouble : INT '.' INT;
+
+EBoolean returns ecore::EBoolean:
+	"true" | "false";
+	
+StrictString returns ecore::EString:
+	STRING;
+
+EInt returns ecore::EInt:
+	'-'? INT;
+
+
+
+/// 
+/// Begin-of PATTERNS
+///
+
+PatternSpecification returns pat::PatternSpecification:
+	'patterns' name=EString '(' inModels+=TransformationDefinitionParameter ')'
+	(patterns+=Pattern)*
+	'end'
+;
+
+Pattern returns pat::Pattern: // TODO: Add parameters to the pattern: // ('(' formalParameters+=MethodParameter (',' formalParameters+=MethodParameter)* ')')?
+	'def' name=EString "->" "(" outputVariables+=POutputVariable (outputVariables+=POutputVariable)* ")"  
+		(objects+=PObject)+
+	'end'
+;
+
+POutputVariable returns pat::POutputVariable: 
+	object=[pat::PObject]
+;
+
+
+
+PObject returns pat::PObject:
+	name=ID ':' type=ClassUse
+	'{' (features += PFeature (',' features += PFeature)*)? '}' 
+;
+
+PFeature returns pat::PFeature:
+    PAttribute | PReference
+;
+
+PReference returns pat::PReference:
+	name=ID '=' value+=PObject
+;
+
+
+PAttribute returns pat::PAttribute:
+	name=ID '=' value=Expression
+;
+
+
+/// 
+/// End-of PATTERNS
+///
+
+///
+/// Begin-of Methods / Imperative
+///
+
+NavigationLibrary returns imperative::ImperativeTransformation:
+	'navigation' name=EString '(' inModels+=TransformationDefinitionParameter ')'
+	(methods+=MethodDefinition)*
+	'end'
+;
+
+MethodDefinition returns imperative::MethodDefinition: 
+	'def' type=ClassUse
+	  '.' name=EString  ('(' formalParameters+=MethodParameter (',' formalParameters+=MethodParameter)* ')')?
+	  	(statements+=Statement)+ 
+	'end'
+;
+
+MethodParameter returns imperative::MethodParameter: 
+	name=EString
+;
+
+
+///
+/// End-of Methods / Imperative
+///
+
+
+
+/// 
+/// Begin-of Qool
+///
+
+
+	QoolTransformation returns qool::QoolTransformation:
+		('qool' | 'scripting')
+		name=EString
+		// '(' left=[core::TransformationDefinitionParameter|EString] ')'
+		//'(' (inModels+=TransformationDefinitionParameter {mappings::MappingTransformation.left = current}) ')'
+		'(' inModels+=TransformationDefinitionParameter ("," inModels+=TransformationDefinitionParameter)* ')'
+		'->'
+		'(' outModels+=TransformationDefinitionParameter? ("," inModels+=TransformationDefinitionParameter)* ')'
+			(annotations+=Annotation)*
+		// like this to resolve a reference: it is not the case
+		//'(' right=[core::TransformationDefinitionParameter|EString] ')'
+			// ('annotations' '{' annotations+=Annotation ( "," annotations+=Annotation)* '}' )?
+			//('inModels' '{' inModels+=TransformationDefinitionParameter ( "," inModels+=TransformationDefinitionParameter)* '}' )?
+			// ('outModels' '{' outModels+=TransformationDefinitionParameter ( "," outModels+=TransformationDefinitionParameter)* '}' )?
+		// (traceInterface = TraceInterface)
+		(inlineModels += InlineModel)*
+		(queues += QoolQueue)*
+		(segments += Segment)+
+	    'end'
+	    ;
+	
+	
+	InlineModel returns core::InlineModel :
+		"model" name=EString
+			(classes+=InlineClass)+
+		"end"
+	;
+	
+	InlineClass returns core::InlineClass :
+		"class" name=EString	 
+		(('{' features+=InlineReferenceInline ( ";" features+=InlineReferenceInline)* '}') | 
+	     ( features+=InlineFeatureExpanded ( features+=InlineFeatureExpanded)* 'end'))
+	;
+	
+	InlineReferenceInline returns core::InlineReference:
+		name=EString ":" type=TypeExpression
+	;
+	
+	InlineFeatureExpanded returns core::InlineFeature :
+		InlineAttributeExpanded 
+		| InlineReferenceExpanded
+	;
+	
+	InlineAttributeExpanded returns core::InlineAttribute :
+		"att" name=EString  ":" type=TypeExpression (multivalued?="*")? 
+	;
+	
+	InlineReferenceExpanded returns core::InlineReference:
+		"ref" name=EString ":" type=TypeExpression (multivalued?="*")?
+	;
+	
+	// -- Queue 
+	QoolQueue returns qool::QoolQueue:
+		LocalQueue |
+		ModelElementQueue
+	;
+	
+	LocalQueue returns qool::LocalQueue:
+		"local" "queue" name=ID ":" type_=TypeExpression ("with" (optimizations+=QueueOptimization)+) ?
+	;
+	
+	ModelElementQueue returns qool::ModelElementQueue: 
+		"model" "queue" name=ID ":" class_=ClassUse 
+	;
+	
+	QueueOptimization returns qool::QueueOptimization: 
+		AccessByFeatureOptimization
+	;
+	
+	AccessByFeatureOptimization returns qool::AccessByFeatureOptimization: 
+		"access-by" featureName=EString (force?="!")?
+	;
+	
+	
+	
+	// -- Segments and expressions
+	
+	Segment returns qool::Segment: 
+		"segment" name=EString
+			(statements += QoolStatement)+	
+		"end"	
+	;
+	
+	// redefine
+	QoolStatement returns core::Statement: 
+		DefineVariable
+		| Expression
+		| PutTraceExpression
+		| PropertyWrite
+		| ForAllStatement
+		// | ForEachStatement
+		| EmitStatement		
+	
+	;
+
+	// Redefined for qool... (I need to restrict better what can be done in each language!!)	
+	ClosureDeclaration returns core::ClosureDeclaration: 
+	"{" ("|" formalParameters+=ClosureParameter ( "," formalParameters+=ClosureParameter)* "|")?
+	   (statements += QoolStatement)+ "}"
+;
+	// redefine
+	PrimaryExpression returns core::Expression: 
+		  Literal
+		| VariableReference
+		| ModelReference
+		| ParenthesizedExpression
+		| MatchTraceExpression 
+		| ClosureDeclaration
+		| MatchExpression // <-- added for qool
+	    | InvokeTransformation
+		| IfExpr
+		
+		// Facilities
+		| Copier
+	;
+	
+	InvokeTransformation returns qool::InvokeTransformation:
+		  InvokeExternal	
+		| InvokeInternal
+	;
+	
+	InvokeInternal returns qool::InvokeInternal: 
+		"invoke-internal" transformationName=QualifiedName
+			"(" (sourceModels+=InvocationParameter (","  sourceModels+=InvocationParameter)*) ? ")" "->"
+			"(" (targetModels+=InvocationParameter (","  targetModels+=InvocationParameter)*) ? ")"
+				("input-view-filter" inputViewFilter=[core::DefineVariable])?
+				("entrypoint" entryPointName=ID "(" (entryPointParameters+=Expression)?  ("," entryPointParameters+=Expression)* ")") ?
+	;
+	
+	NamedInvocationParameter returns qool::NamedInvocationParameter: 
+		formalName=EString "=" actualParameter=Expression
+	;
+	
+	InvokeExternal returns qool::InvokeExternal: 
+		"invoke-external" transformationName=QualifiedName
+			"(" (sourceModels+=InvocationParameter (","  sourceModels+=InvocationParameter)*) ? ")" "->"
+			"(" (targetModels+=InvocationParameter (","  targetModels+=InvocationParameter)*) ? ")"
+			("+" "(" parameters+=NamedInvocationParameter ("," parameters+=NamedInvocationParameter)* ")" )?
+		(
+			(
+				"entrypoint" entryPointName=ID "(" (entryPointParameters+=Expression)?  ("," entryPointParameters+=Expression)* ")") ?
+		|   (
+				"input-view-filter" inputViewFilter=[core::DefineVariable]
+				("output-element"    outputResolutionSourceElement=Expression "[" queueName=EString "." traceAttributeName=EString "]")?
+			)
+		)
+	;
+	
+	InvocationParameter returns qool::InvocationParameter: 
+		calleeModelName=ID "=" model=[core::TransformationDefinitionParameter]  
+	;
+	
+	
+	
+	ForAllStatement returns qool::ForAllStatement: 
+		"forall" name=ID "from" queue=[qool::QoolQueue]
+			("where" condition = Expression)?
+			(statements += QoolStatement)+		
+		"end"
+	;
+	
+	EmitStatement returns qool::EmitStatement: 
+		"emit" value=Expression "to" queue=[qool::QoolQueue]
+	;
+	
+	MatchExpression returns qool::MatchExpression: 
+		queue=[qool::QoolQueue] "[" (predicates += Predicate) ("," predicates += Predicate)* "]" 
+	;
+	
+	Predicate returns qool::MatchPredicate:
+		KindOfPredicate
+		| PropertyEqualsPredicate 
+	;
+	
+	KindOfPredicate returns qool::KindOfPredicate:
+	    "#kindOf" "(" class_ = ClassUse ")"
+	;
+	
+	PropertyEqualsPredicate returns qool::PropertyEqualsPredicate:
+	    "#p" "(" propertyName=EString "," value=Expression ")"
+	;
+	
+	// Begin-of Facilities
+	
+	Copier returns facilities::Copier: 
+		"copy" "(" objects+=Expression ("," objects+=Expression)* ")" "model" copyInModel=[core::TransformationDefinitionParameter] ("{"
+		   callbacks+=CopierCallbackDefinition ("," callbacks+=CopierCallbackDefinition)*
+		"}")?
+	;
+	
+	CopierCallbackDefinition returns facilities::CopierCallbackDefinition: 
+		("with" | stop?="stop") trigger=Expression "->" action=Expression
+	;
+	
+
+// End-of facilities
+///
+/// End-of Qool
+///
+
+
+
+///
+/// Being-of TAO
+///
+
+TaoTransformation returns tao::TaoTransformation:
+	'tao'
+	name=EString
+	// '(' left=[core::TransformationDefinitionParameter|EString] ')'
+	//'(' (inModels+=TransformationDefinitionParameter {mappings::MappingTransformation.left = current}) ')'
+	'(' (inModels+=TransformationDefinitionParameter) ("," inModels+=TransformationDefinitionParameter)* ')'
+	'->'
+	'(' outModels+=TransformationDefinitionParameter ("," outModels+=TransformationDefinitionParameter)* ')'
+
+	(uses+=UsesStatements)*
+
+	( templates+=Template)+
+    "end"
+    ;
+
+// @common
+
+Template returns tao::Template: 
+	"template" name=ID "(" parameters+=TemplateParameter ( "," parameters+=TemplateParameter)* ")"
+	(roots += TemplateRootObject)
+	"end"
+;
+
+TemplateParameter returns tao::TemplateParameter: 
+	name=ID ":" type=ClassUse
+;
+
+
+// To avoid conflicts, because Statement is not actually used
+//Statement returns core::Statement: 
+//	DefineVariable
+//;
+
+// "redefine" Expression
+TaoExpression returns core::Expression:
+	WithResolveMethodCall
+;
+
+
+TemplateRootObject returns tao::TemplateRootObject: 
+// 	ObjectInstantiation
+//  Duplicated!
+	(name=ID ":")? type=ClassUse "{"
+		(assigments+=Assignment)*
+	"}"
+;
+
+ObjectInstantiation returns tao::ObjectInstantiation: 
+	(name=ID ":")? type=ClassUse "{"
+		(assigments+=Assignment)*
+	"}"
+;
+
+Assignment returns tao::Assignment: 
+	AttributeAssigment
+	| ObjectSyntax
+	| Invocation
+;
+
+AttributeAssigment returns tao::AttributeAssigment: 
+	targetFeature=ID "=" expr=SourceExpression	
+;
+
+SourceExpression returns tao::SourceExpression: 
+	WithOptionalVariableExpression 
+//	| NormalExpression 
+; 
+
+WithOptionalVariableExpression returns tao::WithOptionalVariableExpression: 
+	(variable=ObjectSourceVariable ":")? expr=TaoExpression // receptor=[core::Variable] "." sourceFeature=ID
+;
+
+ObjectSourceVariable returns tao::ObjectSourceVariable: 
+	name=ID 
+;
+
+
+ObjectSyntax returns tao::ObjectSyntax: 
+	targetFeature=ID "=" ("from" expr=SourceExpression (multivalued?="*")?  "to")? object=ObjectInstantiation		
+;
+
+Invocation returns tao::Invocation: 
+	targetFeature=ID "=" template=[tao::Template] "(" expr=SourceExpression (multivalued?="*")?  ")"
+;
+
+
+///
+/// End-of TAO
+///
+
+
+///
+/// Begin-of Attribute
+///
+
+
+AttributionTransformation returns attr::AttributionTransformation:
+	'attribution'
+	name=EString
+	// '(' left=[core::TransformationDefinitionParameter|EString] ')'
+	//'(' (inModels+=TransformationDefinitionParameter {mappings::MappingTransformation.left = current}) ')'
+	'(' inModels+=TransformationDefinitionParameter ("," inModels+=TransformationDefinitionParameter)* ')'
+	'->'
+	'(' outModels+=TransformationDefinitionParameter? ("," inModels+=TransformationDefinitionParameter)* ')'
+	(annotations+=Annotation)*
+	// like this to resolve a reference: it is not the case
+	//'(' right=[core::TransformationDefinitionParameter|EString] ')'
+		// ('annotations' '{' annotations+=Annotation ( "," annotations+=Annotation)* '}' )?
+		//('inModels' '{' inModels+=TransformationDefinitionParameter ( "," inModels+=TransformationDefinitionParameter)* '}' )?
+		// ('outModels' '{' outModels+=TransformationDefinitionParameter ( "," outModels+=TransformationDefinitionParameter)* '}' )?
+	// (traceInterface = TraceInterface)
+	(uses+=UsesStatements)*
+	(attributes += AttributeDcl)*	
+	(rules += AttributionRule)+
+    "end"
+    ;
+
+AttributeDcl returns attr::AttributeDcl :
+	InheritedAttributeDcl
+	| SynthesizedAttributeDcl
+;
+
+InheritedAttributeDcl returns attr::InheritedAttributeDcl: 
+	"inh" name=ID ":" type_=ClassUse
+;
+
+SynthesizedAttributeDcl returns attr::SynthesizedAttributeDcl: 
+	"syn" name=ID ":"  type_=ClassUse
+;
+
+AttributionRule returns attr::AttributionRule: 
+	"rule" type=ClassUse
+		(statements+=AttributionStatement)+
+//		("properties:"
+//		(statements+=PropertyWrite)+)? // It does not recognize property writes as parts of statements!
+	"end"
+;
+
+
+// redefine
+AttributionStatement returns core::Statement: 
+	AttributionDefineVariable
+	// | Expression // This is to avoid conflicts, but I don't think standalone expressions are really needed here
+	| AttributionExpressionNoUse
+	// | AttributionExpression
+	| AttributeInit
+	| PropertyWrite
+;
+
+AttributionDefineVariable returns core::DefineVariable: 
+	name=EString "=" expression=AttributionExpression
+;
+
+/*
+AttributionClosureStatement returns core::Statement: 
+	DefineVariable
+	// | Expression 
+	| PropertyWrite
+	| VariableReference 
+	| AttributeInit	// Let's see if this compile and works...
+	
+	// TODO: Allow normal expressions in closures... conflict currently
+;
+*/
+
+// Redefined
+AttributionClosureDeclaration returns core::ClosureDeclaration: 
+	"{" ("|" formalParameters+=ClosureParameter ( "," formalParameters+=ClosureParameter)* "|")?
+	   (statements += AttributionStatement)+ "}"
+;
+
+
+// redefine
+AttributionPrimaryExpression returns core::Expression: 
+	  Literal
+	| VariableReference
+	| ModelReference
+	| ParenthesizedExpression
+	| AttributionClosureDeclaration
+	| AttributeUse
+//	| InheritedAttributeUse   // <-- added for attribution
+	// | SynthesizedAttributeUse // <-- added for attribution
+;
+
+AttributionPrimaryExpressionNoUse returns core::Expression: 
+	  Literal
+	| VariableReference
+	| ModelReference
+	| ParenthesizedExpression
+	| AttributionClosureDeclaration
+	| IfExpr
+
+;
+
+AttributionExpression returns core::Expression:
+	// AttributionMethodCall	
+	AttributionMethodCall | AttributionResolveLinkAsArray // | AttributeUse	
+;
+
+AttributionExpressionNoUse returns core::Expression:
+	AttributionMethodCallNoUse | AttributionResolveLinkAsArray 	
+;
+
+
+AttributionResolveLinkAsArray returns core::ResolveLink:
+	( module=[core::UseDeclaration] isExternal?="!") linkName=EString ("." featureName=EString)?  "[" expr = AttributionExpression "]" 
+;
+
+// Copied from expressions
+AttributionMethodCall returns core::Expression:
+	AttributionPrimaryExpression
+	(
+		( ({core::BinaryExpr.left = current}) binaryOp=BinaryOp right=Expression)
+	    |	(=> ({core::MethodCall.receptor = current}) "." methodName=EString (withParameters?="(" parameters+=AttributionExpression ("," parameters+=AttributionExpression)* ")" )? (parameters+=AttributionClosureDeclaration)?  )+
+	//|	( ({core::MethodCall.receptor = current}) "." methodName=EString )
+	//|   (=> ({core::KeywordMethodCall.receptor = current}) "." (parameters+=KeywordParameter)+  )
+	//|   (=> ({core::KeywordMethodCall.receptor = current}) (parameters+=KeywordParameter)+  )+	
+	)?
+;
+
+AttributionMethodCallNoUse returns core::Expression:
+	AttributionPrimaryExpressionNoUse
+	(
+		( ({core::BinaryExpr.left = current}) binaryOp=BinaryOp right=Expression)
+	    |	(=> ({core::MethodCall.receptor = current}) "." methodName=EString (withParameters?="(" parameters+=AttributionExpression ("," parameters+=AttributionExpression)* ")" )? (parameters+=AttributionClosureDeclaration)?  )+
+	)?
+;
+
+AttributeUse returns attr::AttributeUse: 
+	attribute=[attr::AttributeDcl] "[" expr=AttributionExpressionNoUse "]"
+;
+
+//InitiableExpression returns core::Expression:
+//	VariableReference 
+//    | VariableReference	(=> ({core::MethodCall.receptor = current}) "." methodName=EString (withParameters?="(" parameters+=Expression ("," parameters+=Expression)* ")" )? (parameters+=ClosureDeclaration)?  )+
+//;
+
+/*
+AttributionMethodCall returns core::Expression:
+	AttributionPrimaryExpression
+	(
+		( ({core::BinaryExpr.left = current}) binaryOp=BinaryOp right=Expression)		
+		| ( ( ({attr::AttributeUse.expr = current}) "[" attribute=[attr::AttributeDcl] "]" )
+			(=> ({core::MethodCall.receptor = current}) "." methodName=EString (withParameters?="(" parameters+=Expression ("," parameters+=Expression)* ")" )? (parameters+=ClosureDeclaration)?  )?
+			)+
+	    | ( (=> ({core::MethodCall.receptor = current}) "." methodName=EString (withParameters?="(" parameters+=Expression ("," parameters+=Expression)* ")" )? (parameters+=ClosureDeclaration)?  )
+			  (  (({attr::AttributeUse.expr = current}) "[" attribute=[attr::AttributeDcl] "]") |
+			  	 ((({core::ResolveLink.expr = current}) "[" module=[core::UseDeclaration] isExternal?="!" linkName=EString ("." featureName=EString)?  "]"))			  	
+			  )? )+
+        // to allow accessing attributes	
+	)? // ? ( ({attr::AttributeUse.expr = current}) "[" attribute=[attr::AttributeDcl] "]" )?
+;
+*/
+
+AttributeInit returns attr::AttributeInit:
+	// attribute=[attr::AttributeDcl] "[" receptor=InitiableExpression "]" "<-" right=Expression  
+	attribute=[attr::AttributeDcl] "[" receptor=AttributionExpressionNoUse "]" "<-" right=AttributionExpression  
+;
+
+///
+/// End-of Attribution
+///
+
+
+/*
+//
+// End-of PatternSpecification
+//
+QoolTransformation returns qool::QoolTransformation:
+	'qool'
+	name=EString
+	'(' (inModels+=TransformationDefinitionParameter) ')' '->' '(' outModels+=TransformationDefinitionParameter ')'
+	(inlineModels += InlineModel)*
+	(queues += QoolQueue)+
+	(segments += Segment)+
+    ;
+
+// @common
+TransformationDefinitionParameter returns core::TransformationDefinitionParameter:
+	{core::TransformationDefinitionParameter}
+	name=EString
+	;
+
+InlineModel returns core::InlineModel :
+	"model" name=EString
+		(classes+=InlineClass)+
+	"end"
+;
+
+InlineClass returns core::InlineClass :
+	"class" name=EString	 
+	(('{' features+=InlineReferenceInline ( ";" features+=InlineReferenceInline)* '}') | 
+     ( features+=InlineFeatureExpanded ( features+=InlineFeatureExpanded)* 'end'))
+;
+
+InlineReferenceInline returns core::InlineReference:
+	name=EString ":" type=TypeExpression
+;
+
+InlineFeatureExpanded returns core::InlineFeature :
+	InlineAttributeExpanded 
+	| InlineReferenceExpanded
+;
+
+InlineAttributeExpanded returns core::InlineAttribute :
+	"att" name=EString  ":" type=TypeExpression (multivalued?="*")? 
+;
+
+InlineReferenceExpanded returns core::InlineReference:
+	"ref" name=EString ":" type=TypeExpression (multivalued?="*")?
+;
+
+// -- Queue 
+QoolQueue returns qool::QoolQueue:
+	LocalQueue |
+	ModelElementQueue
+;
+
+LocalQueue returns qool::LocalQueue:
+	"local" "queue" name=ID ":" type_=TypeExpression	
+;
+
+ModelElementQueue returns qool::ModelElementQueue: 
+	"model" "queue" name=ID ":" class_=ClassUse
+;
+
+// -- Segments and expressions
+
+Segment returns qool::Segment: 
+	"segment" name=EString
+		(statements += Statement)+	
+	"end"	
+;
+
+// redefine
+Statement returns core::Statement: 
+	DefineVariable
+	| Expression
+	| PutTraceExpression
+	| PropertyWrite
+	| ForAllStatement
+	// | ForEachStatement
+	| EmitStatement	
+;
+
+// redefine
+PrimaryExpression returns core::Expression: 
+	  Literal
+	| VariableReference
+	| ModelReference
+	| ParenthesizedExpression
+	| MatchTraceExpression 
+	| ClosureDeclaration
+	| MatchExpression // <-- added for qool
+;
+
+ForAllStatement returns qool::ForAllStatement: 
+	"forall" name=ID "from" queue=[qool::QoolQueue]
+		("where" condition = Expression)?
+		(statements += Statement)+		
+	"end"
+;
+
+EmitStatement returns qool::EmitStatement: 
+	"emit" value=Expression "to" queue=[qool::QoolQueue]
+;
+
+MatchExpression returns qool::MatchExpression: 
+	queue=[qool::QoolQueue] "[" (predicates += Predicate) ("," predicates += Predicate)* "]" 
+;
+
+Predicate returns qool::MatchPredicate:
+	KindOfPredicate
+	| PropertyEqualsPredicate 
+;
+
+KindOfPredicate returns qool::KindOfPredicate:
+    "#kindOf" "(" class_ = ClassUse ")"
+;
+
+PropertyEqualsPredicate returns qool::PropertyEqualsPredicate:
+    "#p" "(" propertyName=EString "," value=Expression ")"
+;
+
+ */

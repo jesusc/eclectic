@@ -1,0 +1,26 @@
+
+/**
+ * Tests that the content of a containment reference 
+ * is moved properly.
+ */
+qool test_move_reference( atl ) -> ( atl ) 
+
+model queue mPlaces : atl!MatchedRule
+
+segment main
+	matchedRule = atl!MatchedRule.all_instances.find { |r| r.name.eq('place_place') }
+	matchedRule.variables.size.println("Variables: ")
+	
+	lazy_rule = atl!LazyMatchedRule.new
+	// This should that a copy of the list has to be made before iterating and changing
+	// elements in a containment reference
+	l = matchedRule.variables.map { |v| v } 
+	//l.each { |v|
+	//	lazy_rule.variables = v
+	//}
+	lazy_rule.variables = l
+	
+	lazy_rule.variables.size.println("Lazy rule variables: ")
+	matchedRule.variables.size.println("Matched rule variables: ")
+	
+end

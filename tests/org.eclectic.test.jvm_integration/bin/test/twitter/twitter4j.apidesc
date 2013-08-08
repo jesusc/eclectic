@@ -1,0 +1,42 @@
+api twitter4j described by "http://twitter4j"
+
+observer twitterListener : twitter4j.UserStreamAdapter {
+	update [0] onStatus(twitter4j.Status) : void
+}
+
+
+metaclass Twitter to twitter4j.Twitter {
+	empty constructor  // I should have something like "readonly" o "no-constructor"
+	
+	ref timeline* : Element 
+		get method getHomeTimeline() : Collection<twitter4j.Status>		
+
+	ref public* : Element 
+		get method getPublicTimeline() : Collection<twitter4j.Status>		
+
+}
+
+metaclass Element to twitter4j.Status {
+	empty constructor
+	
+	attr text : String get method getText() : String
+
+	ref user: User 
+		get method getUser() : twitter4j.User
+		
+	ref hashtags*: HashTag 
+		get method getHashtagEntities() : Array<twitter4j.HashTagEntity>
+
+}
+
+metaclass HashTag to twitter4j.HashtagEntity {
+	empty constructor
+	attr text : String get method getText() : String
+}
+
+metaclass User to twitter4j.User {
+	empty constructor
+	attr name : String get method getName() : String		
+}
+
+// TODO: Deal with inheritance

@@ -1,0 +1,17 @@
+mappings test_invoke_internal_map2(in) -> (out)
+
+uses place_mapper as net_mapper
+
+[net]
+delegate from _ : in!Net
+          to place_mapper!tgt
+  
+from src : in!Transition to 
+     tgt : out!Transition    
+	
+	tgt.name = src.name
+    tgt.net  <- src.net
+end
+
+
+

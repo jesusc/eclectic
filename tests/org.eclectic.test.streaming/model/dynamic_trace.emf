@@ -1,0 +1,57 @@
+@namespace(
+	uri="http://eclectic.org/streaming/dynamic_trace",
+	prefix="dynamic_trace")
+package dtrace;
+
+abstract class ExecutionStatement {
+   attr int[1] timestamp;
+   attr int[1] nodeId;
+   attr String[1] statementSrc;
+}
+
+abstract class MethodExecution extends ExecutionStatement {
+   attr String[1] methodName;
+   attr String[0..1] debugId;
+   
+   ref MethodExecution[0..1]#callee caller;
+   ref MethodExecution[*]#caller callee; 
+   ref Classifier[1] receptor;
+}
+
+class LocalExecution extends MethodExecution {
+   attr boolean isCreate;
+   attr boolean isDestroy;
+}
+
+class RemoteCall extends MethodExecution {
+}
+
+class RemoteMethodExecution extends MethodExecution {
+   attr int[1] clientTimestamp;
+   attr int[1] clientNodeId;   
+}
+
+
+abstract class Classifier {
+ 
+}
+
+abstract class Instance extends Classifier {
+   attr int objectId;
+   //attr int nodeId;
+
+   attr String objectId_hex;
+
+   ref Class[1] clazz;
+}
+
+class LocalInstance extends Instance {
+}
+class RemoteInstance extends Instance {
+   attr int nodeId;
+}
+
+class Class extends Classifier {
+   attr String[1] name;  
+}
+

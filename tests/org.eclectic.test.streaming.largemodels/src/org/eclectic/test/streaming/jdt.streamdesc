@@ -1,0 +1,11 @@
+stream dtrace for "http://eclectic.org/streaming/dynamic_trace"
+
+// Keys
+key(TypeDeclaration) = NO_KEY
+
+// Windows
+//sliding for MethodDeclaration = 500 elements
+//sliding for FieldDeclaration = 500 elements
+
+// Fragment
+// cross(LocalExecution.caller 

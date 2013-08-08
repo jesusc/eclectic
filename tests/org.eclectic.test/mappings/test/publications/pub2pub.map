@@ -1,0 +1,13 @@
+mappings pub2pub (in) -> (out)
+
+from  m : in!Model
+  to outm: out!Model
+    
+  outm.journals <- m.publications
+end
+
+from  c : in!Publication 
+  to out: out!Journal
+   
+  out.name = c.name
+end

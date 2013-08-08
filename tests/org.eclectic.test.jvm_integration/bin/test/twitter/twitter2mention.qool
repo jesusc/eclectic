@@ -1,0 +1,84 @@
+qool twitter2mentions(twitter) -> (mentions)
+twitter : 'platform:/resource/org.eclectic.test.jvm_integration/src/test/twitter/twitter4j.apidesc'
+
+model rt 
+  class generic 
+	ref s : _!String 
+	ref t : _!Any
+  end
+end 
+
+ 
+local queue UserTrace       : rt!generic
+local queue HashtagTrace    : rt!generic
+
+model queue mTwitter : twitter!Twitter
+model queue mElement : twitter!Element
+model queue mHashTag : twitter!HashTag
+model queue mUser    : twitter!User
+ 
+segment models
+  c = mentions!MentionGraph.new
+
+	/*
+  forall t from mTwitter
+  	"...".println("paso")
+  	t.timeline.each { |s|
+		s.println("status: ")
+  	}
+  end
+	*/
+
+  forall e from mElement  	
+    user = UserTrace[ #kindOf(rt!generic), #p(s, e.user.name) ].t 
+  	e.hashtags.each { |h|  		
+  		hashtag = HashtagTrace[ #kindOf(rt!generic), #p(s, h.text) ].t
+  		user.relatedHashtags.include(hashtag).if_else({ |v| "nothing" }, 
+  			{ |v| 
+  				user.relatedHashtags = user.relatedHashtags.add(hashtag)
+  			}
+  		)
+  	}
+  		
+  end
+
+ forall u from mUser // Como podría comprobar que el hashtag pertenece a un status mio??
+  	existing = rt!generic.all_instances.select { |g| g.s.eq(u.name) }.first
+  	existing.is_nil.if_else(
+	    		{ |v|  
+			  		n = mentions!User.new
+  					n.value = u.name 					
+  					c.nodes = n
+  					  					
+  					t = rt!generic.new
+  					t.s = u.name
+  					t.t = n
+					emit t to UserTrace    	  		    			
+	    		}, 	    		
+	    		{ |v|  
+	    			"nothing"     			
+	    		})	    	    		
+  end
+  
+  forall h from mHashTag // Como podría comprobar que el hashtag pertenece a un status mio??
+  	existing = rt!generic.all_instances.select { |g| g.s.eq(h.text) }.first
+  	existing.is_nil.if_else(
+	    		{ |v|  
+			  		n = mentions!HashTag.new
+  					n.value = h.text
+  					//n.count = 1 // does not work, why?  					
+  					c.nodes = n
+  					  					
+  					t = rt!generic.new
+  					t.s = h.text
+  					t.t = n
+					emit t to HashtagTrace    	  		    			
+	    		}, 	    		
+	    		{ |v|  
+	    			target_t = existing.t
+	    			// produces a Insufficient maximum stack size. at compile-time
+	    			//target_t.count = existing.t.count.add(1)     			
+	    		})	    	    		
+  end
+
+end

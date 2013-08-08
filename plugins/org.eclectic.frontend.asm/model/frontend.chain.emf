@@ -1,0 +1,44 @@
+@namespace(uri="http://eclectic.org/frontend/chainL", prefix="ec_frontend_chainL")
+package chain;
+
+@namespace(uri="http://eclectic.org/frontend/dep", prefix="ec_frontend_dep")
+package dep {
+   
+   class Variable { }
+   class NamedElement { }
+   class TransformationDefinition { }
+   class RepresentModel { }
+   class LocatedElement { }
+ 
+}
+
+class ChainTransformation extends dep.TransformationDefinition {
+   val CompositeTransformation[*] composites;
+   
+   val ExternalTransformation[*] externals;
+   val GeneratedModel[*] generatedModels;
+   
+   
+   val TransformationExecution[*] executions;
+   
+}
+
+class GeneratedModel extends dep.RepresentModel, dep.NamedElement {      
+}
+
+class TransformationExecution extends dep.LocatedElement {
+   ref AvailableTransformation[1] transformation;
+   ref dep.RepresentModel[*] inputModels;
+   ref dep.RepresentModel[*] outputModels;
+}
+
+abstract class AvailableTransformation {
+   
+}
+
+class ExternalTransformation extends AvailableTransformation, dep.NamedElement {
+}
+
+class CompositeTransformation extends AvailableTransformation, dep.TransformationDefinition  {
+	val TransformationExecution[*] executions;
+}

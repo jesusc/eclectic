@@ -1,0 +1,48 @@
+// as an alternative api2pdf -> uses Java reflection to discover the methods and fiels
+// an example of dealing with exceptions
+qool mm2pdf(mm) -> (pdf)
+pdf : 'platform:/resource/org.eclectic.test.jvm_integration/src/test/itext/itext.apidesc'
+
+model rt 
+  class generic 
+	ref s : _!Any
+	ref t : _!Any
+  end
+end
+
+local queue genericQ : rt!generic
+
+model queue mMetaclass : mm!EClass
+model queue mReference : mm!EReference
+model queue mAttribute : mm!EAttribute
+model queue mFeatures  : mm!EStructuralFeature
+
+segment models
+
+  forall m from mMetaclass
+  	pa = pdf!Paragraph.new
+	pa.textContent = "Metaclass "
+  	pa.textContent = m.name
+    //pa.content = ph
+
+    list = pdf!SymbolBasedList.new
+    list.items = m.eStructuralFeatures.map { |f|
+    	genericQ[ #kindOf(rt!generic), #p(s, f) ].t
+    }
+
+    pa.content = list
+    
+    // pa.add(Chunk.NEW_LINE) <- Factory? Singleton?
+  end
+
+  forall r from mFeatures
+  	li = pdf!ListItem.new
+    li.value = r.name
+  
+    tlink = rt!generic.new
+    tlink.s = r
+    tlink.t = li
+    emit tlink to genericQ
+  end
+  
+end

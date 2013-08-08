@@ -1,6 +1,26 @@
+# Added by github
 *.class
 
-# Package Files #
-*.jar
-*.war
-*.ear
+# Ignored files
+# Manually modified
+
+.metadata
+
+
+# Binaries
+*/bin/*
+*/eclectic-gen/*
+tests/org.eclectic.ttc2013.flowgraphs/bin/*
+tests/org.eclectic.frontend.test/bin/*
+
+tests/*/eclectic-gen/
+compiler/*/bin/
+compiler/*/eclectic-gen/
+plugins/*/bin/
+
+tests/*/tmp_
+compiler/*/tmp_
+
+
+
+>>>>>>> FETCH_HEAD

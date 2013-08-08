@@ -1,0 +1,17 @@
+
+// If potency is not specified, then new instances are not created
+// (see MetadepthModel.java:46 and Clabject.java:79)
+Model ClassDiagram {
+  Node Class {
+    name : String;
+    features : Attribute[0..*];
+  }
+  
+  Node Attribute {
+    name : String;
+    type : Class;
+  }
+}
+
+
+

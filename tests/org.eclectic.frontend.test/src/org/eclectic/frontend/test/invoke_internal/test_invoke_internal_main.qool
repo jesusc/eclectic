@@ -1,0 +1,30 @@
+qool test_invoke_internal_main ( in ) -> ( out ) 
+
+model rt 
+  class generic 
+	ref s : _ ! Any 
+	ref t : _ ! Any
+  end
+end 
+
+model queue mPlaces : in!Place 
+ 
+local queue trace : rt!generic
+
+/*
+segment main_resolving_dependencies
+    // Here I should use a parallel group, or create a composite, as a primitive of Eclectic, not qool
+    // Another interesting thing would be to return the transformation itself as part of the invocation
+    // so that you can:
+    //    query the transformation: has pending?
+    //    pass the transformation to fulfill the requirement of another transformation
+    //    resume the transformation with the data of another transformation it has been stuck
+	invoke-internal eclectic.test_invoke_internal_map1(in = in) -> (out = out)
+	invoke-internal eclectic.test_invoke_internal_map2(in = in) -> (out = out)
+end
+*/
+
+segment main
+    // Here I should use a parallel group, or create a composite, as a primitive of Eclectic, not qool
+	invoke-internal eclectic.test_invoke_internal_map1(in = in) -> (out = out)
+end

@@ -1,0 +1,84 @@
+/**
+ * It is a copy of jdk2jdt, but classresolution is not done through proxies...
+ * but by id indexation.
+ */
+qool jdk2jdt_batch(jdk) -> (jdt)
+
+model rt 
+  class generic
+	ref s : _!Any
+	ref t : _!Any
+  end
+end 
+
+// Required for the allInstances!!
+model queue mCompilationUnit : jdk!EJCCompilationUnit
+model queue mClassDcl        : jdk!EJCClassDecl
+model queue mMethodDcl       : jdk!EJCMethodDecl
+
+local queue MethodQ : rt!generic with access-by s! 
+local queue ClassQ  : rt!generic with access-by s!
+
+
+segment ruleCompilationUnit
+
+	forall jdk_cu from mCompilationUnit 
+		cu = jdt!CompilationUnit.new
+		cu.originalFilePath = jdk_cu.sourceFile
+		cu.name            = jdk_cu.sourceFile
+        cu.types = jdk_cu.typeDecls.map { |jdk_type|
+			ClassQ[#kindOf(rt!generic), #p(s, jdk_type.sName)].t						
+        }		
+	end
+
+end
+
+segment ruleClassDcl
+	forall jdk_cd from mClassDcl
+		cd = jdt!ClassDeclaration.new
+		cd.name = jdk_cd.sName
+	
+		lnk = rt!generic.new
+		lnk.s = jdk_cd.sName  // index by name
+		lnk.t = cd
+		emit lnk to ClassQ
+		 
+		cd.bodyDeclarations = jdk_cd.methodDcls.map { |m| 
+			MethodQ[#kindOf(rt!generic), #p(s, m)].t
+		}
+		
+		// There are two ways: 
+		//   - Raw style: Transform resolving with the identifier, using the original AST node
+		//   - Pre-processing: When creating the fragment, transform Ident to a proxy => scoping/resolving implicitly done there
+		// Using "id" style allows us to use the same transformation for streaming and batch
+		jdk_cd.extendingId.is_nil.if_false({			
+			ta = jdt!TypeAccess.new
+			cd.superClass = ta				
+			ta.type = ClassQ[#kindOf(rt!generic), #p(s, jdk_cd.extendingId.value)].t												
+		})
+				
+	end
+end
+ 
+segment ruleMethodDcl
+	forall jdk_cons from mMethodDcl
+     where jdk_cons.name.eq("<init>")
+		const = jdt!ConstructorDeclaration.new
+    	lnk = rt!generic.new
+		lnk.s = jdk_cons
+		lnk.t = const
+		emit lnk to MethodQ     
+	end
+
+	forall jdk_met from mMethodDcl
+     where jdk_met.name.eq("<init>").not
+		md = jdt!MethodDeclaration.new
+    	md.name = jdk_met.name
+    	
+    	lnk = rt!generic.new
+		lnk.s = jdk_met
+		lnk.t = md
+		emit lnk to MethodQ     
+	end
+end
+

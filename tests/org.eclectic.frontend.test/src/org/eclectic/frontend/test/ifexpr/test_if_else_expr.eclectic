@@ -1,0 +1,36 @@
+/**
+ * Test if expressions 
+ */
+
+eclectic test_if_else_expr( in ) -> ( in ) 
+ 
+qool test_if_else_expr_qool( in ) -> ( in ) 
+
+model queue mPlaces : in!Place 
+
+segment main
+	/* 
+	 * SIMPLE TEST FOR DEBUG
+	"x".println(if false
+		"x"
+	elsif true
+		"y"
+	end)
+	*/
+	forall p from mPlaces
+	 if p.name.eq("p1")  
+		 "Changing p1".println("")
+	 	p.name = 'p1_changed'
+	 elsif p.name.eq("p2")
+		 "Changing p2".println("")
+	 	p.name = 'p2_changed'
+	 else 
+	 	"Changing others".println("")
+	 	p.name = 'others'
+	 end
+	end
+	
+end
+
+
+end

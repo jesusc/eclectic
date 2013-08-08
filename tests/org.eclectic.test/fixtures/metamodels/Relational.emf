@@ -1,0 +1,18 @@
+@namespace(uri="http://www.modelum.es/eclectic/test/relational", prefix="relational")
+package Relational;
+
+class NamedElement {
+   attr String[1] name;
+}
+
+class Schema extends NamedElement {
+	val Table[*] tables;
+}
+
+class Table extends NamedElement {
+   val Column[*] columns;
+}
+
+class Column extends NamedElement {
+      attr String[1] type;
+}

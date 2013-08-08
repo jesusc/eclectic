@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ocl="http://www.eclipse.org/gmt/2005/OCL" xmlns:ocl_constraints="ocl_constraints">
+  <ocl_constraints:OclConstraintsModel location="1:1-9:2" metamodel="Company">
+    <contexts location="3:2-7:72">
+      <metaclass_ location="3:10-3:14" name="Bank"/>
+      <precondition location="4:3-7:72" name="createAccount" description="This is a small bank with a limited number of accounts">
+        <expr xsi:type="ocl:LetExp" location="5:4-6:18">
+          <variable location="5:8-5:46" varName="size" variableExp="/0/@contexts.0/@precondition/@expr/@in_/@source">
+            <type xsi:type="ocl:IntegerType" location="5:15-5:22"/>
+            <initExpression xsi:type="ocl:CollectionOperationCallExp" location="5:25-5:46" operationName="size">
+              <source xsi:type="ocl:NavigationOrAttributeCallExp" location="5:25-5:38" name="accounts">
+                <source xsi:type="ocl:VariableExp" location="5:25-5:29" referredVariable="/1"/>
+              </source>
+            </initExpression>
+          </variable>
+          <in_ xsi:type="ocl:OperatorCallExp" location="6:7-6:18" operationName="&lt;">
+            <source xsi:type="ocl:VariableExp" location="6:7-6:11" referredVariable="/0/@contexts.0/@precondition/@expr/@variable"/>
+            <arguments xsi:type="ocl:IntegerExp" location="6:14-6:18" integerSymbol="1000"/>
+          </in_>
+        </expr>
+      </precondition>
+    </contexts>
+  </ocl_constraints:OclConstraintsModel>
+  <ocl:VariableDeclaration location="5:25-5:29" varName="self" variableExp="/0/@contexts.0/@precondition/@expr/@variable/@initExpression/@source/@source"/>
+</xmi:XMI>

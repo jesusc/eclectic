@@ -1,0 +1,44 @@
+
+tao gen_java(uml, ocl) -> (java)
+   // start mapProgram
+   // use java.conversions, string
+   uses ocl_typing
+   uses struct
+
+   template mapProgram(p : ocl!Program) 
+     dcl : java!ClassDeclaration {
+        name = p.name // [ java.conversions.camelCase, string.concat("Check") ] 
+        bodyDeclarations = from i : p.invariants to m : java!Method {
+             name       = i.name
+             visibility = "public"
+             // ... // generate parameters
+             // expressions = mapExpression(i.body)          
+        }
+     }     
+   end
+
+   template mapPrecondition(p : ocl!OclPrecondition)
+   	  a : java!AssertStatement {
+   	     expression = mapExpression(p.expr)
+   	  }
+   	  //java!MethodInvocation {
+         // method = java!MethodDeclaration {
+         //  name = "assert"
+         // }   	    
+   	  //}
+   end
+   
+   template mapExpression(expr : ocl!NavigationOrAttributeCallExp)
+     java!MethodInvocation {
+       //method = expr.feature[get]
+       // parameters = 
+     }
+   end
+   
+   template mapExpression(expr : ocl!LetExp)
+     java!VariableDeclarationExpression {
+       type = java!TypeAccess {
+         type = expr[ocl_typing!type][struct!classifier.t]      
+       }
+     }
+   end

@@ -1,0 +1,36 @@
+attribution typing(uml, ocl) -> ()
+  syn type  : uml!Classifier
+  inh env   : _!Map
+  syn debug   : _!String 
+ 
+  rule ocl!OclPrecondition
+  	self.expr[env] <- _!Map.new_
+  end
+ 
+  rule ocl!NavigationOrAttributeCallExp 
+    self[type]    <-  
+    	self.source[type].feature(self.name).type
+    self.receptor[env] <- self[env]
+  end
+
+  //rule ocl!LetExp
+  //end
+
+  rule ocl!LetExp
+    self.in_[env]  <- 
+    	self[env].put(self.variable, self.variable.initExpression[type])
+    self[type] <- self.in_[type]
+  end
+
+  rule ocl!OperatorCallExp
+    self[type] <- self.umlType
+    self.receptor[env] <- self[env]
+  end
+
+  rule ocl!VariableExp
+    self[type] <- self[env].get(self.referredVariable)
+  end
+
+  rule ocl!IntegerExp
+    self[type] <- self.umlType  
+  end

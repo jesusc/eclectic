@@ -1,0 +1,74 @@
+@namespace(uri="http://eclectic.org/frontend/patL", prefix="ec_frontend_patL")
+package patterns;
+
+@namespace(uri="http://eclectic.org/frontend/dep", prefix="ec_frontend_dep")
+package dep {
+   class NamedElement { }
+   class TransformationDefinition { }
+   class TransformationDefinitionParameter { }
+   class LocatedElement { }      
+   
+   class ClassUse { }
+   class Variable { }
+   class Expression { }
+}
+
+class PatternSpecification extends dep.TransformationDefinition {
+	val Pattern[*] patterns;
+}
+
+
+class Pattern extends dep.LocatedElement {
+   attr String[1] name;
+   val PObject[*] objects;
+   val POutputVariable[*] outputVariables;
+}
+
+class POutputVariable {
+   // attr String[1] name;
+   ref PObject[1] object;
+}
+
+class PObject extends dep.Variable, dep.LocatedElement {
+   //takes the name from the Variable...
+   val dep.ClassUse[0..1] type;
+   val  PFeature[*]  features;
+}
+
+abstract class PFeature extends dep.LocatedElement {
+   attr String[1] name;
+}
+
+class PAttribute extends PFeature {   
+   val dep.Expression[0..1] value;
+   
+   ref  dep.Variable[0..1] variable;
+}
+
+class PReference extends PFeature {
+   val PObject[*] value;
+}
+
+class CollectionReference extends PReference {   
+}
+
+
+
+
+/*
+class Pattern extends dep.NamedElement {
+   val Predicate[1] root;
+}
+
+abstract class Predicate { }
+class AndPredicate extends Predicate {
+   val Predicate[*] predicates;
+}
+
+class ForAllPredicate extends Predicate, dep.Variable {
+   	val dep.ClassUse[1] type;
+    val dep.Expression[0..1] expr;
+}
+
+*/
+

@@ -1,0 +1,26 @@
+@namespace(uri="http://www.modelum.es/eclectic/test/simple_tree", prefix="simple_tree")
+package Tree;
+
+class Tree {
+	val Node[1] root;
+}
+
+abstract class Node {
+	   
+}
+
+class Branch extends Node {
+   val Node[*] children;
+}
+
+abstract class Leaf extends Node { }
+
+class IntegerLeaf extends Leaf {
+   attr Integer[1] value;
+}
+
+class StringLeaf extends Leaf {
+   attr String[1] value;
+}
+
+

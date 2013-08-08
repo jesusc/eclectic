@@ -1,0 +1,27 @@
+eclectic test_library(in) -> (out)
+
+navigation test_library_uml_library(in) 
+	def in!EClassifier.uml_name
+		self.name
+	end	
+end
+
+mappings test_library_map_class(in) -> (out)
+	// uses test_library_uml_library
+	require uml_library(in = in) = test_library_uml_library
+
+	// require uml_library(in, number_of_whatever) = test_library_uml_library
+	// require number_of_whatever : int
+
+	from e : in!EClass to
+	     u : out!Class
+		u.name = e.uml_name
+		
+		// A better way would be
+		// u.name = e.name convert to_uml_class
+		// Although I may want to have polymorphism so (weird!):
+		// u.name = e convert to_uml 
+	end
+
+	// converter String.to_uml_class = self + '_whatever'
+end

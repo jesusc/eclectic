@@ -1,0 +1,51 @@
+qool umlcopy_with_qool(in) -> (out)
+
+model rt 
+  class class2class 
+	attr s :  in!Class 
+	attr t : out!Class 
+  end
+
+  class attr2attr 
+	attr s :  in!Attribute 
+	attr t : out!Attribute 
+  end
+end 
+
+// local queue traceQ : core_!Object
+local queue traceQ : in!Object__ // THIS IS JUST A TEMPORARY TRICK, I NEED TO FIND A GOOD WAY OF DOING THIS!
+local queue qClass : in!Class
+local queue qAttr : in!Attr
+
+model queue mClass : in!Class
+model queue mAttr  : in!Attribute
+
+segment findClasses // : pattern
+    c1 = x
+	forall c1 from mClass
+		emit c1 to qClass
+	end
+end
+
+segment class2class // : rule
+forall c1 from qClass 
+
+  tgt   = out!Class.new   
+
+  //emit trace to traceQ
+
+  forall attrTrace from traceQ
+         // where c1.features.include(attrTrace.s)
+
+    tgt.name = "xxx"
+    
+  end
+end
+end 
+
+segment anotherThatUsesTarget
+forall c1 from qAttr
+  tgt   = out!Attr.new   
+  tgt.name = "myAttr"
+end
+end 

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="ejctree"
+    nsURI="http://eclectic.org/streaming/emf_java_compiler_tree" nsPrefix="emf_java_compiler_tree">
+  <eClassifiers xsi:type="ecore:EClass" name="EJCTree" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="objectId" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EJCCompilationUnit" eSuperTypes="#//EJCTree">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sourceFile" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="typeDecls" upperBound="-1"
+        eType="#//EJCTree" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EJCClassDecl" eSuperTypes="#//EJCTree">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="qName" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="sName" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="extendingId" eType="#//EJCIdent"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="extending" eType="#//EJCClassDecl"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="methodDcls" upperBound="-1"
+        eType="#//EJCMethodDecl" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EJCMethodDecl" eSuperTypes="#//EJCTree">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="qName" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="EJCIdent" eSuperTypes="#//EJCTree">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+</ecore:EPackage>

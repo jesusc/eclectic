@@ -1,0 +1,13 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Eclectic Integration with Metadepth
+Bundle-SymbolicName: org.eclectic.modeling.metadepth
+Bundle-Version: 1.0.0.qualifier
+Bundle-Activator: org.eclectic.modeling.metadepth.Activator
+Bundle-Vendor: Eclectical
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclectic.modeling;bundle-version="0.8.0",
+ org.eclectic.idc;bundle-version="0.8.0"
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy
+Export-Package: org.eclectic.modeling.metadepth

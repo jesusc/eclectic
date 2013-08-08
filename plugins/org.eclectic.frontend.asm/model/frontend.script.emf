@@ -1,0 +1,22 @@
+@namespace(uri="http://eclectic.org/frontend/scriptL", prefix="ec_frontend_scriptL")
+package script;
+
+@namespace(uri="http://eclectic.org/frontend/scriptL/deps", prefix="ec_frontend_dep")
+package dep {   
+   class Variable { }
+   class NamedElement { }
+   class TransformationDefinition { }
+   class TraceInterface { }
+   class TransformationDefinitionParameter { }
+   class LocatedElement { }
+   
+   class ClassUse { }           
+   class Expression { }   
+   class Statement { }
+   class TypedWithClass { }   
+}
+
+class ScriptedTransformation extends dep.TransformationDefinition {
+   val dep.Statement[*] statements;
+}
+

@@ -1,0 +1,16 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Eclectic integration with Metadepth (Tests)
+Bundle-SymbolicName: org.eclectic.modeling.metadepth.test
+Bundle-Version: 1.0.0.qualifier
+Bundle-Vendor: Eclectical
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Import-Package: org.junit
+Require-Bundle: org.eclectic.frontend;bundle-version="0.8.0",
+ org.eclectic.frontend.asm;bundle-version="0.8.0",
+ org.eclectic.frontend.syntax;bundle-version="0.8.0",
+ org.eclectic.idc;bundle-version="0.8.0",
+ org.eclectic.modeling;bundle-version="0.8.0",
+ org.eclectic.modeling.metadepth;bundle-version="0.8.0",
+ org.eclipse.emf;bundle-version="2.6.0",
+ org.eclipse.emf.ecore.xmi;bundle-version="2.7.0"

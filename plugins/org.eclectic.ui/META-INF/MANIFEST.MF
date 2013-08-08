@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Eclectic UI Basic
+Bundle-SymbolicName: org.eclectic.ui; singleton:=true
+Bundle-Version: 0.8.6.qualifier
+Bundle-Activator: org.eclectic.ui.Activator
+Bundle-Vendor: Eclectical
+Require-Bundle: org.eclipse.ui,
+ org.eclipse.core.runtime,
+ org.eclipse.core.resources,
+ org.eclipse.ui.ide,
+ org.eclipse.xtext;bundle-version="2.0.0",
+ org.eclipse.xtext.builder;bundle-version="2.0.0",
+ org.eclipse.jdt.ui;bundle-version="3.7.0",
+ org.eclipse.jdt.core;bundle-version="3.7.0",
+ org.eclectic.frontend;bundle-version="0.8.0",
+ org.eclectic.idc;bundle-version="0.8.0",
+ org.eclectic.modeling;bundle-version="0.8.0",
+ org.eclipse.pde.core;bundle-version="3.7.0",
+ org.eclipse.pde.runtime;bundle-version="3.4.200",
+ org.eclectic.apidesc.language;bundle-version="0.8.0",
+ org.eclectic.streamdesc.language;bundle-version="0.8.0",
+ org.eclipse.ui.editors
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Bundle-ActivationPolicy: lazy

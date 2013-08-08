@@ -1,0 +1,74 @@
+qool jdt2kdm(jdt) -> (kdm)
+jdt : 'platform:/resource/org.eclectic.test.streaming.largemodels/src/org/eclectic/test/streaming/jdt.streamdesc' 
+
+model rt 
+  class generic
+	ref s : _!Any
+	ref t : _!Any
+  end
+end 
+
+model queue mTypeDeclaration : jdt!TypeDeclaration
+model queue mMethodDeclaration : jdt!MethodDeclaration
+model queue mFieldDeclaration : jdt!FieldDeclaration
+
+local queue ClassQ : rt!generic with access-by s! 
+local queue BodyQ  : rt!generic with access-by s! 
+
+ 
+segment ruleTypeDeclaration
+	forall typeDcl from mTypeDeclaration
+		cu = kdm!ClassUnit.new
+		cu.name = typeDcl.name.fullyQualifiedName
+
+		lnk = rt!generic.new
+		lnk.s = cu.name  // index by name
+		lnk.t = cu
+		emit lnk to ClassQ
+		 
+		cu.codeElement = typeDcl.bodyDeclarations.select { |b| b.kind_of(jdt!FieldDeclaration).or(b.kind_of(jdt!MethodDeclaration)) }.map { |m| 
+			BodyQ[#kindOf(rt!generic), #p(s, m)].t
+		}
+		
+		typeDcl.superclassType.is_nil.if_false({
+			kdmExtends = kdm!Extends.new
+			cu.codeRelation = kdmExtends
+			kdmExtends.^from = cu
+			
+			superclass_name = typeDcl.superclassType.kind_of(jdt!ParameterizedType).if_else({
+				typeDcl.superclassType.type.name.fullyQualifiedName
+			}, {
+				typeDcl.superclassType.name.fullyQualifiedName
+			})
+			
+			kdmExtends.^to   = ClassQ[#kindOf(rt!generic), #p(s, superclass_name)].t		
+		})
+	end
+end
+
+segment ruleBodyDeclaration
+
+	forall methodDcl from mMethodDeclaration
+		mu = kdm!MethodUnit.new
+		mu.name = methodDcl.name.fullyQualifiedName
+	
+    	lnk = rt!generic.new
+		lnk.s = methodDcl
+		lnk.t = mu
+		emit lnk to BodyQ     
+				
+	end
+
+	forall fieldDcl from mFieldDeclaration
+		mu = kdm!MemberUnit.new
+		mu.name = fieldDcl.fragments.first.name.fullyQualifiedName
+
+    	lnk = rt!generic.new
+		lnk.s = fieldDcl
+		lnk.t = mu
+		emit lnk to BodyQ     
+				
+	end
+
+end
+

@@ -1,0 +1,622 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclectic.frontend.asm/src-gen"
+    modelPluginID="org.eclectic.frontend.asm" modelName="Eclectic" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false">
+  <foreignModel>eclectic.frontend.ecore</foreignModel>
+  <genPackages prefix="Frontend" basePackage="org.eclectic" disposableProviderFactory="true"
+      ecorePackage="eclectic.frontend.ecore#/">
+    <genClasses ecoreClass="eclectic.frontend.ecore#//DummyRootMetaclass"/>
+    <nestedGenPackages prefix="Script" basePackage="org.eclectic.frontend" disposableProviderFactory="true"
+        ecorePackage="eclectic.frontend.ecore#//script">
+      <genClasses ecoreClass="eclectic.frontend.ecore#//script/ScriptedTransformation">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//script/ScriptedTransformation/statements"/>
+      </genClasses>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Koan" basePackage="org.eclectic.frontend" disposableProviderFactory="true"
+        ecorePackage="eclectic.frontend.ecore#//koan">
+      <genClasses ecoreClass="eclectic.frontend.ecore#//koan/KoanTransformation">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//koan/KoanTransformation/traceInterface"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//koan/KoanTransformation/rules"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//koan/KoanRule">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//koan/KoanRule/matcher"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//koan/KoanRule/statements"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//koan/Matcher">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//koan/Matcher/child"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//koan/ForAllMatcher">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//koan/ForAllMatcher/type"/>
+      </genClasses>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Attribution" basePackage="org.eclectic.frontend" disposableProviderFactory="true"
+        ecorePackage="eclectic.frontend.ecore#//attribution">
+      <genClasses ecoreClass="eclectic.frontend.ecore#//attribution/AttributionTransformation">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//attribution/AttributionTransformation/attributes"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//attribution/AttributionTransformation/rules"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//attribution/AttributeDcl"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//attribution/InheritedAttributeDcl"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//attribution/SynthesizedAttributeDcl"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//attribution/AttributionRule">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//attribution/AttributionRule/type"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//attribution/AttributionRule/self"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//attribution/AttributionRule/condition"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//attribution/AttributionRule/statements"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//attribution/RuleSelf"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//attribution/AttributeInit">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//attribution/AttributeInit/attribute"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//attribution/AttributeInit/receptor"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//attribution/AttributeInit/right"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//attribution/AttributeUse">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//attribution/AttributeUse/expr"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//attribution/AttributeUse/attribute"/>
+      </genClasses>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Imperative" basePackage="org.eclectic.frontend" disposableProviderFactory="true"
+        ecorePackage="eclectic.frontend.ecore#//imperative">
+      <genClasses ecoreClass="eclectic.frontend.ecore#//imperative/ImperativeTransformation">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//imperative/ImperativeTransformation/methods"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//imperative/MethodDefinition">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//imperative/MethodDefinition/name"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//imperative/MethodDefinition/formalParameters"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//imperative/MethodDefinition/self"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//imperative/MethodDefinition/type"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//imperative/MethodDefinition/statements"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//imperative/MethodSelf"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//imperative/MethodParameter"/>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Chain" basePackage="org.eclectic.frontend" disposableProviderFactory="true"
+        ecorePackage="eclectic.frontend.ecore#//chain">
+      <genClasses ecoreClass="eclectic.frontend.ecore#//chain/ChainTransformation">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//chain/ChainTransformation/composites"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//chain/ChainTransformation/externals"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//chain/ChainTransformation/generatedModels"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//chain/ChainTransformation/executions"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//chain/GeneratedModel"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//chain/TransformationExecution">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//chain/TransformationExecution/transformation"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//chain/TransformationExecution/inputModels"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//chain/TransformationExecution/outputModels"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//chain/AvailableTransformation"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//chain/ExternalTransformation"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//chain/CompositeTransformation">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//chain/CompositeTransformation/executions"/>
+      </genClasses>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Patterns" basePackage="org.eclectic.frontend" disposableProviderFactory="true"
+        ecorePackage="eclectic.frontend.ecore#//patterns">
+      <genClasses ecoreClass="eclectic.frontend.ecore#//patterns/PatternSpecification">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//patterns/PatternSpecification/patterns"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//patterns/Pattern">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//patterns/Pattern/name"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//patterns/Pattern/objects"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//patterns/Pattern/outputVariables"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//patterns/POutputVariable">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//patterns/POutputVariable/object"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//patterns/PObject">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//patterns/PObject/type"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//patterns/PObject/features"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//patterns/PFeature">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//patterns/PFeature/name"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//patterns/PAttribute">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//patterns/PAttribute/value"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//patterns/PAttribute/variable"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//patterns/PReference">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//patterns/PReference/value"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//patterns/CollectionReference"/>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Mappings" basePackage="org.eclectic.frontend" disposableProviderFactory="true"
+        ecorePackage="eclectic.frontend.ecore#//mappings">
+      <genEnums typeSafeEnumCompatible="false" ecoreEnum="eclectic.frontend.ecore#//mappings/MappingCardinality">
+        <genEnumLiterals ecoreEnumLiteral="eclectic.frontend.ecore#//mappings/MappingCardinality/OneToOne"/>
+        <genEnumLiterals ecoreEnumLiteral="eclectic.frontend.ecore#//mappings/MappingCardinality/NToOne"/>
+        <genEnumLiterals ecoreEnumLiteral="eclectic.frontend.ecore#//mappings/MappingCardinality/OneToN"/>
+      </genEnums>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/MappingTransformation">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/MappingTransformation/delegates"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/MappingTransformation/contexts"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/MappingVariable"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/MatchedElement"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/Delegate">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/Delegate/left"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//mappings/Delegate/isExternal"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/Delegate/module"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//mappings/Delegate/linkName"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//mappings/Delegate/featureName"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/Delegate/tags"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/Context">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/Context/left"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/Context/right"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/Context/mappings"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/Context/modifiers"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/Context/sections"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/Context/tags"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/Section">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//mappings/Section/sectionType"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/Section/mappings"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//mappings/MappingElement"/>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//mappings/ClassMapping"/>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//mappings/Feature2Feature">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/Feature2Feature/leftFeature"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/Feature2Feature/converter"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//mappings/AttributeMapping">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/AttributeMapping/left"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/AttributeMapping/rightPart"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//mappings/AttributeRightPart"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/AttributeIsString">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//mappings/AttributeIsString/strValue"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/AttributeIsBoolean">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//mappings/AttributeIsBoolean/boolValue"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/AttributeIsDouble">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//mappings/AttributeIsDouble/doubleValue"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/AttributeIsResolveLink">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/AttributeIsResolveLink/resolveLink"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/AttributeIsInteger">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//mappings/AttributeIsInteger/intValue"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/Converter">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//mappings/Converter/isExternal"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/Converter/module"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//mappings/Converter/converterName"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/Tag"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/Class2Class">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//mappings/Class2Class/cardinality"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/Class2Class/modifiers"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/Class2Class/left"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/Class2Class/right"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/Class2Class/scopedAttributes"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//mappings/C2CModifier"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/RelatedBy">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/RelatedBy/attribute"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/LinkedBy">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/LinkedBy/attribute"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/LinkedBy/linkedElement"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/EqualityFilter">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/EqualityFilter/attribute"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//mappings/EqualityFilter/filter"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//mappings/Operator"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/Split">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/Split/mappings"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/Join">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/Join/mappings"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/Attribute2Attribute">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//mappings/Attribute2Attribute/cardinality"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/Attribute2Attribute/context"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/Attribute2Attribute/right"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/Attribute2Attribute/modifiers"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/Reference2Reference">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//mappings/Reference2Reference/cardinality"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/Reference2Reference/left"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/Reference2Reference/right"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//mappings/Reference2Reference/resolverName"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//mappings/Modifier"/>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//mappings/AttributeModifier"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/ConvertModifier">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//mappings/ConvertModifier/converter"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//mappings/DefaultValue"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/IntDefaultValue">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//mappings/IntDefaultValue/defaultValue"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//mappings/MetamodelElementRef"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/ClassRef">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/ClassRef/klass"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/FeatureRef">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/FeatureRef/referredElement"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//mappings/FeatureRef/featureName"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//mappings/FeatureRef/multivalued"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/AttributeRef">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/AttributeRef/referredElement"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//mappings/AttributeRef/featureName"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//mappings/AttributeRef/multivalued"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//mappings/ReferenceRef">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//mappings/ReferenceRef/referredElement"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//mappings/ReferenceRef/featureName"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//mappings/ReferenceRef/multivalued"/>
+      </genClasses>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Qool" basePackage="org.eclectic.frontend" disposableProviderFactory="true"
+        ecorePackage="eclectic.frontend.ecore#//qool">
+      <genClasses ecoreClass="eclectic.frontend.ecore#//qool/QoolTransformation">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/QoolTransformation/queues"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/QoolTransformation/segments"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//qool/QoolQueue">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/QoolQueue/optimizations"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//qool/QueueOptimization"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//qool/AccessByFeatureOptimization">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//qool/AccessByFeatureOptimization/featureName"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//qool/AccessByFeatureOptimization/force"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//qool/LocalQueue">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/LocalQueue/type_"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//qool/ModelElementQueue">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/ModelElementQueue/class_"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/ModelElementQueue/additionals"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//qool/Segment">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/Segment/statements"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//qool/IteratorStatement">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/IteratorStatement/condition"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/IteratorStatement/statements"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//qool/ForAllStatement">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/ForAllStatement/queue"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//qool/ForEachStatement">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/ForEachStatement/collection"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//qool/EmitStatement">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/EmitStatement/queue"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/EmitStatement/value"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//qool/MatchExpression">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/MatchExpression/queue"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/MatchExpression/predicates"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//qool/MatchPredicate"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//qool/KindOfPredicate">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/KindOfPredicate/class_"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//qool/PropertyEqualsPredicate">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//qool/PropertyEqualsPredicate/propertyName"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/PropertyEqualsPredicate/value"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//qool/InvokeTransformation">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//qool/InvokeTransformation/transformationName"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/InvokeTransformation/sourceModels"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/InvokeTransformation/targetModels"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/InvokeTransformation/parameters"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/InvokeTransformation/inputViewFilter"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//qool/InvokeTransformation/entryPointName"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/InvokeTransformation/entryPointParameters"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//qool/InvokeExternal">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/InvokeExternal/outputResolutionSourceElement"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//qool/InvokeExternal/queueName"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//qool/InvokeExternal/traceAttributeName"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//qool/InvokeInternal"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//qool/InvocationParameter">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/InvocationParameter/model"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//qool/InvocationParameter/calleeModelName"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//qool/NamedInvocationParameter">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//qool/NamedInvocationParameter/formalName"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/NamedInvocationParameter/actualParameter"/>
+      </genClasses>
+      <nestedGenPackages prefix="Facilities" basePackage="org.eclectic.frontend.qool"
+          disposableProviderFactory="true" ecorePackage="eclectic.frontend.ecore#//qool/facilities">
+        <genClasses ecoreClass="eclectic.frontend.ecore#//qool/facilities/Copier">
+          <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/facilities/Copier/objects"/>
+          <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/facilities/Copier/callbacks"/>
+          <genFeatures notify="false" createChild="false" propertySortChoices="true"
+              ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/facilities/Copier/copyInModel"/>
+        </genClasses>
+        <genClasses ecoreClass="eclectic.frontend.ecore#//qool/facilities/CopierCallbackDefinition">
+          <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//qool/facilities/CopierCallbackDefinition/stop"/>
+          <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/facilities/CopierCallbackDefinition/trigger"/>
+          <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//qool/facilities/CopierCallbackDefinition/action"/>
+        </genClasses>
+      </nestedGenPackages>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Tao" basePackage="org.eclectic.frontend" disposableProviderFactory="true"
+        ecorePackage="eclectic.frontend.ecore#//tao">
+      <genClasses ecoreClass="eclectic.frontend.ecore#//tao/TaoTransformation">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//tao/TaoTransformation/templates"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//tao/TemplateParameter">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//tao/TemplateParameter/type"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//tao/ObjectInstantiation">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//tao/ObjectInstantiation/type"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//tao/ObjectInstantiation/assigments"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//tao/TemplateRootObject"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//tao/Template">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//tao/Template/parameters"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//tao/Template/roots"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//tao/Assignment"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//tao/AttributeAssigment">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//tao/AttributeAssigment/targetFeature"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//tao/AttributeAssigment/expr"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//tao/SourceExpression"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//tao/WithOptionalVariableExpression">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//tao/WithOptionalVariableExpression/variable"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//tao/WithOptionalVariableExpression/expr"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//tao/ObjectSourceVariable"/>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//tao/ReferenceAssignment">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//tao/ReferenceAssignment/targetFeature"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//tao/ReferenceAssignment/expr"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//tao/ReferenceAssignment/multivalued"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//tao/ObjectSyntax">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//tao/ObjectSyntax/object"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//tao/Invocation">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//tao/Invocation/template"/>
+      </genClasses>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Core" basePackage="org.eclectic.frontend" disposableProviderFactory="true"
+        ecorePackage="eclectic.frontend.ecore#//core">
+      <genEnums typeSafeEnumCompatible="false" ecoreEnum="eclectic.frontend.ecore#//core/BinaryOp">
+        <genEnumLiterals ecoreEnumLiteral="eclectic.frontend.ecore#//core/BinaryOp/EQUAL"/>
+        <genEnumLiterals ecoreEnumLiteral="eclectic.frontend.ecore#//core/BinaryOp/ADD"/>
+        <genEnumLiterals ecoreEnumLiteral="eclectic.frontend.ecore#//core/BinaryOp/SUB"/>
+        <genEnumLiterals ecoreEnumLiteral="eclectic.frontend.ecore#//core/BinaryOp/MUL"/>
+        <genEnumLiterals ecoreEnumLiteral="eclectic.frontend.ecore#//core/BinaryOp/DIV"/>
+      </genEnums>
+      <genEnums typeSafeEnumCompatible="false" ecoreEnum="eclectic.frontend.ecore#//core/ResolveTraceCardinality">
+        <genEnumLiterals ecoreEnumLiteral="eclectic.frontend.ecore#//core/ResolveTraceCardinality/ONE_ONE"/>
+        <genEnumLiterals ecoreEnumLiteral="eclectic.frontend.ecore#//core/ResolveTraceCardinality/ZERO_OR_ONE"/>
+        <genEnumLiterals ecoreEnumLiteral="eclectic.frontend.ecore#//core/ResolveTraceCardinality/MANY"/>
+      </genEnums>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//core/LocatedElement">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/LocatedElement/row"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/LocatedElement/column"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/LocatedElement/file"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//core/NamedElement">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/NamedElement/name"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//core/DefinitionParameter"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/ModuleParameter"/>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//core/ModuleDefinition"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/AnnotableElement">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/AnnotableElement/annotatedWith"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/ImplicitlyAnnotableElement">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/ImplicitlyAnnotableElement/annotations"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/Annotation">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/Annotation/annotatedElement"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/OptimizationsAnnotation">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/OptimizationsAnnotation/enabled"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/MetamodelModelAnnotation">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/MetamodelModelAnnotation/metamodel"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//core/SingleAnnotation"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/PotencyAnnotation">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/PotencyAnnotation/value"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/GenericAnnotation">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/GenericAnnotation/name"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/GenericAnnotation/parameters"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//core/AnnotationParameter"/>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//core/RepresentModel"/>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//core/TransformationDefinition">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/TransformationDefinition/inModels"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/TransformationDefinition/outModels"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/TransformationDefinition/importedModels"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/TransformationDefinition/inlineModels"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/TransformationDefinition/annotations"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/TransformationDefinition/uses"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/TransformationDefinition/requires"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/EclecticTransformationDefinition">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/EclecticTransformationDefinition/transformations"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/TransformationDefinitionParameter"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/ImportedModel"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/UseDeclaration">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/UseDeclaration/module"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/UseDeclaration/as"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/RequireDeclaration">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/RequireDeclaration/name"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/RequireDeclaration/default"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/RequireDeclaration/parameters"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//core/RequireParameter">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/RequireParameter/formalParameterName"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/RequireModelParameter">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/RequireModelParameter/model"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//core/Variable">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/Variable/name"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//core/Statement"/>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//core/Expression"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/DefineVariable">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/DefineVariable/expression"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/PropertyWrite">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/PropertyWrite/property"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/PropertyWrite/receptor"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/PropertyWrite/expression"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/ModelReference"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/VariableReference">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/VariableReference/variable"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/MethodCall">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/MethodCall/receptor"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/MethodCall/methodName"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/MethodCall/parameters"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/MethodCall/withParameters"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/KeywordMethodCall">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/KeywordMethodCall/receptor"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/KeywordMethodCall/parameters"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/KeywordParameter">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/KeywordParameter/keyword"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/KeywordParameter/value"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/BinaryExpr">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/BinaryExpr/left"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/BinaryExpr/right"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/BinaryExpr/binaryOp"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/ClosureDeclaration">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/ClosureDeclaration/statements"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/ClosureDeclaration/formalParameters"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/ClosureParameter"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/ResolveLink">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/ResolveLink/expr"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/ResolveLink/isExternal"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/ResolveLink/module"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/ResolveLink/linkName"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/ResolveLink/featureName"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/IfExpr">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/IfExpr/then"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/IfExpr/elsifs"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/IfExpr/else"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/IfBranch">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/IfBranch/condition"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/IfBranch/statements"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/NumLiteral">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/NumLiteral/value"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/DoubleLiteral">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/DoubleLiteral/value"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/StringLiteral">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/StringLiteral/value"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/BooleanLiteral">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/BooleanLiteral/value"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//core/TypeExpression"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/ClassUse">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/ClassUse/model"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/ClassUse/className"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/ClassUse/strictType"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/TraceUse">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/TraceUse/trace"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="eclectic.frontend.ecore#//core/TypedWithClass">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/TypedWithClass/type_"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/TraceInterface">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/TraceInterface/definitions"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/TracedModelParameter"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/TraceDefinition">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/TraceDefinition/elements"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/TraceElement">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/TraceElement/type"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/InlineModel">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/InlineModel/classes"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/InlineClass">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/InlineClass/features"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/InlineFeature">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/InlineFeature/type"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/InlineFeature/multivalued"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/InlineAttribute"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/InlineReference"/>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/MatchTrace">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/MatchTrace/trace"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/MatchTrace/traceExpr"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/MatchTrace/cardinality"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/TraceCompareExpression">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute eclectic.frontend.ecore#//core/TraceCompareExpression/multivaluedTag"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/TraceCompareExpression/traceVar"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/TraceCompareExpression/expr"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/PutTrace">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/PutTrace/trace"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/PutTrace/parameters"/>
+      </genClasses>
+      <genClasses ecoreClass="eclectic.frontend.ecore#//core/PutTraceParameter">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/PutTraceParameter/value"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference eclectic.frontend.ecore#//core/PutTraceParameter/traceVar"/>
+      </genClasses>
+    </nestedGenPackages>
+  </genPackages>
+</genmodel:GenModel>

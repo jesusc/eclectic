@@ -1,0 +1,15 @@
+Model ValidationDSL@1 {
+
+  abstract Node RequiredLink {
+     left  : String;
+     right : String;
+  }
+
+  Node ControlFlowLink : RequiredLink {
+  }
+  
+  Node DataFlowLink : RequiredLink {
+  }
+  
+}
+

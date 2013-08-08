@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- ====================================================================== 
+     01/01/2012 23:58:17                                                        
+
+     project    
+     description
+                   
+     jesusc                                                                
+     ====================================================================== -->
+<project name="project" default="default">
+    <description>
+            description
+    </description>
+
+	<taskdef name="javaflow" classname="org.apache.commons.javaflow.ant.AntRewriteTask">
+	   <classpath path="../org.eclectic.javaflow/bin" />
+	   <classpath path="../org.eclectic.idc/bin" /> <!-- This is important to allow resolving references -->
+	   <classpath path="../org.eclectic.modeling/bin" /> <!-- This is important to allow resolving references -->
+	   
+	   <classpath location="../org.eclectic.javaflow/lib/asm-3.3.jar" />
+       <classpath location="../org.eclectic.javaflow/lib/asm-util-3.3.jar" />		
+       <classpath location="../org.eclectic.javaflow/lib/asm-analysis-3.3.jar" />		
+	   <classpath location="../org.eclectic.javaflow/lib/asm-commons-3.3.jar" />				
+	   <classpath location="../org.eclectic.javaflow/lib/asm-tree-3.3.jar" />
+
+		<classpath location="../org.eclectic.javaflow/lib/commons-logging-1.1.1.jar" />				
+		
+	</taskdef>
+
+    <!-- ================================= 
+          target: default              
+         ================================= -->
+    <target name="instrument" depends="depends" description="description">
+		<javaflow srcdir="bin" destdir="bin">
+			<!--
+			<filename name="org/eclectic/idc/datatypes/ImmutableList"/>
+			-->
+
+			<include name="org/eclectic/idc/datatypes/ImmutableList.class"/>
+			<include name="org/eclectic/idc/jvm/runtime/BooleanWrapper.class"/>
+			<include name="org/eclectic/idc/jvm/runtime/ContinuationResolverHelper.class"/>
+			
+			
+			<include name="org/eclectic/idc/datatypes/active/AllInstancesGenerator.class"/>
+			<include name="org/eclectic/idc/datatypes/active/AllInstancesGenerator$AllInstancesClosure.class"/>
+			<include name="org/eclectic/idc/datatypes/active/AllInstancesGenerator$AllInstancesForAll.class"/>			
+
+			<include name="org/eclectic/idc/datatypes/active/ActiveBase.class"/>
+			<include name="org/eclectic/idc/datatypes/active/ActiveIterable.class"/>
+			<include name="org/eclectic/idc/datatypes/active/ActiveMap.class"/>
+			<include name="org/eclectic/idc/datatypes/active/ActiveOperation.class"/>
+			<include name="org/eclectic/idc/datatypes/active/ActiveSelect.class"/>
+			<include name="org/eclectic/idc/datatypes/active/IActiveSource.class"/>
+			<include name="org/eclectic/idc/datatypes/active/ActiveSet.class"/>
+
+			<!--
+
+			<include name="**/Request.class" />
+			<include name="**/HistoryQueue.class" />
+			-->
+		</javaflow>        
+    </target>
+
+	
+	<target name="generate-jar">
+		<jar destfile="lib-instrumented/idc-instrumented.jar">
+			<fileset dir="bin" >
+				<include name="org/eclectic/idc/datatypes/ImmutableList.class"/>
+				<include  name="org/eclectic/idc/jvm/runtime/BooleanWrapper.class"/>
+				<include  name="org/eclectic/idc/jvm/runtime/ContinuationResolverHelper.class"/>
+
+				
+				<include name="org/eclectic/idc/datatypes/active/AllInstancesGenerator.class"/>
+				<include name="org/eclectic/idc/datatypes/active/AllInstancesGenerator$AllInstancesClosure.class"/>
+				<include name="org/eclectic/idc/datatypes/active/AllInstancesGenerator$AllInstancesForAll.class"/>			
+
+				<include name="org/eclectic/idc/datatypes/active/ActiveBase.class"/>
+				<include name="org/eclectic/idc/datatypes/active/ActiveIterable.class"/>
+				<include name="org/eclectic/idc/datatypes/active/ActiveMap.class"/>
+				<include name="org/eclectic/idc/datatypes/active/ActiveOperation.class"/>
+				<include name="org/eclectic/idc/datatypes/active/ActiveSelect.class"/>
+				<include name="org/eclectic/idc/datatypes/active/IActiveSource.class"/>
+				<include name="org/eclectic/idc/datatypes/active/ActiveSet.class"/>
+								
+				
+			</fileset>
+
+		</jar>
+	</target>
+	
+	<target name="default" depends="instrument, generate-jar">
+	</target>
+	
+    <!-- - - - - - - - - - - - - - - - - - 
+          target: depends                      
+         - - - - - - - - - - - - - - - - - -->
+    <target name="depends">
+    </target>
+
+</project>

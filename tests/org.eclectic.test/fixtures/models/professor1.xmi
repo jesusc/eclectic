@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="ASCII"?>
+<professor1:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:professor1="http://www.modelum.es/eclectic/test/professor1" xsi:schemaLocation="http://www.modelum.es/eclectic/test/professor1 ../metamodels/Publications1.ecore">
+  <professors name="Professor1" publications="//@publications.1 //@publications.0"/>
+  <professors name="Professor2"/>
+  <publications name="Towards publishing what has already been published" type="Journal"/>
+  <publications name="Just publishing what I published last year" type="Journal"/>
+  <publications name="A serious publication" type="Journal"/>
+  <publications name="A paper I did to travel" type="Journal"/>
+</professor1:Model>

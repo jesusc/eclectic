@@ -1,0 +1,393 @@
+eclectic task1 (in) -> (out)
+	
+mappings task1_map(in) -> (out)
+//	optimizations : enabled
+	
+	uses task1_attribution  as task1_attribution 
+    uses task_patterns as task_patterns
+
+	from src :  in!ClassMethod
+	  to tgt : out!Method, exit : out!Exit
+	  linking tgt.exit = exit
+		tgt.stmts <- src.statements
+			
+	    tgt.txt  = task1_attribution!text[src]
+		exit.txt = "Exit"
+	end	
+	
+	// -------------
+	// Statements
+	// -------------
+	
+	from src : in!LocalVariableStatement
+	  to tgt : out!SimpleStmt
+	    tgt.txt  = task1_attribution!text[src]
+	end
+	
+	from src : in!ExpressionStatement
+	  to tgt : out!SimpleStmt
+	    tgt.txt  = task1_attribution!text[src]
+	end
+	
+	from src : in!WhileLoop
+	  to tgt : out!Loop
+	  	tgt.expr <- src.condition
+		tgt.body <- src.statement	
+
+		tgt.txt  = task1_attribution!text[src]
+	end
+	
+	from src : in!Condition
+	  to tgt : out!If
+	    tgt.txt  = task1_attribution!text[src]
+	  
+	  	tgt.expr <- src.condition
+		tgt.then <- src.statement	
+		tgt.^else <- src.elseStatement
+	end
+
+	from src : in!Return
+	  to tgt : out!Return
+	    tgt.txt  = task1_attribution!text[src]
+	end
+
+	from src : in!Break
+	  to tgt : out!Break
+	    tgt.txt  = task1_attribution!text[src]	  
+	end
+
+	from src : in!Continue
+	  to tgt : out!Continue
+	    tgt.txt  = task1_attribution!text[src]	  
+	end
+
+	from src : in!JumpLabel
+	  to tgt : out!Label
+	  tgt.stmt <- src.statement
+	  tgt.txt  = task1_attribution!text[src]	  
+	end
+	
+	from src : in!Block
+	  to tgt : out!Block
+		tgt.stmts <- src.statements	
+	    tgt.txt  = task1_attribution!text[src]		
+	end
+
+	// -------------
+	// Expressions
+	// -------------
+	from src : task_patterns!ConditionalExpression
+	  to tgt : out!Expr
+	    tgt.txt  = task1_attribution!text[src]
+	end
+
+	from src : task_patterns!LoopExpression
+	  to tgt : out!Expr
+	    tgt.txt  = task1_attribution!text[src]	  
+	end	
+	
+end
+
+attribution task1_attribution(in) -> (out)
+//	optimizations : enabled
+	syn text : _!String
+	
+	rule in!Method
+		text[self] <- self.name.concat('()')
+	end
+	
+	rule in!LocalVariableStatement
+		init_text  = text[self.variable.initialValue]
+		type_ref   = text[self.variable.typeReference]
+		
+		text[self] <- type_ref.concat(' ').concat(
+		              self.variable.name.concat(' = ').
+		              concat(init_text)).concat(';')
+	end
+
+	rule in!ExpressionStatement
+		init_text  = text[self.expression]
+
+		text[self] <- init_text.concat(";")
+	end
+
+	rule in!AssignmentExpression
+		left  = text[self.child]
+		right = text[self.value]
+		operator = text[self.assignmentOperator]
+		
+		text[self] <- left.concat(' = ').concat(right)
+	end
+
+	rule in!SuffixUnaryModificationExpression
+		expr_text = text[self.child]
+		operator  = text[self.operator]
+		text[self] <- expr_text.concat(operator) 
+	end
+
+	rule in!MultiplicativeExpression
+		first = text[self.children.first]
+		rest  = self.children.tail.zip(self.multiplicativeOperators)
+
+		text[self] <- rest.inject(first) { |tmp, v| 
+			tmp.concat(text[v.second]).concat(text[v.first])
+		}
+	end
+
+	rule in!AdditiveExpression
+		first = text[self.children.first]
+		rest  = self.children.tail.zip(self.additiveOperators)
+				
+		text[self] <- rest.inject(first) { |tmp, v| 
+			tmp.concat(text[v.second]).concat(text[v.first])
+		}
+	end
+
+	rule in!RelationExpression
+		first = text[self.children.first]
+		rest  = self.children.tail.zip(self.relationOperators)
+		
+		text[self] <- rest.inject(first) { |tmp, v| 
+			tmp.concat(text[v.second]).concat(text[v.first])
+		}
+	end
+
+	rule in!EqualityExpression
+		first = text[self.children.first]
+		rest  = self.children.tail.zip(self.equalityOperators)		
+		
+		text[self] <- rest.inject(first) { |tmp, v| 
+			tmp.concat(text[v.second]).concat(text[v.first])
+		}
+	end
+
+	rule in!IdentifierReference
+		text[self] <- self.target.name
+	end
+
+	rule in!DecimalIntegerLiteral
+		text[self] <- self.decimalValue.to_s
+	end
+
+	rule in!WhileLoop
+		text[self] <- "while"
+	end
+
+	rule in!Condition
+		text[self] <- "if"
+	end
+
+	rule in!Block
+		text[self] <- "{...}"
+	end
+	
+	rule in!Continue
+		text[self] <- "continue" // TODO: LABEL
+	end
+	
+	rule in!Break
+		text[self] <- "break" // TODO: LABEL
+	end
+
+	rule in!Return
+		rvalue = self.returnValue.is_nil.if_else({ 
+			';' 
+		}, { 
+			v = text[self.returnValue]
+			' '.concat(v.concat(';'))
+		})
+		text[self] <- "return".concat(rvalue)
+	end
+
+	rule in!JumpLabel
+		text[self] <- self.name.concat(":")
+	end
+
+	// Types
+	rule in!Int
+		text[self] <- 'int'
+	end
+	
+	// Operators
+	rule in!Assignment
+		text[self] <- ' = '
+	end
+
+	rule in!Multiplication
+		text[self] <- ' * '
+	end
+	
+	rule in!Addition
+		text[self] <- ' + '
+	end
+
+	rule in!Division
+		text[self] <- ' / '
+	end
+	
+	rule in!Subtraction
+		text[self] <- ' - '
+	end
+
+	rule in!Equal
+		text[self] <- ' == '
+	end	
+	rule in!GreaterThan
+		text[self] <- ' > '
+	end
+
+	rule in!LessThan
+		text[self] <- ' < '
+	end
+
+	rule in!PlusPlus
+		text[self] <- '++'
+	end
+
+	rule in!MinusMinus
+		text[self] <- '--'
+	end
+
+end
+
+// ----------------------
+//       Task 3.1
+// ----------------------
+
+attribution task3_1_varuses(in) -> (out)
+	uses task1_map as task1_map
+    uses task_patterns as task_patterns
+
+	inh vardef : out!Var
+	syn writes : _!List
+	syn reads  : _!List
+
+	// Create variables
+	rule in!Method
+		translation = task1_map!default.t[self]
+		vars = self.parameters.map { |p| 
+			pvar = out!Param.new
+			pvar.txt = p.name
+
+			vardef[p] <- pvar
+				
+			pvar 
+		}
+		translation.vars = vars
+		translation.^def = vars
+	end
+	
+	rule in!LocalVariableStatement
+		avar = out!Var.new
+		avar.txt = self.variable.name
+
+		vardef[self.variable] <- avar
+
+		translation   = task1_map!default.t[self.up_to(in!Method)]
+		translation.vars = avar
+	end
+	
+	// Compute reads/writes for statements
+	rule in!ExpressionStatement
+		reads  = reads[self.expression]
+		writes = writes[self.expression]
+
+		translation = task1_map!default.t[self]
+		translation.use  = reads
+		translation.^def = writes
+	end
+
+	rule in!LocalVariableStatement
+		left   = vardef[self.variable]
+		reads  =  reads[self.variable.initialValue]
+		writes = writes[self.variable.initialValue]
+	
+		translation = task1_map!default.t[self]
+		translation.use  = reads
+		translation.^def = writes.add(left)
+	end
+
+	rule in!Return
+		self.returnValue.is_nil.if_false {
+			reads = reads[self.returnValue]
+			translation = task1_map!default.t[self]			
+			translation.use = reads
+		}
+	end		
+	
+	rule in!UnaryModificationExpression
+		avar = vardef[self.child.target]
+		writes[self] <- avar.as_list
+		reads[self]  <- avar.as_list	
+	end
+	
+	// Compute reads/writes for expressions
+	rule in!AssignmentExpression
+		writes[self] <- vardef[self.child.target]
+		reads[self]  <- reads[self.value]
+	end	
+
+	// covers ShiftExpression, AdditiveExpression, MultiplicativeExpression
+	rule in!RelationExpression 
+		writes[self] <- self.children.map { |c| r = writes[c] }.flatten 
+		reads[self]  <- self.children.map { |c| r = reads[c] }.flatten 
+	end		
+
+	rule in!AdditiveExpression 
+		writes[self] <- self.children.map { |c| r = writes[c] }.flatten 
+		reads[self]  <- self.children.map { |c| r = reads[c] }.flatten 
+	end		
+
+	rule in!MultiplicativeExpression 
+		writes[self] <- self.children.map { |c| r = writes[c] }.flatten 
+		reads[self]  <- self.children.map { |c| r = reads[c] }.flatten
+	end		
+
+	rule in!EqualityExpression
+		writes[self] <- self.children.map { |c| r = writes[c] }.flatten 
+		reads[self]  <- self.children.map { |c| r = reads[c] }.flatten
+	end		
+
+	rule in!DecimalIntegerLiteral
+		writes[self] <- _!List.new
+		reads[self]  <- _!List.new
+	end		
+	
+	rule in!IdentifierReference
+		writes[self] <- _!List.new
+		reads[self]  <- vardef[self.target]
+	end		
+
+	// Expressions
+	rule task_patterns!LoopExpression
+		translation = task1_map!default.t[self]
+		reads  = reads[self]
+		writes = writes[self]
+
+		translation.use  = reads
+		translation.^def = writes
+	end	
+
+	rule task_patterns!ConditionalExpression
+		translation = task1_map!default.t[self]
+		reads  = reads[self]
+		writes = writes[self]
+
+		translation.use  = reads
+		translation.^def = writes
+	end		
+end
+
+patterns task_patterns(in)
+	def LoopExpression -> (e)
+		l : in!WhileLoop {
+			condition = e : in!Expression { }
+		}
+	end
+
+	def ConditionalExpression -> (e)
+		l : in!Conditional {
+			condition = e : in!Expression { }
+		}
+	end
+end

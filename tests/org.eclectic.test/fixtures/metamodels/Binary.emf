@@ -1,0 +1,28 @@
+@namespace(uri="http://www.modelum.es/eclectic/test/binary_calculator", prefix="binary_calculator")
+package BinaryCalculator;
+
+class Model {
+   val BinaryCalculator[*] calculators;
+}
+
+class BinaryCalculator {
+   attr String[0..1] description;
+   val BitSeq[1] number;  
+   val Value[0..1] result; 
+}
+
+abstract class BitSeq {
+}
+
+class L extends BitSeq {
+   val BitSeq[1] left;
+   val Bit[1]    rigth;   
+}
+
+class Bit extends BitSeq {
+   attr Integer[1] value; // 0 or 1
+}
+
+class Value {
+   attr Integer[1] value;
+}

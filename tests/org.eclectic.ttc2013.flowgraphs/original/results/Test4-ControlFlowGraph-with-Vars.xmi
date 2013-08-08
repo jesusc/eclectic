@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowgraph="http://flowgraph/1.0">
+  <flowgraph:Method txt="testMethod()" cfNext="/0/@stmts.0">
+    <stmts xsi:type="flowgraph:SimpleStmt" txt="int i = 100;" cfNext="/0/@stmts.1/@expr" cfPrev="/0" def="/1"/>
+    <stmts xsi:type="flowgraph:Loop" txt="while">
+      <expr txt="i > 0" cfNext="/0/@stmts.1/@body/@stmts.0/@expr /0/@exit" cfPrev="/0/@stmts.0 /0/@stmts.1/@body/@stmts.1" use="/1"/>
+      <body xsi:type="flowgraph:Block" txt="\{...\}">
+        <stmts xsi:type="flowgraph:Loop" txt="while">
+          <expr txt="i > 50" cfNext="/0/@stmts.1/@body/@stmts.0/@body/@stmts.0 /0/@stmts.1/@body/@stmts.1" cfPrev="/0/@stmts.1/@expr /0/@stmts.1/@body/@stmts.0/@body/@stmts.1/@expr" use="/1"/>
+          <body xsi:type="flowgraph:Block" txt="\{...\}">
+            <stmts xsi:type="flowgraph:SimpleStmt" txt="i = i - 10;" cfNext="/0/@stmts.1/@body/@stmts.0/@body/@stmts.1/@expr" cfPrev="/0/@stmts.1/@body/@stmts.0/@expr" def="/1" use="/1"/>
+            <stmts xsi:type="flowgraph:If" txt="if">
+              <expr txt="i == 50" cfNext="/0/@stmts.1/@body/@stmts.0/@body/@stmts.1/@then /0/@stmts.1/@body/@stmts.0/@expr" cfPrev="/0/@stmts.1/@body/@stmts.0/@body/@stmts.0" use="/1"/>
+              <then xsi:type="flowgraph:Break" txt="break;" cfNext="/0/@stmts.1/@body/@stmts.1" cfPrev="/0/@stmts.1/@body/@stmts.0/@body/@stmts.1/@expr"/>
+            </stmts>
+          </body>
+        </stmts>
+        <stmts xsi:type="flowgraph:SimpleStmt" txt="i--;" cfNext="/0/@stmts.1/@expr" cfPrev="/0/@stmts.1/@body/@stmts.0/@body/@stmts.1/@then /0/@stmts.1/@body/@stmts.0/@expr" def="/1" use="/1"/>
+      </body>
+    </stmts>
+    <exit txt="Exit" cfPrev="/0/@stmts.1/@expr"/>
+  </flowgraph:Method>
+  <flowgraph:Var txt="i" definers="/0/@stmts.0 /0/@stmts.1/@body/@stmts.0/@body/@stmts.0 /0/@stmts.1/@body/@stmts.1" users="/0/@stmts.1/@expr /0/@stmts.1/@body/@stmts.0/@expr /0/@stmts.1/@body/@stmts.0/@body/@stmts.0 /0/@stmts.1/@body/@stmts.0/@body/@stmts.1/@expr /0/@stmts.1/@body/@stmts.1"/>
+</xmi:XMI>

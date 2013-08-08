@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="ASCII"?>
+<classdiagram:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:classdiagram="http://www.modelum.es/eclectic/test/classdiagram" xsi:schemaLocation="http://www.modelum.es/eclectic/test/classdiagram ../metamodels/ClassDiagram.ecore">
+  <classifiers xsi:type="classdiagram:Class" name="Pet">
+    <features xsi:type="classdiagram:Attribute" type="//@classifiers.0" name="brother"/>
+    <features xsi:type="classdiagram:Attribute" type="//@classifiers.2" name="name"/>
+    <features xsi:type="classdiagram:Attribute" type="//@classifiers.1" name="age" visibility=""/>
+  </classifiers>
+  <classifiers xsi:type="classdiagram:Class" name="Integer">
+    <features xsi:type="classdiagram:Attribute" type="//@classifiers.2" name="repr"/>
+  </classifiers>
+  <classifiers xsi:type="classdiagram:Class" name="String">
+    <features xsi:type="classdiagram:Attribute" type="//@classifiers.1" name="hash"/>
+  </classifiers>
+</classdiagram:Model>

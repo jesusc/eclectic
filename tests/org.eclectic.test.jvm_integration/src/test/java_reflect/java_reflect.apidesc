@@ -1,0 +1,14 @@
+api java_reflect described by "http://javax.reflect"	
+
+metaclass Class to java.lang.Class {
+	empty constructor 
+    attr name : String get method getName() : java.lang.String
+    ref methods : Method get method getMethods() : Array<Method>
+    
+}
+
+metaclass Method to java.lang.reflect.Method {
+	empty constructor 
+    attr name : String get method getName() : java.lang.String	
+}
+

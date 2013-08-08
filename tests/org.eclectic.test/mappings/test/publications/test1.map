@@ -1,0 +1,10 @@
+mappings mapPublicacions (src) -> (tgt)
+
+Publication, Kind   -> Publication
+  name        -> name
+  dateOfBirth -> bornIn 
+     //converting dateToInteger
+     //default    currentDate.asInteger 
+  //salary      -> salary converting dollarsToEuro
+  
+Author -> Person

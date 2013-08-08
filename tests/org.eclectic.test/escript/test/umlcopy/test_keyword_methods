@@ -1,0 +1,20 @@
+script umlcopy(in) -> (out)
+  
+/*
+tclass = out!Class.new
+x = 1
+y = 3
+*/
+x = 1
+
+// map x with name
+
+// filter x with { |x| x } &
+//  map it with { |y| y } 
+
+// x filter: { |x| x } & map: 1 with: { |x| x } & 
+
+//tclass.name = "prueba"
+
+names = in!Class.all_objects.inject(0) { |o| o }.
+                             map { |o| o.name }

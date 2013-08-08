@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jardesc>
+    <jar path="org.eclectic.ttc2013.flowgraphs/lib/eclectic-metadepth.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/org.eclectic.ttc2013.flowgraphs/eclectic-metadepth.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="true" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <folder path="/org.eclectic.modeling.metadepth/META-INF"/>
+        <javaElement handleIdentifier="=org.eclectic.modeling.metadepth/src"/>
+        <file path="/org.eclectic.modeling.metadepth/.project"/>
+        <file path="/org.eclectic.modeling.metadepth/build.properties"/>
+        <file path="/org.eclectic.modeling.metadepth/.classpath"/>
+    </selectedElements>
+</jardesc>

@@ -1,0 +1,26 @@
+mappings uml2swing(in) -> (out)
+	out : 'api/test/api/swing.apidesc'
+
+
+from  m : in!Class
+  to  p: out!JPanel, l : out!BoxLayout
+    linking p.layout = l
+    linking l.container = p
+  
+    l.axis = 0
+    p.name = m.name
+    p.components <- m.ownedAttribute
+end
+
+// I seems that there are scoping problems with xtext if repeating the same pattern variable names
+from  prop : in!Property
+  to  layoutPanel: out!JPanel, layoutOfPanel : out!FlowLayout, label : out!JLabel, field: out!JTextField
+  linking layoutPanel.layout = layoutOfPanel
+  linking layoutPanel.components = label  
+  linking layoutPanel.components = field
+  // TOOD: FILTER TO AVOID PROPERTIES OF ASSOCIATIONS... I HAVE TO LOOK INTO THE UML METAMODEL!
+  
+  layoutPanel.name = prop.name
+  label.text = prop.name
+  field.text = prop.name
+end

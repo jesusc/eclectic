@@ -1,0 +1,25 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: Eclectic Frontend
+Bundle-SymbolicName: org.eclectic.frontend
+Bundle-Version: 0.8.6.qualifier
+Bundle-Activator: org.eclectic.frontend.Activator
+Require-Bundle: org.eclipse.core.runtime,
+ org.eclipse.emf.ecore;bundle-version="2.6.1",
+ org.eclipse.emf.ecore.xmi;bundle-version="2.5.0",
+ org.eclectic.frontend.syntax;bundle-version="0.8.0",
+ org.eclectic.frontend.asm;bundle-version="0.8.0",
+ org.eclectic.idc;bundle-version="0.8.0";visibility:=reexport,
+ org.eclectic.modeling;bundle-version="0.8.0"
+Bundle-ActivationPolicy: lazy
+Bundle-RequiredExecutionEnvironment: JavaSE-1.6
+Export-Package: org.eclectic.capi,
+ org.eclectic.frontend,
+ org.eclectic.frontend.api,
+ org.eclectic.frontend.capi
+Bundle-Vendor: Eclectical
+Bundle-ClassPath: lib/bcel-5.2-required-by-bootstrapper.jar,
+ lib/scala.library_2.9.0.final.jar,
+ lib/eclectic-scala-bootstrapper.jar,
+ lib/eclectic-compiler.jar,
+ .

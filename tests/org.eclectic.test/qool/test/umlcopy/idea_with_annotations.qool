@@ -1,0 +1,82 @@
+qool umlcopy(in) -> (out)
+
+trace rt 
+  link class2class 
+	var s :  in!Class 
+	var t : out!Class 
+  end
+
+  link attr2attr 
+	var s :  in!Attribute 
+	var t : out!Attribute 
+  end
+end 
+
+// tratar todo como conceptos!!
+/*
+types
+    // necesitaria genericidad!!! 
+    // pero el lenguaje es dinamico, estatico o mixto???
+	type PairClassClass 
+		var _1 : in!Class
+		var _2 : in!Class
+	end
+end
+*/
+
+// There is advantage in letting the pattern
+// call the rule: the same patterns could call several
+// rules, as an optimization
+local queue qClass : in!Class
+//local queue qPair  : PairClassClass
+model queue mClass : in!Class
+
+// in!Class is treated as a queue
+// it could be declared as
+//    metaclass queue inClass : in!Class
+// and used
+//    forall c1 in inClass
+
+// Another type are polymorphic queues redirects its elements
+// only to one of the sinks that are waiting,
+// according to the dynamic type of the enqueued object.
+
+segment findClasses // : pattern
+	forall c1 from mClass
+		emit c1 to qClass
+	end
+end
+
+
+
+// I could have just "segment" to indicate
+// a piece of code that receives events
+// Actually, NO need to differentiate between patterns and rules
+// 		=> HOWEVER, it would be interesting to annotate what is 
+//		   a pattern and what a rule, in order to perform analysis
+//		   and optimizations (e.g., bindings - adaptations)
+//		=> A RULE is a piece of code that performs modifications
+//		=> A PATTERN is a piece of code that reads and emits
+
+segment class2class // : rule
+  forall c1 from qClass 
+  // it is inconditional, in the sense that the rule is triggered whenever a new element
+  // is created
+
+  // forRequest 		
+  // I don't really need forRequest, because I could intercept the queue with the
+  // requests, which would be an implicit queue, the only issue is how to know
+  // which is the thing being matched
+  // 
+  // Now match trace can be generalised to "match"
+  // match qPair with [ _1 = someObj ]
+	
+  x = 1
+  // put rt!class2class with [ s = sclass, t = tclass ] 
+  end
+end 
+
+// How could i possibly support rule inheritance in qool?????
+
+// pattern rule communication could be another queue
+

@@ -1,0 +1,27 @@
+@namespace(
+	uri="http://eclectic.org/test_jvm_integration/mention_graph",
+	prefix="mention_graph")
+package mention_graph;
+
+class MentionGraph {
+	val Node[*] nodes;
+	val Edge[*] edges;
+}
+
+abstract class Node {
+	attr String[1] value;
+}
+
+class User extends Node {
+   ref HashTag[*] relatedHashtags;
+}
+
+class HashTag extends Node {
+   	attr int[1] count = 0;
+}
+
+class Edge {
+   ref Node[1] source;
+   ref Node[1] target; 
+}
+

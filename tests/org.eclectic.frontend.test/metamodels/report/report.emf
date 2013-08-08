@@ -1,0 +1,8 @@
+@namespace(uri="http://org.eclectic.test/report", prefix="report")
+	
+package report;
+
+class Report {
+  attr String[1] value;
+  val Report[*] nested;
+}

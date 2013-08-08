@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.0"?>
+
+<!--
+ <copyright>
+ </copyright>
+
+ $Id$
+-->
+
+<plugin>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package   
+            uri="http://eclectic.org/frontend"
+            class="org.eclectic.frontend.FrontendPackage"
+            genModel="model/eclectic.frontend.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://eclectic.org/frontend/koanL"
+            class="org.eclectic.frontend.koan.KoanPackage"
+            genModel="model/eclectic.frontend.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://eclectic.org/frontend/core"
+            class="org.eclectic.frontend.core.CorePackage"
+            genModel="model/eclectic.frontend.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://eclectic.org/frontend/mappingL"
+            class="org.eclectic.frontend.mappings.MappingsPackage"
+            genModel="model/eclectic.frontend.genmodel"/>
+   </extension>
+
+   <extension point="org.eclipse.emf.ecore.generated_package">
+      <package
+            uri="http://eclectic.org/frontend/attributionL"
+            class="org.eclectic.frontend.attribution.AttributionPackage"
+            genModel="model/eclectic.frontend.genmodel"/>
+   </extension>
+
+</plugin>

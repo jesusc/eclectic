@@ -1,0 +1,10 @@
+stream dtrace for "http://eclectic.org/streaming/dynamic_trace"
+
+
+key(EJCCompilationUnit) = objectId
+// key(EJCClassDecl) = objectId
+key(EJCClassDecl) = sName
+key(EJCMethodDecl) = qName
+
+key(EJCIdent) = NO_KEY
+

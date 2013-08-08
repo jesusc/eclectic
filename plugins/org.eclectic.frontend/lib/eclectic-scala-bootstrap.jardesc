@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<jardesc>
+    <jar path="org.eclectic.frontend/lib/eclectic-scala-bootstrapper.jar"/>
+    <options buildIfNeeded="true" compress="true" descriptionLocation="/org.eclectic.frontend/lib/eclectic-scala-bootstrap.jardesc" exportErrors="true" exportWarnings="true" includeDirectoryEntries="false" overwrite="false" saveDescription="true" storeRefactorings="false" useSourceFolders="false"/>
+    <storedRefactorings deprecationInfo="true" structuralOnly="false"/>
+    <selectedProjects/>
+    <manifest generateManifest="true" manifestLocation="" manifestVersion="1.0" reuseManifest="false" saveManifest="false" usesManifest="true">
+        <sealing sealJar="false">
+            <packagesToSeal/>
+            <packagesToUnSeal/>
+        </sealing>
+    </manifest>
+    <selectedElements exportClassFiles="true" exportJavaFiles="false" exportOutputFolder="false">
+        <folder path="/modelum.eclectic.compiler/model"/>
+        <folder path="/modelum.eclectic.compiler/META-INF"/>
+        <javaElement handleIdentifier="=modelum.eclectic.emf"/>
+        <javaElement handleIdentifier="=modelum.eclectic.compiler/backends\/jvm"/>
+        <folder path="/modelum.eclectic.compiler/util"/>
+        <file path="/modelum.eclectic.compiler/.project"/>
+        <file path="/modelum.eclectic.compiler/plugin.xml"/>
+        <javaElement handleIdentifier="=modelum.eclectic.scala"/>
+        <javaElement handleIdentifier="=modelum.eclectic.compiler/backends\/clojure\/src"/>
+        <javaElement handleIdentifier="=modelum.eclectic.compiler/src"/>
+        <file path="/modelum.eclectic.compiler/.classpath"/>
+        <file path="/modelum.eclectic.compiler/JESUS_PERERA"/>
+        <file path="/modelum.eclectic.compiler/rats.treboldef"/>
+        <file path="/modelum.eclectic.compiler/common.xml"/>
+        <file path="/modelum.eclectic.compiler/build.properties"/>
+        <folder path="/modelum.eclectic.compiler/bootstrap"/>
+        <file path="/modelum.eclectic.compiler/.scala_dependencies"/>
+        <javaElement handleIdentifier="=modelum.eclectic.compiler/lib"/>
+        <file path="/modelum.eclectic.compiler/tasks.rake"/>
+        <folder path="/modelum.eclectic.compiler/tasklib"/>
+        <file path="/modelum.eclectic.compiler/ecl.treboldef"/>
+        <folder path="/modelum.eclectic.compiler/frontend"/>
+        <folder path="/modelum.eclectic.compiler/syntax"/>
+        <file path="/modelum.eclectic.compiler/plugin.properties"/>
+        <folder path="/modelum.eclectic.compiler/backends"/>
+        <javaElement handleIdentifier="=modelum.eclectic.compiler/test"/>
+        <javaElement handleIdentifier="=modelum.eclectic.compiler/gen"/>
+    </selectedElements>
+</jardesc>

@@ -1,0 +1,136 @@
+// 
+// This is the compiler from Mappings to Qool 
+// 
+
+qool chain2idc(in) -> (idc)
+
+model rt 
+  class generic 
+	ref s : _!Any 
+	ref t : _!Any 
+  end
+  
+  class var2var
+    ref s : _!Any
+    ref t : idc!Variable
+  end
+  
+  class instr
+    ref s    :  _!Any
+    ref list : idc!Instruction*
+  end
+  
+  class queue_link
+    att name   : _!String
+    ref queue_ : idc!Queue
+  end
+
+  class attr2link
+    ref s  : in!AttributeDcl
+    ref t  : idc!KClass
+  end  
+end 
+
+local queue instrQ      : rt!instr
+local queue varsQ       : rt!var2var
+
+local queue genericQ    : rt!generic
+local queue globalQ     : rt!global
+local queue queueByName : rt!queue_link
+local queue attr2linkQ  : rt!attr2link
+
+model queue mChainTransformation : in!ChainTransformation
+
+
+model queue mAttributionRule               : in!AttributionRule
+model queue mAttributeInit                 : in!AttributeInit
+model queue mAttributeUse                  : in!AttributeUse
+
+// core
+model queue mVariableReference           : in!VariableReference
+model queue mMethodCall                  : in!MethodCall
+
+
+segment high_level
+  forall trafo from mChainTransformation
+    ct      = idc!SequentialTransformation.new
+    ct.name = trafo.name
+    ct.qualifier = "main"
+
+	// Begin-of ModelDefinition 
+    model_def_transformer =  { |kind_of_model|
+      result_1 = { |transf_def_param_1|
+         
+         mp_1 = idc!ModelDefinition.new
+         mp_1.name = transf_def_param_1.name
+         mp_1.kind = kind_of_model
+
+      	 annotatedWith = trafo.annotations.select { |a| a.annotatedElement.eq(transf_def_param_1) }	
+      	 mp_1.metamodel = annotatedWith.select { |a| a.kind_of(in!MetamodelModelAnnotation) }.map { |a|  
+      			d = idc!MetamodelDefinition.new
+      			d.path = a.metamodel
+      			d 
+      		}.first // I should have a way to check there is only one
+      
+         trace_in_model_to_model = rt!generic.new
+         trace_in_model_to_model.s = transf_def_param_1
+         trace_in_model_to_model.t = mp_1
+      
+         emit trace_in_model_to_model to genericQ
+        
+         mp_1 
+      }
+      result_1
+    }
+    ct.models = trafo.inModels.map (model_def_transformer.call("IN") )
+    ct.models = trafo.outModels.map(model_def_transformer.call("OUT") )
+    ct.intermediateModels = trafo.generatedModels.map(model_def_transformer.call("OUT") )
+    // End-of ModelDefinition
+
+    transf_execution_transformer = { |te|
+     	idc_exec = idc!TransformationExecution.new
+    	idc_exec.transformationName = te.transformation.name
+        idc_exec.inModels = te.inputModels.map { |m|
+    	   genericQ[ #kindOf(rt!generic), #p(s, m) ].t   
+        }
+        idc_exec.outModels = te.outputModels.map { |m|
+    	   genericQ[ #kindOf(rt!generic), #p(s, m) ].t   
+        }            	
+  
+        idc_exec.row    = te.row
+        idc_exec.column = te.column
+        idc_exec.file   = te.file
+    	    	
+    	idc_exec
+    }
+
+    ct.executions = trafo.executions.map(transf_execution_transformer)
+
+
+    composite_transformer = { |comp_trafo|
+    	pt = idc!ParallelTransformation.new
+    	pt.name = comp_trafo.name
+
+        pt.models = comp_trafo.inModels.map (model_def_transformer.call("IN") )
+		pt.models = comp_trafo.outModels.map(model_def_transformer.call("OUT") )
+    	
+	    pt.executions = comp_trafo.executions.map(transf_execution_transformer)
+    	
+    	pt
+    }
+    
+    trafo.composites.each(composite_transformer)
+  end
+end
+
+/*
+segment line_numbers
+  forall instr_trace from instrQ
+    instr_trace.list.each { |idc_instr|
+      idc_instr.row    = instr_trace.s.row
+      idc_instr.column = instr_trace.s.column
+      idc_instr.file   = instr_trace.s.file
+    }
+  end
+end
+*/

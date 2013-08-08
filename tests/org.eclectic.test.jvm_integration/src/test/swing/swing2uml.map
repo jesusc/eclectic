@@ -1,0 +1,18 @@
+mappings swing2uml(in) -> (uml)
+	in : 'platform:/resource/org.eclectic.test.jvm_integration/src/test/swing/swing.apidesc'
+
+
+// A better analyis could be done with attribute propagation
+from  p : in!JPanel 
+  to  c : uml!Class
+  
+  c.name = p.name
+  c.ownedAttribute <- p.components
+end
+
+from  f : in!JTextField
+  to  a : uml!Property
+  
+  a.name = f.text
+  // what about the type?
+end

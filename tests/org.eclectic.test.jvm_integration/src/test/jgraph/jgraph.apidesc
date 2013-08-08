@@ -1,0 +1,55 @@
+api jgraph described by "http://jgraph"	
+
+	metaclass Graph to com.mxgraph.view.mxGraph {
+		empty constructor 
+		ref cells* : Cell
+			set method addCell(java.lang.Object) : java.lang.Object
+	}
+
+	metaclass Cell to com.mxgraph.model.mxCell {
+		empty constructor  
+		attr edge : Boolean
+			get method getEdge() : boolean
+			set method setEdge(boolean) : void
+
+		attr vertex : Boolean
+			get method getVertex() : boolean
+			set method setVertex(boolean) : void
+
+		attr connectable : Boolean
+			get method getConnectable() : boolean
+			set method setConnectable(boolean) : void
+
+		attr value : String
+			get method getValue() : java.lang.Object
+			set method setValue(java.lang.Object) : void
+
+		attr id : String
+			get method getId() : java.lang.String
+			set method setId(java.lang.String) : void
+
+		attr style : String
+			get method getStyle() : java.lang.String
+			set method setStyle(java.lang.String) : void
+
+		ref geometry : Geometry
+			set method setGeometry(com.mxgraph.model.mxGeometry) : void
+		
+		ref source : Cell
+			set method setSource(com.mxgraph.model.mxICell) : void
+
+		ref target : Cell
+			set method setTarget(com.mxgraph.model.mxICell) : void
+		
+	}
+
+	metaclass Geometry to com.mxgraph.model.mxGeometry  {
+		empty constructor
+
+		attr width : Double
+			set method setWidth(double) : void
+
+		attr height : Double
+			set method setHeight(double) : void
+		
+	}

@@ -1,0 +1,140 @@
+eclectic task2 (flow) -> (flow_out)
+
+attribution task2_attribution(flow) -> (flow_out)
+	inh successors  : _!List
+	syn cf_next   : flow!FlowInstr // the control flow instruction for the previous flow instruction one
+
+	rule flow!Method
+		successors[self.stmts.first] <- self.stmts.tail.add(self.exit)
+		
+		cf_next[self.exit] <- self.exit 
+		 
+		next_flow   = cf_next[self.stmts.first]
+		self.cfNext = next_flow
+	end
+	
+	rule flow!Block!
+		// Propagate the sibling attr. to your immediate sibling
+		successors = successors[self]
+		successors[successors.first] <- successors.tail 
+
+		successor = successors.first
+		successors[self.stmts.first] <- self.stmts.tail.add(successor)
+		
+		// Compute the control flow
+		cf_next[self] <- cf_next[self.stmts.first]		
+	end
+
+	rule flow!SimpleStmt
+		successors = successors[self]
+		successors[successors.first] <- successors.tail 
+
+		cf_next[self] <- self
+
+		next_flow = cf_next[successors.first]
+		self.cfNext = next_flow
+	end
+
+	rule flow!Return
+		successors = successors[self]
+		successors[successors.first] <- successors.tail 
+	
+		method = self.up_to(flow!Method)
+		self.cfNext = method.exit		
+		cf_next[self] <- self
+	end
+	
+	rule flow!Loop
+		condition  = self.expr
+			
+		// Propagate the sibling attr. to your immediate sibling
+		successors = successors[self]
+		successors[successors.first] <- successors.tail 
+
+		// successors[self.body] <- successors
+		successors[self.body] <- condition.as_list // self.body.as_list.add(condition)
+		
+		cf_next[condition] <- condition
+
+		// Compute the control flow
+		cf_next[self] <- condition
+
+		set_next = {
+		next_flow = cf_next[successors.first]
+		condition.cfNext = next_flow
+		}
+		set_next.call
+
+		first_within = cf_next[self.body]
+		condition.cfNext = first_within					
+	end
+
+	rule flow!If
+		// Propagate the sibling attr. to your immediate sibling
+		successors = successors[self]
+		successors[successors.first] <- successors.tail 
+		successors[self.then] <- successors //_!List.new.add(self.then).concat(successors)
+		
+		cf_next[self] <- self.expr
+
+		first_then = cf_next[self.then]
+		condition  = self.expr
+		condition.cfNext = first_then
+		
+		// No   else => next sibling
+		// With else => the else statement flow instruction
+		self.^else.is_nil.if_else({
+			next_flow = cf_next[successors.first]
+			condition  = self.expr
+			condition.cfNext = next_flow				
+		}, {
+			successors[self.^else] <- successors 
+			
+			first_within = cf_next[self.^else]
+			condition    = self.expr
+			condition.cfNext = first_within											
+		})
+	end
+
+	rule flow!Break
+		successors = successors[self]
+		successors[successors.first] <- successors.tail 
+
+		cf_next[self] <- self
+		
+		jump_location = self.label.is_nil.if_else({
+			self.up_to(flow!Loop) 
+		}, {
+			self.label
+		})
+		
+		break_successors = successors[jump_location]
+		next_flow = cf_next[break_successors.first]
+		self.cfNext = next_flow		
+	end
+	
+	rule flow!Continue
+		successors = successors[self]
+		successors[successors.first] <- successors.tail 
+
+		expr = self.label.is_nil.if_else({
+			loop = self.up_to(flow!Loop) // assume it is a loop...
+			loop.expr	
+		}, {
+			self.label.stmt.expr
+		})
+
+		self.cfNext = expr
+		cf_next[self] <- self
+	end
+	
+
+	rule flow!Label
+		successors = successors[self]
+		successors[successors.first] <- successors.tail 
+		successors[self.stmt] <- successors
+
+		cf_next[self] <- cf_next[self.stmt] // next instruction in the flow...
+	end
+end
+	

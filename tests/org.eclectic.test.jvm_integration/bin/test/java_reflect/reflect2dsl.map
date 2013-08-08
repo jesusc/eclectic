@@ -1,0 +1,22 @@
+mappings reflect2dsl(reflect) -> (dsl)
+reflect : 'platform:/resource/org.eclectic.test.jvm_integration/src/test/java_reflect/java_reflect.apidesc'
+
+from  j : reflect!Class
+  to  c : dsl!SimpleClassMapping
+  
+  c.metaclassName = j.name // convertir a simple name!
+  
+  c.featureMappings <- j.methods
+end
+
+
+
+from  m : reflect!Method
+  to  f : dsl!SimpleReferenceMapping
+
+  f.featureName = m.name  // convert!
+end
+
+// TODO: Implement heuristics!
+
+			

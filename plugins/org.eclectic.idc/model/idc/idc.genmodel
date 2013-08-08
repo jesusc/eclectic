@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<genmodel:GenModel xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore"
+    xmlns:genmodel="http://www.eclipse.org/emf/2002/GenModel" modelDirectory="/org.eclectic.idc/src-gen"
+    modelPluginID="org.eclectic.idc" modelName="Idc" importerID="org.eclipse.emf.importer.ecore"
+    complianceLevel="6.0" copyrightFields="false">
+  <foreignModel>idc.ecore</foreignModel>
+  <genPackages prefix="Idc" basePackage="org.eclectic" disposableProviderFactory="true"
+      ecorePackage="idc.ecore#/">
+    <genClasses ecoreClass="idc.ecore#//DummyToCreateAPackage"/>
+    <nestedGenPackages prefix="Core" basePackage="org.eclectic.idc" disposableProviderFactory="true"
+        ecorePackage="idc.ecore#//core">
+      <genEnums typeSafeEnumCompatible="false" ecoreEnum="idc.ecore#//core/ModelKind">
+        <genEnumLiterals ecoreEnumLiteral="idc.ecore#//core/ModelKind/IN"/>
+        <genEnumLiterals ecoreEnumLiteral="idc.ecore#//core/ModelKind/OUT"/>
+      </genEnums>
+      <genClasses image="false" ecoreClass="idc.ecore#//core/LocatedElement">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//core/LocatedElement/row"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//core/LocatedElement/column"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//core/LocatedElement/file"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="idc.ecore#//core/NamedElement">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//core/NamedElement/name"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="idc.ecore#//core/CodeUnit">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//core/CodeUnit/qualifier"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//core/CodeUnit/main"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//core/CodeUnit/models"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//core/CodeUnit/additionalModels"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//core/CodeUnit/importedModels"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//core/CodeUnit/requires"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//core/RequireDeclaration">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//core/RequireDeclaration/default"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//core/RequireDeclaration/parameters"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="idc.ecore#//core/RequireParameter">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//core/RequireParameter/formalParameterName"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//core/RequireModelParameter">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//core/RequireModelParameter/model"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="idc.ecore#//core/ExecutableUnit">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//core/ExecutableUnit/pre"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//core/ExecutableUnit/post"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//core/EntryPointUnit"/>
+      <genClasses ecoreClass="idc.ecore#//core/MethodLibrary">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//core/MethodLibrary/methods"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//core/ModelDefinition">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//core/ModelDefinition/kind"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//core/ModelDefinition/includedLibraries"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//core/ModelDefinition/metamodel"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//core/MetamodelDefinition">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//core/MetamodelDefinition/path"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//core/ImportedModel">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//core/ImportedModel/capabilityQueues"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="idc.ecore#//core/InstructionBlock">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//core/InstructionBlock/instructions"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="idc.ecore#//core/Mapping"/>
+      <genClasses image="false" ecoreClass="idc.ecore#//core/Instruction"/>
+      <genClasses image="false" ecoreClass="idc.ecore#//core/FunctionDef">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//core/FunctionDef/formalParameters"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//core/NormalFunction">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//core/NormalFunction/name"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//core/Parameter"/>
+      <genClasses ecoreClass="idc.ecore#//core/MethodDefinition">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//core/MethodDefinition/type"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//core/MethodDefinition/selfVar"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//core/SelfVariable"/>
+      <genClasses image="false" ecoreClass="idc.ecore#//core/Variable">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//core/Variable/type"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//core/Variable/getReceptors"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//core/Variable/setReceptors"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//core/Variable/setValues"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//core/Variable/assignVariables"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//core/Variable/ifConditions"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//core/Variable/callReceptors"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//core/Variable/callParameters"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//core/Variable/emitValues"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//core/TypeInfo">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//core/TypeInfo/model"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//core/TypeInfo/classifierName"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//core/TypeInfo/isList"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//core/TypeInfo/strictType"/>
+      </genClasses>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Extensions" basePackage="org.eclectic.idc" disposableProviderFactory="true"
+        ecorePackage="idc.ecore#//extensions">
+      <genClasses image="false" ecoreClass="idc.ecore#//extensions/Extension"/>
+      <genClasses ecoreClass="idc.ecore#//extensions/PotencyExtension">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//extensions/PotencyExtension/potency"/>
+      </genClasses>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Qool" basePackage="org.eclectic.idc" disposableProviderFactory="true"
+        ecorePackage="idc.ecore#//qool">
+      <genClasses ecoreClass="idc.ecore#//qool/QoolTransformation">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//qool/QoolTransformation/segments"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//qool/QoolTransformation/queues"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//qool/QoolTransformation/provided"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//qool/QoolTransformation/inlineModels"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//qool/InlineModel">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//qool/InlineModel/classifiers"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//qool/Segment">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//qool/Segment/name"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="idc.ecore#//qool/Queue">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//qool/Queue/name"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//qool/Queue/optimizations"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="idc.ecore#//qool/QueueOptimization"/>
+      <genClasses ecoreClass="idc.ecore#//qool/AccessByFeatureOptimization">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//qool/AccessByFeatureOptimization/featureName"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//qool/AccessByFeatureOptimization/speculative"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//qool/ModelElementQueue">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//qool/ModelElementQueue/type_"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//qool/ModelElementQueue/additionals"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//qool/ModelElementQueue/extension"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//qool/LocalQueue">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//qool/LocalQueue/type_"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//qool/RequiredQueue">
+        <genFeatures property="None" notify="false" createChild="false" ecoreFeature="ecore:EReference idc.ecore#//qool/RequiredQueue/importedModel"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="idc.ecore#//qool/QIterator"/>
+      <genClasses ecoreClass="idc.ecore#//qool/QForAll">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//qool/QForAll/queue"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//qool/QEmit">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//qool/QEmit/queue"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//qool/QEmit/value"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//qool/QMatch">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//qool/QMatch/queue"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//qool/QMatch/predicates"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//qool/QMatch/getterClosure"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="idc.ecore#//qool/QMatchPredicate"/>
+      <genClasses ecoreClass="idc.ecore#//qool/KindOfPredicate">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//qool/KindOfPredicate/className"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//qool/KindOfPredicate/model"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//qool/PropertyEqualsPredicate">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//qool/PropertyEqualsPredicate/propertyName"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//qool/PropertyEqualsPredicate/value"/>
+      </genClasses>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Instr" basePackage="org.eclectic.idc" disposableProviderFactory="true"
+        ecorePackage="idc.ecore#//instr">
+      <genEnums typeSafeEnumCompatible="false" ecoreEnum="idc.ecore#//instr/GetKind">
+        <genEnumLiterals ecoreEnumLiteral="idc.ecore#//instr/GetKind/PLAIN_GET"/>
+        <genEnumLiterals ecoreEnumLiteral="idc.ecore#//instr/GetKind/TRY_GET_FIRST"/>
+        <genEnumLiterals ecoreEnumLiteral="idc.ecore#//instr/GetKind/TRY_METHOD_FIRST"/>
+      </genEnums>
+      <genEnums typeSafeEnumCompatible="false" ecoreEnum="idc.ecore#//instr/LiteralKind">
+        <genEnumLiterals ecoreEnumLiteral="idc.ecore#//instr/LiteralKind/STRING"/>
+        <genEnumLiterals ecoreEnumLiteral="idc.ecore#//instr/LiteralKind/INTEGER"/>
+        <genEnumLiterals ecoreEnumLiteral="idc.ecore#//instr/LiteralKind/DOUBLE"/>
+        <genEnumLiterals ecoreEnumLiteral="idc.ecore#//instr/LiteralKind/BOOLEAN"/>
+        <genEnumLiterals ecoreEnumLiteral="idc.ecore#//instr/LiteralKind/NULL"/>
+      </genEnums>
+      <genEnums typeSafeEnumCompatible="false" ecoreEnum="idc.ecore#//instr/ReadMetaKind">
+        <genEnumLiterals ecoreEnumLiteral="idc.ecore#//instr/ReadMetaKind/METACLASS"/>
+        <genEnumLiterals ecoreEnumLiteral="idc.ecore#//instr/ReadMetaKind/MODEL"/>
+        <genEnumLiterals ecoreEnumLiteral="idc.ecore#//instr/ReadMetaKind/THIS_TRANSFORMATION_METHOD_HANDLER"/>
+        <genEnumLiterals ecoreEnumLiteral="idc.ecore#//instr/ReadMetaKind/THIS_TRANSFORMATION_OBJECT"/>
+      </genEnums>
+      <genClasses image="false" ecoreClass="idc.ecore#//instr/InstructionWithResult"/>
+      <genClasses ecoreClass="idc.ecore#//instr/Create">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//instr/Create/model"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//instr/Create/className"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//instr/Create/constructorParameters"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//instr/Set">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//instr/Set/receptor"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//instr/Set/featureName"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//instr/Set/value"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//instr/Get">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//instr/Get/receptor"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//instr/Get/featureName"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//instr/Get/kind"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//instr/Get/maybeCollection"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//instr/Literal">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//instr/Literal/stringValue"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//instr/Literal/intValue"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//instr/Literal/doubleValue"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//instr/Literal/booleanValue"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//instr/Literal/kind"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//instr/ClosureDef"/>
+      <genClasses ecoreClass="idc.ecore#//instr/Assign">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//instr/Assign/rightVariable"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//instr/IfInstr">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//instr/IfInstr/then"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//instr/IfInstr/elsifs"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//instr/IfInstr/elseBlock"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//instr/IfBranch">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//instr/IfBranch/booleanVariable"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//instr/IfBranch/ifBlock"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//instr/IfElseBlock"/>
+      <genClasses ecoreClass="idc.ecore#//instr/MethodCall">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//instr/MethodCall/methodName"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//instr/MethodCall/receptor"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//instr/MethodCall/actualParameters"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//instr/MethodCall/maybeGet"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//instr/MethodCall/receptorType"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//instr/ReadMeta">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//instr/ReadMeta/className"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//instr/ReadMeta/kind"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//instr/ReadMeta/model"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="idc.ecore#//instr/InvokeTransformation">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//instr/InvokeTransformation/transformationName"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//instr/InvokeTransformation/sourceModels"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//instr/InvokeTransformation/targetModels"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//instr/InvokeTransformation/inputViewFilter"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//instr/InvokeTransformation/entryPointName"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//instr/InvokeTransformation/entryPointParameters"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//instr/InvokeExternal">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//instr/InvokeExternal/parameters"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//instr/InvokeExternal/outputResolutionSourceElement"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//instr/InvokeExternal/queueName"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//instr/InvokeExternal/srcTraceAttributeName"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//instr/InvokeExternal/tgtTraceAttributeName"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="idc.ecore#//instr/InvokeInternal"/>
+      <genClasses ecoreClass="idc.ecore#//instr/InvocationParameter">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//instr/InvocationParameter/model"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//instr/InvocationParameter/calleeModelName"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//instr/NamedInvocationParameter">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//instr/NamedInvocationParameter/formalName"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//instr/NamedInvocationParameter/result"/>
+      </genClasses>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Scheduling" basePackage="org.eclectic.idc" disposableProviderFactory="true"
+        ecorePackage="idc.ecore#//scheduling">
+      <genClasses ecoreClass="idc.ecore#//scheduling/ParallelTransformation">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//scheduling/ParallelTransformation/executions"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//scheduling/SequentialTransformation">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//scheduling/SequentialTransformation/executions"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//scheduling/SequentialTransformation/intermediateModels"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//scheduling/TransformationExecution">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//scheduling/TransformationExecution/transformationName"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//scheduling/TransformationExecution/inModels"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//scheduling/TransformationExecution/outModels"/>
+      </genClasses>
+    </nestedGenPackages>
+    <nestedGenPackages prefix="Ecl_meta" basePackage="org.eclectic.idc" disposableProviderFactory="true"
+        ecorePackage="idc.ecore#//ecl_meta">
+      <genClasses ecoreClass="idc.ecore#//ecl_meta/NamedElement">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//ecl_meta/NamedElement/name"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//ecl_meta/KPackage">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//ecl_meta/KPackage/subpackages"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//ecl_meta/KPackage/classifiers"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//ecl_meta/KMetamodel"/>
+      <genClasses image="false" ecoreClass="idc.ecore#//ecl_meta/KClassifier"/>
+      <genClasses image="false" ecoreClass="idc.ecore#//ecl_meta/KDataType"/>
+      <genClasses ecoreClass="idc.ecore#//ecl_meta/KPrimitiveType"/>
+      <genClasses ecoreClass="idc.ecore#//ecl_meta/KEnumeration">
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//ecl_meta/KEnumeration/literals"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//ecl_meta/KEnumLiteral"/>
+      <genClasses ecoreClass="idc.ecore#//ecl_meta/KClass">
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//ecl_meta/KClass/supertypes"/>
+        <genFeatures property="None" children="true" createChild="true" ecoreFeature="ecore:EReference idc.ecore#//ecl_meta/KClass/features"/>
+      </genClasses>
+      <genClasses image="false" ecoreClass="idc.ecore#//ecl_meta/KStructuralFeature">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//ecl_meta/KStructuralFeature/isMultivalued"/>
+        <genFeatures notify="false" createChild="false" propertySortChoices="true"
+            ecoreFeature="ecore:EReference idc.ecore#//ecl_meta/KStructuralFeature/ktype"/>
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//ecl_meta/KStructuralFeature/ktypeName"/>
+      </genClasses>
+      <genClasses ecoreClass="idc.ecore#//ecl_meta/KAttribute"/>
+      <genClasses ecoreClass="idc.ecore#//ecl_meta/KReference">
+        <genFeatures createChild="false" ecoreFeature="ecore:EAttribute idc.ecore#//ecl_meta/KReference/isContained"/>
+      </genClasses>
+    </nestedGenPackages>
+  </genPackages>
+</genmodel:GenModel>

@@ -1,0 +1,33 @@
+/**
+ * Tests simple replacements.
+ * 
+ * Assumptions:
+ *   - Binary expressions are not used because replacements are needed
+ *     to implement them
+ */
+qool test_inplace_replace_simple ( in ) -> ( in ) 
+
+model queue mPlaces : in!Place 
+
+segment main
+	forall p from mPlaces
+	
+		p.name.println("Replacing: ")
+		
+		// Create a new place
+		new_place = in!Place.new
+		new_place.name = p.name.concat('replacement')	
+		p.replaceBy(new_place)
+		
+	end
+
+end
+
+/// Several types of replacements:
+///   - Replace, do not delete
+///   - Replace and delete
+/// 
+/// A mechanism to inject the created object into the queues
+/// is needed. One way is to pass a closure to replace (replace_inject), so that
+/// when its content is executed atomically, before injecting.
+///

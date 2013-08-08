@@ -1,0 +1,205 @@
+/* 
+ * Transforms an Ocl model to Java, by propagating attributes.
+ * For instance:
+ * <pre>
+ *   context Company
+ *      inv: self.employees->select(e | e.isBoss)->size() = 1   
+ * </pre>
+ * 
+ * is translated to:
+ * <pre>
+ *   this.getEmployees().select(new Closure() {
+ *      public Object exec(Object e) {
+ *         e.isBoss
+ *      }
+ *   }).size() == 1;
+ * </pre>
+ *
+ * This could be done with a simple mapping, but type information
+ * requires propagating elements.
+ *
+ * Another option is to generate idiomatic Java.
+ * From: 
+ *     <pre>
+ *        self.organization.employees->select(e | e.isBoss)->size() = 1   
+ *     </pre>
+ * Generate:
+ * <pre>
+ *    Collection<Employee> employees = this.getOrganization().getEmployees();
+ *    Collection<Employee> selected  = new LinkedList<Employee>();
+ *    for(Employee e : employees) {
+ *       if ( e.isBoss ) {
+ *         selected.add(e);
+ *       }
+ *    }
+ *    return selected.size() == 0;
+ * </pre>
+ * 
+ */
+prop typing(uml, ocl) -> (java)
+  syn type  : uml!Classifier
+  inh table : _!Map
+ 
+  // self.employees
+  ocl!NavigationExpr :
+    type <- self.receptor[#type].feature(self.name).type
+  	table > table # if not given it is automatically propagated
+  end
+
+  ocl!IteratorExpr | self.isUnaryIterator :
+    type  <- self.receptor[#type].feature(self.name).type
+    table -> #table.put(self.iterators.first, self.iterators.type)
+  end
+  
+  // instead of a table, it could be possible to associate the inherited type
+  // directly to the iterator in ocl!IteratorVariable rule
+end 
+
+// Can I create elements here, or invoke something, to have
+// something different from propagation
+//
+// 
+//
+prop ocl2java(uml, ocl) -> (java)
+  syn statements : java!Statement*
+  syn expression : java!Expression
+  syn variable   : java!VariableDeclarationFragment
+  
+  ocl!NavigationExpr | isEndOfChain:
+    statements <- [] 
+    expression <- genJava.createMethodCall(self) 
+  end // what about the receptor??
+
+  ocl!NavigationExpr | ! isEndOfChain:
+    genJava.createAssignment(self, genJava.createMethodCall(self) ) 
+    
+    
+    statements <- [] 
+    expression <- genJava.createMethodCall(self) 
+  end // what about the receptor??
+  
+  // We would like to transform all the tree involving
+  // receptors as a chain until the iterator.
+  //    e.g., employee.departament.people->select(...)
+  //          getEmployee().getDepartament().getPeople();  
+  ocl!IteratorCall | self.name == "select" :
+    statements <- genJava.createAssignment(receptor[#expression], receptor[#typing.type])
+    statements <- genJava.createSelect(self) 
+    expression <-  
+    // this is not fine, it would like to emit before suspending... in case of circular refs...
+  end
+  
+  self.employees->select
+  
+end
+
+// Curiously, in prop resolving operators is invoked as if it were a syn/inh resolver!
+
+// Maybe it makes sense to add some kind of high-order functions
+// to TAO, to enable higher-degree of extensibility when being called
+// not just plain functions...
+
+tao genJava(uml, ocl) -> (java)
+
+  // self.employees
+  template createMethodCall(nav : ocl!NavigationExpr) 
+    java!MethodInvokation {
+       method = [high_level.get] nav.umlFeature      
+    }
+  end
+  
+end
+
+// I have to explain the notion of tag as a means for establishing
+// and interface for resolving. Some languages has implicit tags,
+// such as propagation
+
+// como hacer la composicion?
+
+scheduling uml2java(uml, ocl) -> (java)
+  requires x
+  uses     typing, maps, generator
+
+  1. make_single_inheritance(uml)
+  2. uml2java_mappings(uml) as maps      
+                               with g = generator
+     genJava(uml, ocl)         as generator 
+                                with maps = maps, typing = typing 
+     typing(uml, ocl)            as typing    
+    
+end
+
+
+tao genJava(uml, ocl) -> (java)
+   requires maps, typing
+
+   // I may need some kind of polymorphic call, like in MofScript
+   
+   template mapMethod(inv : ocl!Context) 
+     java!Method {
+	    name = inv.name
+	    type = high_level.boolean 
+	    visibility = "public"	
+     
+        mapExpression(inv.body)
+     }
+   end
+   
+   template booleanType()
+     java!xxx
+   end 
+   
+   template mapExpression(expr : ocl!NavigationExpr)
+     java!MethodInvokation {
+         method     = [high_level.get] nav.umlFeature
+         expression = mapExpression(expr.expression)   
+     }
+   end
+   
+   template mapExpression(expr : ocl!IteratorExpr)
+     when expr.isSelect
+     
+     java!MethodInvokation {
+        method     = [high_level.get] nav.umlFeature
+        expression = ocl!AnonymousClassDeclaration {
+           classInstanceCreation = {
+              // type = ... how??
+              // invented, but useful: 
+              genericType = expr[#typing.table].get(expr.iterators.first)[#high_level.classifier]
+           }
+           bodyDeclarations = {
+              
+           } 
+        }
+     }
+   end
+    
+end
+// multiple-dispatch????
+// useful instead of visitor (see gamma book)
+
+// a good thing of the tag-based way for resolving (BTW, cite kurtev!!)
+// is that one could include in the trace elements that does not exist
+// e.g, for anonymous class declaration... well, not sure if its the case!!
+
+// We are currently bootstrapping the languages. This process would
+// help us in further experimenting and improving the languages as it is 
+// a non-trivial problem...
+
+ * <pre>
+ *   context Company
+ *      inv: self.employees->select(e | e.isBoss)->size() = 1   
+ * </pre>
+ * 
+ * is translated to:
+ * <pre>
+ *   this.getEmployees().select(new Closure() {
+ *      public Object exec(Object e) {
+ *         e.isBoss
+ *      }
+ *   }).size() == 1;
+ * </pre>
+
+
+// How can I invoke this from the mappings language? the glue language? 
+// some external extension/higher-order mechanism?

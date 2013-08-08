@@ -1,0 +1,41 @@
+qool operators_rewriting(eclectic) -> ()
+
+model rt 
+  class generic 
+	ref s : _!Any 
+	ref t : _!Any 
+  end  
+end 
+
+model queue mBinaryExpr                  : eclectic!BinaryExpr
+
+segment rewrite_binary_expressions
+  forall expr from mBinaryExpr
+  	//replace {
+  		// replacement code -> protected region??	
+  	//}
+
+  	mc = eclectic!MethodCall.new
+	mc.receptor = expr.left
+	mc.parameters = expr.right
+	mc.methodName = 'concat' // expr.binaryOp.eq('EQUAL').if_else({'eq'}, {'concat'})
+	mc.withParameters = true
+
+	/*
+    mc.methodName = match expr.binaryOp
+    	case eclectic!BinaryOp::EQUAL    : 'eq'
+    	case eclectic!BinaryOp::ADDITION : 'concat'
+    end
+    */
+    
+    /*
+    match expr.left != null
+    case true  : 
+    case false :
+    end
+     */
+
+	// TODO: Assuming addition and equality so far, until "if" o match or something is implemented
+	expr.replaceBy(mc)
+  end
+end

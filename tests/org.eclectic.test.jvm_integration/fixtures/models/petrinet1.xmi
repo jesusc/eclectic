@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="ASCII"?>
+<petri_net:PetriNet xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:petri_net="http://eclectic.org/test_jvm_integration/petrinet" xsi:schemaLocation="http://eclectic.org/test_jvm_integration/petrinet ../metamodels/petrinet.ecore" name="TestPetriNet">
+  <nodes xsi:type="petri_net:Place" name="p1"/>
+  <nodes xsi:type="petri_net:Place" name="p2"/>
+  <nodes xsi:type="petri_net:Transition" name="t"/>
+  <nodes xsi:type="petri_net:Place" name="p3"/>
+  <arcs name="p1_t" source="//@nodes.0" target="//@nodes.2"/>
+  <arcs name="p2_t" source="//@nodes.1" target="//@nodes.2"/>
+  <arcs name="t_p3" source="//@nodes.2" target="//@nodes.3"/>
+</petri_net:PetriNet>

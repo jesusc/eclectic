@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:java="http://www.eclipse.org/MoDisco/Java/0.2.incubation/java" xsi:schemaLocation="http://www.eclipse.org/MoDisco/Java/0.2.incubation/java file:/home/jesus/usr/qool/workspace/org.eclectic.test.family/./src/uml2java/java.ecore">
+  <java:MethodDeclaration name="customer">
+    <returnType type="/4"/>
+  </java:MethodDeclaration>
+  <java:MethodDeclaration name="fullName">
+    <returnType type="/7"/>
+  </java:MethodDeclaration>
+  <java:MethodDeclaration name="customer">
+    <returnType type="/4"/>
+  </java:MethodDeclaration>
+  <java:MethodDeclaration name="bank">
+    <returnType type="/11"/>
+  </java:MethodDeclaration>
+  <java:ClassDeclaration originalCompilationUnit="/10" name="Customer" usagesInTypeAccess="/2/@returnType /0/@returnType"/>
+  <java:PrimitiveType name="Integer" usagesInTypeAccess="/8/@returnType /6/@body/@statements.0/@expression/@type"/>
+  <java:MethodDeclaration name="getCash">
+    <body>
+      <statements xsi:type="java:AssertStatement">
+        <expression xsi:type="java:VariableDeclarationExpression">
+          <type type="/5"/>
+        </expression>
+      </statements>
+    </body>
+  </java:MethodDeclaration>
+  <java:PrimitiveType name="String" usagesInTypeAccess="/9/@returnType /1/@returnType"/>
+  <java:MethodDeclaration name="number">
+    <returnType type="/5"/>
+  </java:MethodDeclaration>
+  <java:MethodDeclaration name="name">
+    <returnType type="/7"/>
+  </java:MethodDeclaration>
+  <java:CompilationUnit/>
+  <java:ClassDeclaration originalCompilationUnit="/14" name="Bank" usagesInTypeAccess="/3/@returnType"/>
+  <java:ClassDeclaration originalCompilationUnit="/15" name="Account" usagesInTypeAccess="/13/@returnType"/>
+  <java:MethodDeclaration name="account">
+    <returnType type="/12"/>
+  </java:MethodDeclaration>
+  <java:CompilationUnit/>
+  <java:CompilationUnit/>
+  <java:PrimitiveType name="Boolean"/>
+</xmi:XMI>

@@ -1,0 +1,186 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<feature
+      id="org.eclectic"
+      label="Eclectic"
+      version="0.8.6.qualifier"
+      provider-name="Eclectical">
+
+   <description url="http://sanchezcuadrado.es/projects/eclectic">
+      A Transformation Tool for the JVM
+   </description>
+
+   <copyright url="http://sanchezcuadrado.es/projects/eclectic">
+      Copyright (C) 2012 Jesus Sánchez Cuadrado
+   </copyright>
+
+   <license url="http://www.gnu.org/copyleft/gpl.html">
+      See http://www.gnu.org/copyleft/gpl.html
+   </license>
+
+   <plugin
+         id="org.eclectic.apidesc.language"
+         download-size="0"
+         install-size="0"
+         version="0.8.6.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclectic.apidesc.language.tests"
+         download-size="0"
+         install-size="0"
+         version="0.8.6.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclectic.apidesc.language.ui"
+         download-size="0"
+         install-size="0"
+         version="0.8.6.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclectic.debug.ui"
+         download-size="0"
+         install-size="0"
+         version="0.8.6.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclectic.frontend"
+         download-size="0"
+         install-size="0"
+         version="0.8.6.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclectic.frontend.asm"
+         download-size="0"
+         install-size="0"
+         version="0.8.6.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclectic.frontend.syntax"
+         download-size="0"
+         install-size="0"
+         version="0.8.6.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclectic.frontend.syntax.attribution.ui"
+         download-size="0"
+         install-size="0"
+         version="0.8.6.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclectic.frontend.syntax.chain.ui"
+         download-size="0"
+         install-size="0"
+         version="0.8.6.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclectic.frontend.syntax.expressions.ui"
+         download-size="0"
+         install-size="0"
+         version="0.8.6.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclectic.frontend.syntax.koan.ui"
+         download-size="0"
+         install-size="0"
+         version="0.8.6.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclectic.frontend.syntax.mappings.ui"
+         download-size="0"
+         install-size="0"
+         version="0.8.6.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclectic.frontend.syntax.qool.ui"
+         download-size="0"
+         install-size="0"
+         version="0.8.6.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclectic.frontend.syntax.script.ui"
+         download-size="0"
+         install-size="0"
+         version="0.8.6.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclectic.frontend.syntax.tao.ui"
+         download-size="0"
+         install-size="0"
+         version="0.8.6.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclectic.frontend.syntax.tests"
+         download-size="0"
+         install-size="0"
+         version="0.8.6.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclectic.frontend.syntax.ui"
+         download-size="0"
+         install-size="0"
+         version="0.8.6.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclectic.idc"
+         download-size="0"
+         install-size="0"
+         version="0.8.6.qualifier"/>
+
+   <plugin
+         id="org.eclectic.javaflow"
+         download-size="0"
+         install-size="0"
+         version="0.8.6.qualifier"/>
+
+   <plugin
+         id="org.eclectic.modeling"
+         download-size="0"
+         install-size="0"
+         version="0.8.6.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclectic.ui"
+         download-size="0"
+         install-size="0"
+         version="0.8.6.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclectic.streamdesc.language"
+         download-size="0"
+         install-size="0"
+         version="0.8.6.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclectic.streamdesc.language.tests"
+         download-size="0"
+         install-size="0"
+         version="0.8.6.qualifier"
+         unpack="false"/>
+
+   <plugin
+         id="org.eclectic.streamdesc.language.ui"
+         download-size="0"
+         install-size="0"
+         version="0.8.6.qualifier"
+         unpack="false"/>
+
+</feature>

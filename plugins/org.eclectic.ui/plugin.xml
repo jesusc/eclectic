@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+
+   <extension
+         id="org.eclectic.builder"
+         name="Eclectic Builder"
+         point="org.eclipse.core.resources.builders">
+      <builder
+            hasNature="true">
+         <run
+               class="org.eclectic.ui.builder.EclecticBuilder">
+         </run>
+      </builder>
+   </extension>
+   <extension
+         id="org.eclectic.nature"
+         name="Eclectic Nature"
+         point="org.eclipse.core.resources.natures">
+      <runtime>
+         <run
+               class="org.eclectic.ui.builder.EclecticProjectNature">
+         </run>
+      </runtime>
+      <builder
+            id="org.eclectic.builder">
+      </builder>
+   </extension>
+   <extension
+         point="org.eclipse.ui.popupMenus">
+      <objectContribution
+            adaptable="true"
+            objectClass="org.eclipse.core.resources.IProject"
+            nameFilter="*"
+            id="org.eclectic.ui.contribution1">
+         <action
+               label="Add/Remove Eclectic Nature"
+               class="org.eclectic.ui.builder.ToggleNatureAction"
+               menubarPath="additions"
+               enablesFor="+"
+               id="org.eclectic.ui.addRemoveNatureAction">
+         </action>
+      </objectContribution>
+   </extension>
+   <extension
+         point="org.eclipse.ui.newWizards">
+      <category
+            name="Eclectic"
+            id="org.eclectic.ui">
+      </category>
+      <wizard
+            name="New Eclectic Transformation"
+            icon="icons/eclectic.png"
+            category="org.eclectic.ui"
+            class="org.eclectic.ui.wizards.NewEclecticFile"
+            id="org.eclectic.ui.wizards.NewEclecticFile">
+      </wizard>
+   </extension>
+   <extension
+         point="org.eclipse.xtext.builder.participant">
+      <participant
+            class="org.eclectic.ui.builder.XtextBuilderParticipant">
+      </participant>
+   </extension>
+   <extension
+         point="org.eclipse.jdt.core.classpathContainerInitializer">
+      <classpathContainerInitializer
+            class="org.eclectic.ui.classpath.EclecticClasspathContainerInitializer"
+            id="org.eclectic.ui.classpath.EclecticClasspathContainerInitializer">
+      </classpathContainerInitializer>
+   </extension>
+   <extension
+         point="org.eclipse.jdt.ui.classpathContainerPage">
+      <classpathContainerPage
+            class="org.eclectic.ui.classpath.EclecticContainerPage"
+            id="org.eclectic.ui.classpath.EclecticContainerPage1"
+            name="Eclectic Library">
+      </classpathContainerPage>
+   </extension>
+   <extension
+         id="org.eclectic.compiler.error"
+         name="Eclectic Compiler Error"
+         point="org.eclipse.core.resources.markers">
+      <super
+            type="org.eclipse.core.resources.problemmarker">
+      </super>
+      <persistent
+            value="false">
+      </persistent>
+   </extension>
+   <extension
+         point="org.eclipse.ui.editors.templates">
+   </extension>
+
+
+   <!--- Menus -->
+   <extension
+         point="org.eclipse.ui.commands">
+      <command
+            description="Generate transformation from example"
+            id="org.eclectic.ui.commands.createTransformationFromExample"
+            name="Generate transformation from example">
+      </command>
+      <command
+            description="Generate navigation path from example"
+            id="org.eclectic.ui.commands.createNavigationPathFromExample"
+            name="Generate navigation path from example">
+      </command>
+   </extension>
+   <extension
+         point="org.eclipse.ui.handlers">
+      <handler
+            class="org.eclectic.ui.handlers.CreateTransformationFromExample"
+            commandId="org.eclectic.ui.commands.createTransformationFromExample">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <instanceof
+                        value="org.eclipse.emf.ecore.EObject">
+                  </instanceof>
+               </iterate>
+            </with>
+         </enabledWhen>
+      </handler>
+      <handler
+            class="org.eclectic.ui.handlers.CreateNavigationPathFromExample"
+            commandId="org.eclectic.ui.commands.createNavigationPathFromExample">
+         <enabledWhen>
+            <with
+                  variable="selection">
+               <iterate
+                     ifEmpty="false"
+                     operator="and">
+                  <instanceof
+                        value="org.eclipse.emf.ecore.EObject">
+                  </instanceof>
+               </iterate>
+            </with>
+         </enabledWhen>
+      </handler>
+   </extension>
+   <extension
+         point="org.eclipse.ui.menus">
+      <menuContribution
+            allPopups="false"
+            locationURI="popup:org.eclipse.ui.popup.any">
+         <command
+               commandId="org.eclectic.ui.commands.createTransformationFromExample"
+               label="Create transformation from example"
+               style="push">
+            <visibleWhen
+                  checkEnabled="true">
+            </visibleWhen>
+         </command>
+         <command
+               commandId="org.eclectic.ui.commands.createNavigationPathFromExample"
+               label="Create navigation path from example"
+               style="push">
+            <visibleWhen
+                  checkEnabled="true">
+            </visibleWhen>
+         </command>
+      </menuContribution>
+   </extension>
+   
+
+</plugin>

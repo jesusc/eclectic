@@ -1,0 +1,173 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Eclectic | A model transformation tool</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Eclectic</h1>
+        <p>A model transformation tool</p>
+
+<!--
+        <p class="view"><a href="https://github.com/jesusc/bento">View the Project on GitHub <small>jesusc/eclectic</small></a></p>
+-->
+
+        <ul>
+<!--
+          <li><a href="https://github.com/jesusc/bento/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/jesusc/bento/tarball/master">Download <strong>TAR Ball</strong></a></li>
+-->
+          <li><a href="http://sanchezcuadrado.es/projects/eclectic/binaries/eclectic-0.8.6.zip">Download <strong>Eclectic</strong></a></li>
+
+          <li><a href="http://sanchezcuadrado.es/projects/eclectic/binaries/eclectic-examples-0.8.6.zip">Download <strong>Examples</strong></a></li>
+
+          <li><a href="https://github.com/jesusc/eclectic">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h3>
+<a name="welcome-to-bento" class="anchor" href="#welcome-to-bento"><span class="octicon octicon-link"></span></a>Welcome to Eclectic</h3>
+
+<p>
+Eclectic is a transformation tool designed as a family of model
+transformation languages, that is, a set of transformation languages
+each one specifically designed to address a specific transformation
+concern.
+<p/>
+
+<p>
+In principle, the combination of these languages would permit covering many  
+model transformation scenarios, in a more intentional way than using
+a general purpose transformation language, improving modularity and 
+understandability.
+</p>
+
+<p>
+In Eclectic every language is compiled to an
+intermediate representation, called IDC. It provides primitive
+instructions for model manipulation.  Then, IDC is compiled to the
+Java Virtual Machine (JVM) bytecode format. In this way, all Eclectic
+languages share the same execution infrastructure. The
+composition mechanisms are implemented at the IDC level.
+There is also a runtime library, which provides datatypes 
+(e.g., a naive implementation of immutable lists), a model manager
+(i.e., EMF and <a href="http://astreo.ii.uam.es/~jlara/metaDepth/">MetaDepth</a> are supported), etc.
+</p>
+
+<!--
+<pre><code>$ cd your_repo_root/repo_name
+$ git fetch origin
+$ git checkout gh-pages
+</code></pre>
+-->
+
+<!--
+<h3>
+<a name="features" class="anchor" href="#designer-templates"><span class="octicon octicon-link"></span></a>Features</h3>
+
+<p>The current version of Bent&#333 provides the following features</p>
+<ul>
+<li>Support for ATL components</li>
+<li>Support Java components</li>
+<li>Textual editor for bindings and component descriptions</li>
+</ul>
+-->
+
+<h3>
+<a name="features" class="anchor" href="#features"><span class="octicon octicon-link"></span></a>Current status</h3>
+<!-- Depends on Eclectic -->
+
+The current version of Eclectic has the following features:
+<ul>
+    <li>Several, small languages</li>
+    <li>Compilers for the JVM</li>
+    <li>Transformation of plain Java objects (Transformations@runtime)</li>
+    <li>Streaming transformations (initial prototype)</li>
+    <li>Eclipse-based IDE</li>
+</ul>
+
+<p>
+Although in this moment Eclectic is in general usable, it is still evolving, and the languages and the implementation are likely to change. 
+</p>
+
+<h3>
+<a name="installation" class="anchor" href="#rather-drive-stick"><span class="octicon octicon-link"></span></a>Installation</h3>
+<!-- Depends on Eclectic -->
+
+The are some dependencies with other plug-ins, that should be 
+installed before installing.
+<ul>
+<li>Xtext (from version 1.4.1) - <a href="http://www.eclipse.org/Xtext/">http://www.eclipse.org/Xtext/</a> </li>
+<li>EMF (from version 2.7) </li>
+</ul>
+
+<p>Download the packaged update site from one of the links at the left
+sidebar. 
+
+Install with:
+
+<pre><code>Help -> Install New Software -> Add... -> Archive ...
+</code></pre>
+
+It may be needed to uncheck "Group items by category" if nothing
+appears in the plug-in list.
+</p>
+
+<!----------- USAGE -------------->
+<h3>
+<a name="usage" class="anchor" href="#usage"><span class="octicon octicon-link"></span></a>Basic usage</h3>
+
+<p>
+Create a new Java project, right-click on the project and select Add
+Eclectic Nature. Then, go to build path configuration, select Add
+Library and Eclectic. Now, you should be able to write .eclectic files
+and get them compiled automatically.
+</p>
+
+<p>
+You can download the example projects to see how to configure and
+launch transformations.
+</p>
+
+<h3>
+<a name="authors-and-contributors" class="anchor" href="#authors-and-contributors"><span class="octicon octicon-link"></span></a>Authors and Contributors</h3>
+
+
+<p>Eclectic has been created by <a href="http://sanchezcuadrado.es">Jesús Sánchez Cuadrado</a>. If you have any trouble installing or using it, you can contact
+ <code>jesus dot sanchez dot cuadrado at uam dot es</code>
+</p>
+
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="http://sanchezcuadrado.es">jesusc</a></p>
+        <p><small>Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-11389533-2']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+    <script src="javascripts/scale.fix.js"></script>
+
+  </body>
+</html>

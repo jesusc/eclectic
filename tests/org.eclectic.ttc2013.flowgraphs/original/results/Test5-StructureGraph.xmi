@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ASCII"?>
+<flowgraph:Method xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowgraph="http://flowgraph/1.0" txt="testMethod()">
+  <stmts xsi:type="flowgraph:SimpleStmt" txt="int i = 100;"/>
+  <stmts xsi:type="flowgraph:Label" txt="outer:" jumps="//@stmts.1/@stmt/@body/@stmts.0/@body/@stmts.1/@then">
+    <stmt xsi:type="flowgraph:Loop" txt="while">
+      <expr txt="i > 0"/>
+      <body xsi:type="flowgraph:Block" txt="\{...\}">
+        <stmts xsi:type="flowgraph:Loop" txt="while">
+          <expr txt="i > 50"/>
+          <body xsi:type="flowgraph:Block" txt="\{...\}">
+            <stmts xsi:type="flowgraph:SimpleStmt" txt="i = i - 10;"/>
+            <stmts xsi:type="flowgraph:If" txt="if">
+              <expr txt="i == 50"/>
+              <then xsi:type="flowgraph:Break" txt="break outer;" label="//@stmts.1"/>
+            </stmts>
+          </body>
+        </stmts>
+        <stmts xsi:type="flowgraph:SimpleStmt" txt="i--;"/>
+      </body>
+    </stmt>
+  </stmts>
+  <stmts xsi:type="flowgraph:Return" txt="return i;"/>
+  <exit txt="Exit"/>
+</flowgraph:Method>

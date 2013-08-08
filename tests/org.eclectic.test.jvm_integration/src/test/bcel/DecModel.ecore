@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ecore:EPackage xmi:version="2.0"
+    xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:ecore="http://www.eclipse.org/emf/2002/Ecore" name="DecModel"
+    nsURI="http://www.sei.pku.edu.cn/rsa/decmodel" nsPrefix="DecModel">
+  <eClassifiers xsi:type="ecore:EClass" name="Decoration">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="genModel" lowerBound="1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.codegen.ecore/model/GenModel.ecore#//GenModel"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="importClass" eType="#//ImportClass"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="codeArea" eType="#//CodeArea"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="mapArea" eType="#//MapArea"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="ImportClass">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="fullClassName" upperBound="-1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CodeArea">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="code" upperBound="-1" eType="#//Code"
+        containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Code" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="code" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"
+        changeable="false" volatile="true" transient="true" derived="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CodeNone" eSuperTypes="#//Code"/>
+  <eClassifiers xsi:type="ecore:EClass" name="CodeFragment" eSuperTypes="#//Code">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="text" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CodeReference" eSuperTypes="#//Code">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="reference" lowerBound="1"
+        eType="#//Code"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="CodeComposition" eSuperTypes="#//Code">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="child" lowerBound="1" upperBound="-1"
+        eType="#//Code" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="MapArea">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="globalMap" eType="#//GlobalMap"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="classMap" upperBound="-1"
+        eType="#//ClassMap" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AbstractMap" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="specType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="specCode" upperBound="-1"
+        eType="#//SpecCode" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="GlobalMap" eSuperTypes="#//AbstractMap"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ClassMap" eSuperTypes="#//AbstractMap">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="classRef" lowerBound="1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EClass"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="featureMap" upperBound="-1"
+        eType="#//FeatureMap" containment="true"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FeatureMap" eSuperTypes="#//AbstractMap">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="feature" lowerBound="1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EStructuralFeature"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="FeatureMapForAbstractClass" eSuperTypes="#//FeatureMap">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="class2eclass" upperBound="-1"
+        eType="ecore:EClass platform:/plugin/org.eclipse.emf.ecore/model/Ecore.ecore#//EStringToStringMapEntry"
+        containment="true" resolveProxies="false"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="SpecCode" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="code" lowerBound="1" eType="#//Code"
+        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="final" lowerBound="1" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"
+        defaultValueLiteral="false"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="description" lowerBound="1"
+        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Create" eSuperTypes="#//SpecCode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Destroy" eSuperTypes="#//SpecCode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Lookup" eSuperTypes="#//SpecCode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Identify" eSuperTypes="#//SpecCode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Get" eSuperTypes="#//SpecCode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Set" eSuperTypes="#//SpecCode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ListSub" eSuperTypes="#//SpecCode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Insert" eSuperTypes="#//SpecCode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Remove" eSuperTypes="#//SpecCode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="UtilMethod" eSuperTypes="#//SpecCode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="UtilField" eSuperTypes="#//SpecCode"/>
+  <eClassifiers xsi:type="ecore:EClass" name="EStringToStringMapEntry" instanceClassName="java.util.Map$Entry">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="key" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="value" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+</ecore:EPackage>

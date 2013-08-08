@@ -1,0 +1,39 @@
+top_rule 'EPackage' do
+   from Merged::EPackage
+   to Resulting::EPackage
+   filter { |c| c.metaclass == Merged::EPackage && c.creation_condition}
+   mapping do |s, t|
+      t.nsURI = s.nsURI
+      t.nsPrefix = s.nsPrefix
+      t.eFactoryInstance = s.eFactoryInstance
+      t.eClassifiers = s.eClassifiers.select { |c|  c.metaclass == Merged::EClass && c.creation_condition }
+      t.eSubpackages = s.eSubpackages
+      t.eSuperPackage = s.eSuperPackage # The same creation_condition
+      t.name = s.name
+      t.eAnnotations = s.eAnnotations
+   end
+end
+
+top_rule 'EClass' do
+   from Merged::EClass
+   to Resulting::EClass
+   filter { |c| c.metaclass == Merged::EClass && c.creation_condition }
+   mapping do |s, t|
+      t.abstract = s.abstract
+      t.interface = s.interface
+      t.eSuperTypes = s.eSuperTypes.select { |c|  c.metaclass == Merged::EClass && c.creation_condition }
+      t.eOperations = s.eOperations
+      t.eStructuralFeatures = s.eStructuralFeatures
+      t.instanceClassName = s.instanceClassName
+      t.name = s.name
+      t.eAnnotations = s.eAnnotations
+ 
+      if s.ePackage.creation_condition
+        t.ePackage = s.ePackage 
+      else
+        p = Receiving::EPackage.all_objects.find { |p| s.ePackage.match?(p.name) }
+        t.ePackage = trace_query(p).one!(Resulting::EPackage)
+      end
+
+   end
+end

@@ -1,0 +1,16 @@
+mappings test_invoke_internal_map1(in) -> (out)
+
+from src : in!Net to 
+     tgt : out!Net
+	
+	tgt.places <- src.places
+end
+
+from src : in!Place to 
+     tgt : out!Place    
+	
+	tgt.name = src.name
+end
+
+
+

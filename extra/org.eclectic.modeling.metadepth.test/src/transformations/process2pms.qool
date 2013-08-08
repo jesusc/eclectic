@@ -1,0 +1,55 @@
+qool reflective_metadepth(in) -> (out)
+
+model rt 
+  class generic 
+	ref s : _!Any 
+	ref t : _!Any 
+  end
+end 
+
+local queue traceQ : _!Any
+
+model queue mPerformer : in!Performer
+model queue mTask      : in!Task
+model queue mAnalysis  : in!Analysis
+
+segment co_transformation
+  forall p from mPerformer
+    u = out!User.new
+    u.name = p.name
+    
+    trace = rt!generic.new
+    trace.s = p
+    trace.t = u 
+    emit trace to traceQ
+    
+  end
+  
+  // tarea -> categoria
+  // generar tags
+
+  forall t from mTask
+    ticket = out!Ticket.new
+    // is it name actually "description" and name is the linguistic name
+    ticket.name       = t.__name__ // QUIERO EL NOMBRE DEL TIPO ... ESTO ES EL ID! USAR MIRRORS??
+	ticket.description = t.name
+	ticket.assignedTo = t.actor.map { |actor|
+		traceQ[ #kindOf(rt!generic), #p(s, actor)].t
+	}.first // only one assignment... the others can be supervisors...
+
+    trace = rt!generic.new
+    trace.s = t
+    trace.t = ticket 
+    emit trace to traceQ
+
+  end
+end
+
+
+segment refining_transformation
+  forall a from mAnalysis 
+    ticket = traceQ[ #kindOf(rt!generic), #p(s, a)].t
+  
+    ticket.priority = "high"
+  end
+end

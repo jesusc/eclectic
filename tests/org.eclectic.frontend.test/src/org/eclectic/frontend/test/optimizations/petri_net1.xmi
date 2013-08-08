@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="ASCII"?>
+<lit_petriNets:Net xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:lit_petriNets="lit_petriNets" xsi:schemaLocation="lit_petriNets ../../../../../../metamodels/petrinet-migration/Before.ecore" name="n1">
+  <places name="p1"/>
+  <places name="p2"/>
+</lit_petriNets:Net>

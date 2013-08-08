@@ -1,0 +1,19 @@
+mappings process2pms (in) -> (out)
+
+  from p : in!Performer to u : out!User
+    u.name = p.name
+  end
+
+  from task : in!Task to ticket : out!Ticket
+    ticket.name        = task._id    // por que task.name no es capaz de acceder al valor "name" del tipo ontologico?
+    ticket.description = task.name
+    ticket.assignedTo  <- task.actor // TODO: Implement something like "strategy take_first" 
+    
+    ticket.categories  <- task.ontological_type
+  end
+
+  from task : in!Task@1 to category : out!Category
+    category.name = task.name 
+    // podría ser interesante desde esta regla ver el task como @0 para poder asignarse a sí mismo...
+  end
+

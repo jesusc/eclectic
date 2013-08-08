@@ -1,0 +1,51 @@
+mappings petrinet2jgraph(in) -> (out)
+	//out : 'platform:/resource/eclectic.test.jvm_integration/src/test/jgraph/jgraph.apidesc'
+	out : 'api/test/jgraph/jgraph.apidesc'
+
+
+from  n : in!Place
+  to  c1: out!Cell, g1 : out!Geometry
+  linking c1.geometry = g1
+  
+  c1.id    = n.name
+  c1.value = n.name
+  c1.vertex = true
+  c1.style  = ';shape=ellipse;strokeColor=black;fillColor=black;'  
+
+  g1.width = 20.0
+  g1.height = 20.0
+end
+
+from  t : in!Transition
+  to  c2: out!Cell, g2 : out!Geometry
+  linking c2.geometry = g2
+  
+  c2.id    = t.name
+  c2.value = t.name
+  c2.vertex = true
+  c2.style  = ';shape=ellipse;strokeColor=black;fillColor=green;'  
+
+  g2.width = 20.0
+  g2.height = 20.0
+end
+
+from  a : in!Arc
+  to  c3: out!Cell, g3: out!Geometry
+  linking c3.geometry = g3
+  
+  c3.id   = a.name
+  c3.edge = true
+  c3.source <- a.source
+  c3.target <- a.target
+end
+
+from  p : in!PetriNet
+  to  g : out!Graph
+  
+  g.cells <- p.nodes
+  g.cells <- p.arcs
+//  c.name = p.name
+end
+
+// Una pega de todo esto es que si la API requiere cierto orden a la hora de establecer
+// los atributos o tiene efectos laterales puede ser complicado saber qué pasa

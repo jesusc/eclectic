@@ -1,0 +1,20 @@
+chain uml2java(uml, ocl) -> (java)
+  external struct
+  external gen_java
+  external ocl_typing
+  external remove_multiple
+  
+  composite uml2java_si(uml, ocl) -> (java)
+    java = struct(uml)
+    java = gen_java(uml, ocl)
+    //_    = typing(uml, ocl) //not working "_" wildcard model
+    java   = ocl_typing(uml, ocl)
+    
+    // _    = umlext(uml)
+  end
+ 
+  // does not work now
+  //uml_single_inh = remove_multiple(uml) 
+  //java = uml2java_si(uml_single_inh, ocl)
+  java = uml2java_si(uml, ocl) 
+end

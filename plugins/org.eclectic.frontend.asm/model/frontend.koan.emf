@@ -1,0 +1,38 @@
+@namespace(uri="http://eclectic.org/frontend/koanL", prefix="ec_frontend_koanL")
+package koan;
+
+@namespace(uri="http://eclectic.org/frontend/dep", prefix="ec_frontend_dep")
+package dep {
+   
+   class Variable { }
+   class NamedElement { }
+   class TransformationDefinition { }
+   class TraceInterface { }
+   class TransformationDefinitionParameter { }
+   class LocatedElement { }
+   
+   class ClassUse { }           
+   class Expression { }   
+   class Statement { }
+   class TypedWithClass { }   
+}
+
+class KoanTransformation extends dep.TransformationDefinition {
+   val dep.TraceInterface[1] traceInterface;
+   val KoanRule[*] rules;
+}
+
+class KoanRule extends dep.LocatedElement, dep.NamedElement {
+   val Matcher[1] matcher;
+   val dep.Statement[*] statements;
+}
+
+abstract class Matcher extends dep.LocatedElement { 
+	val Matcher[0..1] child;
+}
+
+class ForAllMatcher extends Matcher, dep.Variable { 
+	val dep.ClassUse[1] type;
+}
+
+

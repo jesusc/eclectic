@@ -1,0 +1,43 @@
+api itext described by "http://itext"
+
+// generic mapper test.itext.ItextMapper
+
+// Inheritance is not working well, this should suffice!
+
+metaclass Paragraph to com.itextpdf.text.Paragraph {
+	empty constructor  
+
+	attr content* : Element
+		set method add(com.itextpdf.text.Element) : boolean
+
+	// from phrase
+	attr textContent* : String // The type is not actually String... but an effect (there is no get!). 
+		set method add(java.lang.String) : boolean
+
+}
+
+metaclass Phrase to com.itextpdf.text.Phrase {
+	empty constructor  
+
+	attr textContent* : String
+		set method add(java.lang.String) : boolean
+}
+
+metaclass SymbolBasedList to com.itextpdf.text.ZapfDingbatsList {
+	empty constructor  
+
+	attr items* : Element
+		set method add(com.itextpdf.text.Element) : boolean
+}	
+	
+metaclass Element to com.itextpdf.text.Element {
+	empty constructor
+}
+
+metaclass ListItem to com.itextpdf.text.ListItem {
+	empty constructor
+	
+	attr value : String
+		set method add(java.lang.String) : boolean	
+}
+

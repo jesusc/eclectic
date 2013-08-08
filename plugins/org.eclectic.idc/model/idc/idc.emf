@@ -1,0 +1,474 @@
+@namespace(uri="http://eclectic.org/idc", prefix="idc_ast")
+package idc;
+
+class DummyToCreateAPackage {
+   
+}
+
+@namespace(uri="http://eclectic.org/idc/core", prefix="idc_ast_core")
+package core {
+    abstract class LocatedElement {
+       attr int[1] row;
+       attr int[1] column;
+       attr String[0..1] file;       
+    }
+
+	abstract class NamedElement {
+	   attr String[1] name;         
+	}
+
+	abstract class CodeUnit extends LocatedElement, NamedElement {
+	    attr String qualifier;
+	    attr boolean[1] main = false; 
+		val ModelDefinition[*] models;
+		val ModelDefinition[*] additionalModels;	   
+   		val ImportedModel[*] importedModels;
+   	
+   		val RequireDeclaration[*] requires;
+   	}
+
+	class RequireDeclaration extends ModelDefinition { 
+		// attr String[1] name;
+		attr String[0..1] default;
+		val RequireParameter[*] parameters;
+	}
+	
+	abstract class RequireParameter {
+	   attr String[0..1] formalParameterName;
+	}	
+	
+	class RequireModelParameter extends RequireParameter {
+   	   ref ModelDefinition[1] model;
+	}	
+	
+	
+	abstract class ExecutableUnit extends CodeUnit {
+		ref NormalFunction[0..1] pre;
+//		val scheduling.ExecutionPlan[0..1]#unit executionPlan;
+		ref NormalFunction[0..1] post;	   
+	}
+	
+	class EntryPointUnit extends ExecutableUnit { }
+		
+	class MethodLibrary extends CodeUnit {
+	   val MethodDefinition[*] methods;
+	}
+	
+	class ModelDefinition extends NamedElement {
+		attr ModelKind kind;
+		// TODO: Set a ref. to a KCore metamodel, which is defined somewhere else, it is optional
+		
+		ref MethodLibrary[*] includedLibraries;
+
+	    val MetamodelDefinition[0..1] metamodel; 
+	}
+
+    class MetamodelDefinition {
+       attr String path;
+       // Here I could generate the structure of the metamodel
+    }
+
+	
+	// An imported model declares capabilities
+	class ImportedModel extends ModelDefinition {
+       val qool.RequiredQueue[*]#importedModel capabilityQueues;
+       // Weird dependency with qool...	
+	}	
+
+	enum ModelKind {
+	   IN  = 0;
+	   OUT = 1;
+	}
+
+	abstract class InstructionBlock {
+	   val Instruction[+] instructions;
+	}
+	
+	abstract class Mapping extends LocatedElement, NamedElement, InstructionBlock {     
+		
+	}  
+	
+	abstract class Instruction extends LocatedElement{
+	   
+	}
+	
+	abstract class FunctionDef extends InstructionBlock, LocatedElement {
+	   val  Parameter[*] formalParameters;
+
+	   //@"http://perejil/degenerate"(property="returnVariable")
+   	   //attr String[1] returnVariableId;   			   
+	   //ref  core.Variable returnVariable;
+	}
+	
+	class NormalFunction extends FunctionDef {
+	   attr String[1] name;	   
+	}
+	
+	class Parameter extends Variable {
+	   
+	}	
+
+    /**
+    * If I don't change 'extends InstructionBlock, NamedElement' for 'extends FunctionDef' 
+    * could I use structural types in scala to reuse interpreters? (see)
+    */
+	class MethodDefinition extends FunctionDef, NamedElement {
+	   val TypeInfo[1] type;
+	   val SelfVariable[1] selfVar;
+	   //val Parameter[*] formalParameters;	   
+	}
+	
+	class SelfVariable extends Variable { }
+
+	abstract class Variable extends NamedElement  {
+	   val  TypeInfo[0..1] type;
+	   
+	   // To get dependencies automatically
+	   ref instr.Get[*]#receptor getReceptors;
+	   ref instr.Set[*]#receptor setReceptors;
+	   ref instr.Set[*]#value    setValues;
+	   ref instr.Assign[*]#rightVariable assignVariables;
+	   ref instr.IfBranch[*]#booleanVariable ifConditions;
+	   ref instr.MethodCall[*]#receptor callReceptors;
+	   ref instr.MethodCall[*]#actualParameters callParameters;
+	   ref qool.QEmit[*]#value emitValues;
+	}
+		
+	class TypeInfo {	
+	   ref ModelDefinition[0..1] model;  	   	   	  
+	   
+	   //@"http://perejil/degenerate"(property="classifier")
+	   attr String classifierName;
+	   //ref KClassifier[1] classifier;
+	   
+	   attr boolean isList = false;
+	   attr boolean strictType = false;
+	}
+}
+
+@namespace(uri="http://eclectic.org/idc/extensions", prefix="idc_ast_extensions")
+package extensions {
+   abstract class Extension {
+      
+   }
+   
+   class PotencyExtension extends Extension {
+      attr Integer[1] potency;
+   }
+}
+
+@namespace(uri="http://eclectic.org/idc/qool", prefix="idc_ast_qool")
+package qool {	
+	class QoolTransformation extends core.ExecutableUnit {
+        val Segment[*] segments;
+        val Queue[*] queues;
+        ref Queue[*] provided;
+        val InlineModel[*] inlineModels;               
+	}
+
+    class InlineModel extends core.ModelDefinition { 
+	    val ecl_meta.KClassifier[*] classifiers;    
+    }	
+		
+	class Segment extends core.InstructionBlock {
+	   attr String[1] name;
+	}
+	
+	abstract class Queue {
+	   attr String[1] name;
+	   val QueueOptimization[*] optimizations;
+	}	
+		
+	abstract class QueueOptimization { }
+	
+	class AccessByFeatureOptimization extends QueueOptimization {
+	   attr String[1] featureName;
+	   attr boolean[1] speculative = true; 
+	}
+	
+		
+	class ModelElementQueue extends Queue {
+	   val core.TypeInfo[1] type_;	
+	   val core.TypeInfo[*] additionals;
+	   val extensions.Extension[1] extension;
+	}
+
+	class LocalQueue extends Queue {
+       // Here the type is optional
+	   val core.TypeInfo[0..1] type_;	
+	}
+		
+    class RequiredQueue extends Queue {
+       // I should compute the expected type
+    	ref core.ImportedModel[1]#capabilityQueues importedModel;
+    }
+
+	abstract class QIterator extends core.Variable, core.Instruction, core.InstructionBlock {
+    }
+    
+    class QForAll extends QIterator {
+       ref Queue[1] queue;
+    }
+    
+    // A ForEach would be to get elements from a reference that is filled... 
+		
+	class QEmit extends core.Instruction {
+	   ref Queue[1] queue; 
+	   ref core.Variable[1]#emitValues value;
+	}
+	
+	class QMatch extends instr.InstructionWithResult {
+	   ref Queue[1] queue; 
+	   val QMatchPredicate[+] predicates;
+	   ref instr.ClosureDef[0..1] getterClosure;
+	}
+
+   
+	abstract class QMatchPredicate { }
+	class KindOfPredicate extends QMatchPredicate {
+		attr String[1] className;		
+    	ref  core.ModelDefinition[1] model; 
+	}
+	
+	class PropertyEqualsPredicate extends QMatchPredicate {
+   		attr String[1] propertyName;
+	    ref core.Variable[1] value;
+	}
+	
+}
+
+
+@namespace(uri="http://eclectic.org/idc/instructions", prefix="idc_ast_instructions")
+package instr {
+  abstract class InstructionWithResult extends core.Variable, core.Instruction { }
+
+  class Create extends InstructionWithResult {
+	ref core.ModelDefinition[1] model;
+	attr String[1] className;
+	//ref  KClass[0..1] kclass; 
+  
+    // Added to deal with Java APIs
+    val Set[*] constructorParameters;
+  }
+
+  /**
+   * Set a value
+   * Example:
+   *          set c name value
+   */
+  class Set extends core.Instruction {
+    ref  core.Variable#setReceptors receptor;
+    attr String featureName;
+    ref  core.Variable#setValues value;
+  }
+
+	/**
+	 * Get a value from an attribute.
+	 * Example:
+	 *          var tmp_name : String = get c name
+	 */
+	class Get extends InstructionWithResult {
+		ref  core.Variable#getReceptors receptor;
+		attr String featureName;
+		
+		attr GetKind[1] kind = 0; 
+		
+		// Not sure if this is a feature or a trick to deal with Walk.ResolveAttribute easily 
+		attr Boolean[0..1] maybeCollection = false;
+	}
+
+	enum GetKind {
+	   PLAIN_GET        = 0;
+	   TRY_GET_FIRST    = 1;
+	   TRY_METHOD_FIRST = 2;	   
+	}
+  
+  class Literal extends InstructionWithResult {
+	attr String[0..1] stringValue;
+	attr Integer[0..1] intValue;
+	attr Double[0..1] doubleValue;
+	attr Boolean[0..1] booleanValue;
+	   
+	 attr LiteralKind[1] kind;
+  }		
+
+  enum LiteralKind {
+	STRING  = 0;
+	INTEGER = 1;	   
+	DOUBLE  = 2;
+	BOOLEAN = 3;
+	NULL    = 4; 
+  }   
+
+  class ClosureDef extends core.FunctionDef, InstructionWithResult {
+	   
+  }
+
+  class Assign extends InstructionWithResult {
+    ref core.Variable#assignVariables rightVariable;		   	  
+  }
+
+  class IfInstr extends InstructionWithResult {
+    val IfBranch[1] then;
+    val IfBranch[*] elsifs;
+	val IfElseBlock[0..1] elseBlock;     
+  }
+
+  class IfBranch extends core.InstructionBlock {
+    ref core.Variable#ifConditions booleanVariable;	
+    val IfElseBlock[1] ifBlock;
+  } 	
+	
+  class IfElseBlock extends core.InstructionBlock {	}
+
+
+  /**
+   * Calls a method
+   * Example:
+   *          var tmp_value = call 'concat' tmp_name [literal]
+   */
+  class MethodCall extends InstructionWithResult {	 
+	attr String[1] methodName;
+				
+    ref  core.Variable[1]#callReceptors receptor;
+	
+	ref  core.Variable[*]#callParameters actualParameters;
+	attr boolean[1] maybeGet;
+	
+	val core.TypeInfo[0..1] receptorType;		
+  }
+
+
+  class ReadMeta extends InstructionWithResult {	 
+	attr String[0..1] className;
+	attr ReadMetaKind[1] kind = 0;
+    ref  core.ModelDefinition[1] model;
+  
+  }
+
+  enum ReadMetaKind {
+  	METACLASS = 0;
+  	MODEL     = 1;
+  	THIS_TRANSFORMATION_METHOD_HANDLER  = 2; // This is used in TAO, it is to get a method handler...
+  	// 
+  	THIS_TRANSFORMATION_OBJECT = 3;
+  }
+  
+  // Begin-of invocation
+  
+  abstract class InvokeTransformation extends InstructionWithResult {
+     // Not clear whether importing the transformation first with "uses"
+     attr String[1] transformationName;     
+ 
+  	val InvocationParameter[*] sourceModels; 
+  	val InvocationParameter[*] targetModels;   	
+ 
+  	ref core.Variable[0..1] inputViewFilter; 	
+ 
+  	// Variant 1: with entry point -> explicit invocation
+  	attr String[0..1] entryPointName;
+  	ref core.Variable[*] entryPointParameters;
+ 
+ 	// Each subclass provides a default behaviour if variant 1 is not used
+  }
+  
+  class InvokeExternal extends InvokeTransformation {
+ 
+  	val NamedInvocationParameter[*] parameters;
+  	 	
+  	// Variant 2: execute all, and select output element
+  	ref core.Variable[0..1] outputResolutionSourceElement;
+  	// I have to find a way to connect the transformation explicitly
+  	// So far, I had used requiredQueues, but this time requiredQueues must be
+  	// associated to the transformation declared "inline" in this invocation
+  	attr String[0..1] queueName;
+  	attr String[0..1] srcTraceAttributeName;
+  	attr String[0..1] tgtTraceAttributeName;
+    // result = invoke-external transformationName(in = modelSrc) -> (out = modelTgt)
+	//			 input-view-filter filter_view
+	//			 output-element src_element[queueName.traceAttributeName]
+  }
+    
+  class InvokeInternal extends InvokeTransformation {
+ 	// Default behaviour is execution, and not return nothing	
+  }  
+  
+  class InvocationParameter {
+  	ref  core.ModelDefinition[1] model; 
+    attr String[1] calleeModelName;
+  }
+
+  class NamedInvocationParameter {
+     attr String[1]   formalName;
+     ref  core.Variable[1] result;
+  }
+
+  // End-of invocation
+  
+}
+
+
+@namespace(uri="http://eclectic.org/idc/scheduling", prefix="idc_ast_scheduling")
+package scheduling {
+	/** This corresponds to a composite */
+	class ParallelTransformation extends core.ExecutableUnit {
+		val TransformationExecution[*] executions; 
+	}
+	
+	/** This corresponds to a chain */
+	class SequentialTransformation extends core.ExecutableUnit {
+	   val TransformationExecution[*] executions;
+       val core.ModelDefinition[*] intermediateModels;
+	}
+	
+	class TransformationExecution extends core.LocatedElement {
+	   attr String[1] transformationName; // loose
+	   ref  core.ModelDefinition[*] inModels;
+	   ref  core.ModelDefinition[*] outModels;
+	}
+}
+
+
+
+@namespace(uri="http://eclectic.org/ecl_meta", prefix="ecl_meta")
+package ecl_meta {
+ 
+    class NamedElement {
+       attr String[1] name;       
+    }
+
+
+    class KPackage extends NamedElement {
+    	// attr String[1] uri;
+		val KPackage[*] subpackages;
+        val KClassifier[*] classifiers;
+	}
+
+    class KMetamodel extends KPackage { }
+
+    abstract class KClassifier extends NamedElement { }
+    abstract class KDataType   extends KClassifier { }
+
+    class KPrimitiveType extends KDataType { }
+    class KEnumeration   extends KDataType {
+       val KEnumLiteral[+] literals;
+    }
+
+    class KEnumLiteral extends NamedElement { }
+
+    class KClass extends KClassifier {
+       ref KClass[*] supertypes;
+       val KStructuralFeature[*] features;
+    }
+    abstract class KStructuralFeature extends NamedElement {
+       attr boolean isMultivalued = false;
+       ref KClassifier[1] ktype;
+       attr String[1] ktypeName; // To facilitate compilation when reference is not available
+    }
+    class KAttribute extends KStructuralFeature {
+    }
+    class KReference extends KStructuralFeature {
+      attr boolean isContained = false;
+    }
+
+}

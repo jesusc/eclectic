@@ -1,0 +1,19 @@
+Products Hardware{
+  Product Hammer {
+    VAT = 10;
+  }
+  Product Nail {
+    VAT  = 8;
+    caliber: double;    
+    length : double;
+  }       
+}
+
+Hardware DoItBest{
+  Hammer h{ price = 10; }
+  Nail n1{
+    price   = 0.1;
+    caliber = 0.1;
+    length  = 10.0;
+  }
+}

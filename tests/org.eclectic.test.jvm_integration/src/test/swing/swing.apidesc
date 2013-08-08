@@ -1,0 +1,98 @@
+api swing described by "http://swing"
+
+metaclass LayoutManager to java.awt.LayoutManager {
+	empty constructor // it is an interface...
+}
+
+metaclass Component to java.awt.Component {
+	empty constructor // it is an interface... -> add a "creation mechanism" called is interface
+}
+	
+metaclass JPanel to javax.swing.JPanel {
+	empty constructor 
+	attr name : String
+		get method getName() : java.lang.String
+		set method setName(java.lang.String) : void
+	
+	ref layout : LayoutManager //java.awt.LayoutManager
+		set method setLayout(java.awt.LayoutManager) : void
+
+	ref components* : Component // java.awt.Component
+		get method getComponents() : Array<java.awt.Component>
+		set method add(java.awt.Component) : java.awt.Component
+}
+
+metaclass JTextField to javax.swing.JTextField {
+	empty constructor 
+	attr text : String
+		get method getText() : java.lang.String
+		set method setText(java.lang.String) : void
+}
+
+metaclass JLabel to javax.swing.JLabel {
+	empty constructor 
+	attr text : String
+		get method getText() : java.lang.String	
+		set method setText(java.lang.String) : void
+}
+
+metaclass FlowLayout to java.awt.FlowLayout {
+	empty constructor 
+}
+
+metaclass BoxLayout to javax.swing.BoxLayout {
+	constructor(container, axis)
+
+	attr axis : Integer
+	    constructor : integer // automatic conversions
+	
+	ref container : JPanel // I force to be a jpanel
+	    constructor : java.awt.Container
+		set method setContainer(java.awt.Container) : void
+		 
+}
+
+metaclass JFrame to javax.swing.JFrame {
+	empty constructor 
+	
+	attr name : String
+		get method getName() : java.lang.String
+		set method setName(java.lang.String) : void
+		
+	ref layout : LayoutManager
+		set method setLayout(java.awt.LayoutManager) : void
+
+	ref components* : Component
+		get method getComponents() : Array<java.awt.Component>
+		set method add(java.awt.Component) : java.awt.Component
+}
+
+// Begin-of limitations
+// JRootPane and JLayeredPane needed because implementation limitations
+metaclass JRootPane to javax.swing.JRootPane {
+	empty constructor 
+	attr name : String
+		get method getName() : java.lang.String
+		set method setName(java.lang.String) : void
+		
+	ref layout : LayoutManager
+		set method setLayout(java.awt.LayoutManager) : void
+
+	ref components* : Component
+		get method getComponents() : Array<java.awt.Component>
+		set method add(java.awt.Component) : java.awt.Component
+}
+
+metaclass JLayeredPane to javax.swing.JLayeredPane {
+	empty constructor 
+	attr name : String
+		get method getName() : java.lang.String
+		set method setName(java.lang.String) : void
+		
+	ref layout : LayoutManager
+		set method setLayout(java.awt.LayoutManager) : void
+
+	ref components* : Component
+		get method getComponents() : Array<java.awt.Component>
+		set method add(java.awt.Component) : java.awt.Component
+}

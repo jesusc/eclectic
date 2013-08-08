@@ -1,0 +1,25 @@
+/**
+ * Tests binary expressions.
+ * 
+ * TODO: Generate a models with a single object holding the results.
+ */
+eclectic test_expressions_eq_add(in) -> (in)
+
+	qool test_expressions_eq_add_the_test ( in ) -> ( in ) 
+	
+	model queue mPlaces : in!Place 
+	
+	segment main
+	
+		a = "a"
+		b = "b"
+		//if a.eq("a")
+			
+		//end
+		
+		concat = a + b
+		
+		concat.println("Addition result for strings: ")
+	end
+
+end

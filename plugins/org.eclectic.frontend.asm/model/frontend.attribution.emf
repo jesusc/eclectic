@@ -1,0 +1,74 @@
+@namespace(uri="http://eclectic.org/frontend/attributionL", prefix="ec_frontend_attributionL")
+package attribution;
+
+@namespace(uri="http://eclectic.org/frontend/dep", prefix="ec_frontend_dep")
+package dep {
+   
+   class Variable { }
+   class NamedElement { }
+   class TransformationDefinition { }
+   class TransformationDefinitionParameter { }
+   class LocatedElement { }
+   
+   class ClassUse { }           
+   class Expression { }   
+   class Statement { }
+   class TypedWithClass { }   
+}
+
+class AttributionTransformation extends dep.TransformationDefinition {
+   /* ref dep.TransformationDefinitionParameter[+] left;
+   ref dep.TransformationDefinitionParameter[+] right;
+   */ 
+
+   val AttributeDcl[*] attributes;
+   val AttributionRule[*] rules;
+}
+
+abstract class AttributeDcl extends dep.Variable, dep.TypedWithClass, dep.LocatedElement { }
+class InheritedAttributeDcl extends AttributeDcl { }
+class SynthesizedAttributeDcl extends AttributeDcl { }
+
+class AttributionRule extends dep.LocatedElement {
+	val dep.ClassUse[1] type;
+	val RuleSelf[1] self;
+	val dep.Expression[0..1] condition;
+	val dep.Statement[*] statements; 
+}
+
+class RuleSelf extends dep.Variable { }
+
+class AttributeInit extends dep.Statement {
+	ref AttributeDcl[1] attribute;
+	val dep.Expression[1] receptor;
+	val dep.Expression[1] right;
+}
+
+class AttributeUse extends dep.Expression {
+   val dep.Expression[1] expr;
+   ref AttributeDcl[1] attribute;
+}
+
+/*
+class InheritedInit extends dep.Statement {
+	ref InheritedAttributeDcl[1] attribute;
+	val dep.Expression[1] receptor;
+	val dep.Expression[1] right;
+}
+
+class SynthesizedInit extends dep.Statement {
+	ref SynthesizedAttributeDcl[1] attribute;
+	val dep.Variable[1] receptor;
+	val dep.Expression[1] right;  
+}
+
+class SynthesizedAttributeUse extends dep.Expression {
+   ref SynthesizedAttributeDcl[1] attribute;
+   val dep.Expression[1] expr;
+}
+
+class InheritedAttributeUse extends dep.Expression {
+   ref InheritedAttributeDcl[1] attribute;
+   // val dep.Expression[1] expr;
+}
+*/

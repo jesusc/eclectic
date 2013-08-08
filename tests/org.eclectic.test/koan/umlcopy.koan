@@ -1,0 +1,56 @@
+
+koan umlcopy(in) -> (out)
+
+trace rt 
+  link class2class 
+	var s :  in!Class 
+	var t : out!Class 
+  end
+
+  link attr2attr 
+	var s :  in!Attribute 
+	var t : out!Attribute 
+  end
+
+end 
+
+rule class2class
+  forAll sclass : in!Class
+  
+  tclass = out!Class.new
+  x = 1
+  y = 3
+  // z = sclass.name  
+  z = sclass.nameWithError
+  
+  put rt!class2class with [ s = sclass, t = tclass ] 
+            
+  // tclass.features = (match rt!attr2attr with [ s = sclass.features ])
+  
+  
+  /*
+  result = (match rt!attr2attr with [ s = sclass.features ])
+  closure = { |trace_| 
+  	trace_.t 
+  }
+  mapped = result.map(closure)  
+  tclass.features = mapped
+  */
+	
+  tclass.features = (match rt!attr2attr with [ s = sclass.features ]).map({ |trace_| trace_.t })
+            
+//  tclass.features = [rt::attr2attr | s = sclass.features ].map({ trace | trace.t; })
+//  tclass.name = sclass.name
+end
+
+rule attr2attr
+  forAll sattr : in!Attribute
+
+  attr = out!Attribute.new
+  attr.name = sattr.name  
+  
+  put rt!attr2attr with [ s = sattr, t = attr ]
+  
+  attr.owner = (match rt!class2class with [ s = sattr.owner ]).t 
+end
+

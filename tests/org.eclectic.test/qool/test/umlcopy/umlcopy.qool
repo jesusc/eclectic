@@ -1,0 +1,60 @@
+qool umlcopy_with_qool(in) -> (out)
+
+model rt 
+  class class2class 
+	ref s :  in!Class 
+	ref t : out!Class 
+  end
+
+  class attr2attr 
+	ref s :  in!Attribute 
+	ref t : out!Attribute 
+  end
+end 
+
+local queue traceQ : _!Any
+
+model queue mClass : in!Class
+model queue mAttr  : in!Attribute
+
+segment class2class // : rule
+  forall c1 from mClass
+    tgt   = out!Class.new   
+    tgt.name = c1.name
+    
+    tgt.features = c1.features.map { |f|
+       trace_attr = traceQ[ #kindOf(rt!attr2attr), #p(s, f)]
+       trace_attr.t
+    }
+
+    trace = rt!class2class.new
+    trace.s = c1
+    trace.t = tgt 
+
+    // emit trace to traceQ
+ 
+  end
+
+end 
+
+segment attribute2attribute
+  forall src from mAttr
+    tgt2 = out!Attribute.new
+
+    tgt2.name = src.name 
+
+    trace2 = rt!attr2attr.new
+    trace2.s = src
+    trace2.t = tgt2 
+
+    emit trace2 to traceQ
+
+    "paso".println(" max 5")
+
+    trace_type = traceQ[ #kindOf(rt!class2class), #p(s, src.type)]
+  
+    tgt2.type = trace_type.t
+  end
+end
+
+

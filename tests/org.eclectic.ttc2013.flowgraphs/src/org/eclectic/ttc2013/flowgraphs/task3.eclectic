@@ -1,0 +1,193 @@
+eclectic task3 (flow) -> (flow_out)
+
+navigation task3_2_navigation(flow)
+	def flow!FlowInstr.all_previous
+		self.all_previous_aux(_!Map.new.^put(self, true))
+	end
+
+	def flow!FlowInstr.all_previous_aux(visited)
+		not_visited = self.cfPrev.select { |p| visited.include(p).not }
+		previous = not_visited.map { |p|
+			p.all_previous_aux(visited.^put(p, true))
+		}.flatten
+		
+		_!List.new.add(self).concat(previous.concat(not_visited))
+	end
+end
+
+attribution task3_2_attribution(flow) -> (flow_out)
+
+	rule flow!FlowInstr
+		previous = self.all_previous
+	
+		self.use.each { |v|
+			// Look in each of the paths
+			self.cfPrev.each { |i|
+				defining_instruction = i.all_previous.select { |previous_i| 
+					previous_i.^def.include(v)
+				}.first
+				
+				defining_instruction.dfNext = self
+			}
+			
+			self.^def.include(v).if_true {
+				self.dfNext = self
+			}
+		}
+	end		
+
+end
+	
+/**
+ * CIRCULAR DEPENDENCY. GETS STUCK
+   
+attribution task3_1_attribution(flow) -> (flow_out)
+	inh defs  : _!List
+
+	rule flow!Method
+		defs[self] <- _!List.new
+	end
+	
+	rule flow!FlowInstr
+		self.println(self.txt)
+	end		
+	
+	rule flow!FlowInstr
+		self.println("processing")
+		
+		previous_defs = self.cfPrev.map { |p|
+			p.println("  trying")
+			
+			d = defs[p]	
+
+			p.println("  succes")
+
+			d
+		}.flatten
+		current_defs  = self.^def
+		
+		no_killed = previous_defs.reject { |def_pair|
+			current_defs.include(def_pair._1)
+		}
+		
+		all_defs = current_defs.map { |v|
+			p = _!Pair.new
+			p.first  = v
+			p.second = self
+			p
+		}.union(no_killed)
+	
+		defs[self] <- all_defs
+
+		used_sources = self.cfPrev.select { |i|
+			defined_pairs = defs[i]
+			defined_pairs.exist { |p| self.^def.include(p._1) }
+		}
+		
+		used_sources.each { |s|
+			source = s._2
+			source.dfNext = self
+		}
+
+		self.println("end")
+	end
+
+end
+*/
+
+/* 
+ * 
+ * DOES NOT WORK BECAUSE SEVERAL SHOULD CONTRIBUTE TO DEF[I] 
+ 
+attribution task3_1_attribution(flow) -> (flow_out)
+	inh defs  : _!List
+
+	rule flow!Method
+		defs[self] <- _!List.new
+	end
+		
+	rule flow!FlowInstr
+		previous_defs = defs[self]
+		current_defs  = self.^def
+		
+		no_killed = previous_defs.reject { |def_pair|
+			current_defs.include(def_pair._1)
+		}
+		
+		all_defs = current_defs.map { |v|
+			p = _!Pair.new
+			p.first  = v
+			p.second = self
+			p
+		}.union(no_killed)
+	
+		self.cfNext.each { |i|
+			defs[i] <- all_defs
+		}
+
+		previous_defs.select { |d| self.use.include(d._1) }.each { |d|
+			instr = d._2
+			instr.dfNext = self
+		}
+	end
+
+end
+*/
+
+
+/*
+ * GET STUCK BECAUSE IT DOES NOT USE CMAP 
+ 
+attribution task3_1_attribution(flow) -> (flow_out)
+	syn out : _!List
+	syn in  : _!List
+
+	syn gen  : _!List
+	syn kill : _!List
+
+	rule flow!FlowInstr
+		// self.println("gen-kill")
+		// self.^def.first.println("  - ")		
+			
+		gen[self]  <- self.^def
+		kill[self] <- flow!FlowInstr.all_instances.select { |f|
+			f.^def.exist { |v| self.^def.include(v) }
+		}
+	end
+
+	rule flow!FlowInstr
+		gen  = gen[self]
+		kill = kill[self] 
+			
+		self.println("computing in")	
+		self.cfPrev.each { |p|
+			p.println("  prev: ")
+		}
+		in = self.cfPrev.map { |p|
+			result = out[p]
+			result
+		}.flatten // flatten (or asSet)
+	
+		in[self] <- in
+		self.println("finished in")
+		out[self] <- gen.union(in.difference(kill))		
+	end	
+	
+end
+ */
+
+/***
+ * 
+ * THIS ALONE FAILS BREAKS THE COMPILER! ==> it has to be (flow) -> (flow_out) 
+
+eclectic task3 (flow) -> (flow)
+	
+
+attribution task3_1_attribution(flow) -> (flow)
+	syn text : _!String
+	
+	rule flow!LocalVariableStatement
+		"..".println(self)
+	end
+end
+ */

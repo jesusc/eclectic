@@ -1,0 +1,72 @@
+qool ant2jgraph(ant) -> (jgraph)
+   ant : 'platform:/resource/org.eclectic.test.jvm_integration/src/test/ant/ant.apidesc'
+jgraph : 'platform:/resource/org.eclectic.test.jvm_integration/src/test/jgraph/jgraph.apidesc'
+
+
+model rt 
+  class generic 
+	ref s : _!String 
+	ref t : _!Any
+  end
+end
+ 	
+local queue NodeTrace : rt!generic
+local queue ArcTrace : rt!generic
+
+model queue mProject : ant!Project
+model queue mTarget  : ant!Target
+ 
+segment models
+
+  forall t from mTarget
+    c1 = jgraph!Cell.new
+    g1 = jgraph!Geometry.new
+    c1.geometry = g1
+  
+    c1.id    = t.name
+    c1.value = t.name
+    c1.vertex = "x".eq("x") // I do not have true literal
+    //c1.style  = ';shape=rectangle;strokeColor=black;fillColor=white;'  
+
+    g1.width = 100.0
+    g1.height = 20.0
+    
+    tlink = rt!generic.new
+    tlink.s = t.name
+    tlink.t = c1
+    emit tlink to NodeTrace  	
+
+    arc_link = rt!generic.new
+    arc_link.s = t.name
+    arc_link.t = t.dependencies.map { |target_name| 
+  	  t = NodeTrace[#kindOf(rt!generic), #p(s, target_name)].t    	
+ 	  c2 = jgraph!Cell.new
+	  c2.edge = "x".eq("x") 
+	
+      g2 = jgraph!Geometry.new
+      g2.width  = 10.0
+      g2.height = 10.0
+      c2.geometry = g2
+      
+      c2.source = c1
+      c2.target = t
+      target_name.println("--")
+
+      c2
+    }
+
+    emit arc_link to ArcTrace  	
+    //"...".println(deps)
+  end
+
+  forall p from mProject
+	g = jgraph!Graph.new
+  	g.cells = p.targets.select { |t| t.is_nil.not }.map { |t|  		
+  		NodeTrace[#kindOf(rt!generic), #p(s, t.name)].t
+  	}
+  	g.cells = p.targets.select { |t| t.is_nil.not }.map { |t|  		
+  		ArcTrace[#kindOf(rt!generic), #p(s, t.name)].t
+  	}.flatten
+  end
+
+end

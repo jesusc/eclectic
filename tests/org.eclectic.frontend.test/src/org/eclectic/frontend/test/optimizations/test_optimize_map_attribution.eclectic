@@ -1,0 +1,32 @@
+eclectic test_optimize_map_attribution(in) -> (out)
+
+
+mappings mapping_copy_petri_calling_attribution(in) -> (out)
+	optimizations : enabled
+	uses attribution_name_petri as attribution_name_petri
+
+	from src : in!Net to
+	     tgt : out!Net
+		tgt.places <- src.places
+		tgt.name  = attribution_name_petri!text[src]		
+	end
+	
+	from src : in!Place to
+	     tgt : out!Place 
+		//tgt.name  = attribution_name_petri!text[src]
+	end
+end
+
+attribution attribution_name_petri(in) -> (out)
+	optimizations : enabled
+
+	syn text : _!String
+		
+	rule in!Net
+		text[self] <- self.name
+	end
+	
+//	rule in!Place 
+//		text[self] <- self.name
+//	end
+end

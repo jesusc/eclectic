@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="ASCII"?>
+<xmi:XMI xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:flowgraph="http://flowgraph/1.0">
+  <flowgraph:Method txt="testMethod()" cfNext="/0/@stmts.0">
+    <stmts xsi:type="flowgraph:SimpleStmt" txt="int a = 1;" cfNext="/0/@stmts.1" cfPrev="/0" def="/1"/>
+    <stmts xsi:type="flowgraph:SimpleStmt" txt="int b = 2;" cfNext="/0/@stmts.2" cfPrev="/0/@stmts.0" def="/2"/>
+    <stmts xsi:type="flowgraph:SimpleStmt" txt="int c = a + b;" cfNext="/0/@stmts.3" cfPrev="/0/@stmts.1" def="/3" use="/1 /2"/>
+    <stmts xsi:type="flowgraph:SimpleStmt" txt="a = c;" cfNext="/0/@stmts.4" cfPrev="/0/@stmts.2" def="/1" use="/3"/>
+    <stmts xsi:type="flowgraph:SimpleStmt" txt="b = a;" cfNext="/0/@stmts.5" cfPrev="/0/@stmts.3" def="/2" use="/1"/>
+    <stmts xsi:type="flowgraph:SimpleStmt" txt="c = a / b;" cfNext="/0/@stmts.6" cfPrev="/0/@stmts.4" def="/3" use="/1 /2"/>
+    <stmts xsi:type="flowgraph:SimpleStmt" txt="b = a - b;" cfNext="/0/@stmts.7" cfPrev="/0/@stmts.5" def="/2" use="/1 /2"/>
+    <stmts xsi:type="flowgraph:Return" txt="return b * c;" cfNext="/0/@exit" cfPrev="/0/@stmts.6" use="/2 /3"/>
+    <exit txt="Exit" cfPrev="/0/@stmts.7"/>
+  </flowgraph:Method>
+  <flowgraph:Var txt="a" definers="/0/@stmts.0 /0/@stmts.3" users="/0/@stmts.2 /0/@stmts.4 /0/@stmts.5 /0/@stmts.6"/>
+  <flowgraph:Var txt="b" definers="/0/@stmts.1 /0/@stmts.4 /0/@stmts.6" users="/0/@stmts.2 /0/@stmts.5 /0/@stmts.6 /0/@stmts.7"/>
+  <flowgraph:Var txt="c" definers="/0/@stmts.2 /0/@stmts.5" users="/0/@stmts.3 /0/@stmts.7"/>
+</xmi:XMI>

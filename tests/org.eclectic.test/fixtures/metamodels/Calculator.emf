@@ -1,0 +1,27 @@
+@namespace(uri="http://www.modelum.es/eclectic/test/calculator", prefix="calculator")
+package Calculator;
+
+class Calculator {
+   val Expression[1] root;  
+   val Value[0..1] result; 
+}
+
+abstract class Expression { }
+
+class IntegerLiteral extends Expression {
+   attr Integer[1] value;
+}
+
+abstract class BinaryExpression extends Expression {
+   val Expression[1] left;
+   val Expression[1] right;
+}
+
+class Add extends BinaryExpression { }
+class Sub extends BinaryExpression { }
+class Mul extends BinaryExpression { }
+class Div extends BinaryExpression { }
+
+class Value {
+   attr Integer[1] value;
+}
